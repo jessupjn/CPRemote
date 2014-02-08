@@ -17,13 +17,13 @@
     <AppXManifest Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2014-02-04T20:40:53.815</Modified>
+      <Modified>2014-02-04T20:51:24.601</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\CPRemoteApp.exe">
       <PackagePath>CPRemoteApp.exe</PackagePath>
-      <Modified>2014-02-04T20:44:32.248</Modified>
+      <Modified>2014-02-04T20:51:24.491</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\Assets\Logo.scale-100.png">
       <PackagePath>Assets\Logo.scale-100.png</PackagePath>
@@ -47,15 +47,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2014-02-04T20:44:32.081</Modified>
+      <Modified>2014-02-04T20:51:24.315</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\MainPage.xbf">
-      <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2014-02-04T20:44:32.083</Modified>
+    <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\Menu\Menu.xbf">
+      <PackagePath>Menu\Menu.xbf</PackagePath>
+      <Modified>2014-02-04T20:51:24.316</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2014-02-04T20:40:53.684</Modified>
+      <Modified>2014-02-04T20:51:24.555</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

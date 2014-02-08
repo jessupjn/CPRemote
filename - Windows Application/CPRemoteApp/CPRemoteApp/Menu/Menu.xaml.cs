@@ -18,13 +18,25 @@ using Windows.UI.Xaml.Navigation;
 namespace CPRemoteApp
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// The main menu and opening page for CPRemote.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class Menu : Page
     {
-        public MainPage()
+        public Menu()
         {
             this.InitializeComponent();
+            
+            // customization of _goToRemote
+
+        
+        
+            // customization of _goToSettings
+
+
+
+
+
+            // customization of titleText
         }
     }
 }

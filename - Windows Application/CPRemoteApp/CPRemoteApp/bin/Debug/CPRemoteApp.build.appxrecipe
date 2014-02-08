@@ -36,8 +36,8 @@
     <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\MainPage.xbf">
-      <PackagePath>MainPage.xbf</PackagePath>
+    <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\Menu\Menu.xbf">
+      <PackagePath>Menu\Menu.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="J:\Github\CPRemote\- Windows Application\CPRemoteApp\CPRemoteApp\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
