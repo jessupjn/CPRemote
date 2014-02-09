@@ -29,7 +29,6 @@ namespace CPRemoteApp
             // customization of _goToRemote
 
         
-        
             // customization of _goToSettings
 
 

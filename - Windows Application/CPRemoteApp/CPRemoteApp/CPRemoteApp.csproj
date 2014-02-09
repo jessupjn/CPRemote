@@ -103,6 +103,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Folder Include="Assets\Supporting Files\" />
+    <Folder Include="Bluetooth Connections\" />
+    <Folder Include="Master Controller\" />
     <Folder Include="ViewController - Remote\" />
     <Folder Include="ViewController - Settings\" />
   </ItemGroup>
