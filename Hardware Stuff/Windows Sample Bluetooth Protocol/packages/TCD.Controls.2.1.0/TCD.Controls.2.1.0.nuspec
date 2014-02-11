@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>TCD.Controls</id>
+    <version>2.1.0</version>
+    <title>TCD.Controls</title>
+    <authors>Michael Osthege</authors>
+    <owners>Michael Osthege</owners>
+    <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
+    <projectUrl>http://kuchenzeit.wordpress.com/2012/08/11/tcd-controls/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windows 8 Metro:
+Flyout, SettingsContractWrapper, HeaderedTextBox, HeaderedTextBlock, LabeledProgressBar, LineCounter, RandomColorGenerator, LayoutAwarePage, SilentTextBox, KeyboardDismissingComboBox and extension methods for localizing enums
+
+Windows Phone:
+ReverseAutocompletePopup, CustomMessageBox
+
+.NET4.5
++ CustomMessageBox
++ SearchTextBox
++ NumberOnlyTextBox</description>
+    <summary>.NET4.5, Windows 8 Metro and Windows Phone UserControls and extension methods for C#/XAML</summary>
+    <releaseNotes>2.0.2 ported to 8.1 and changed multiple controls: removed Flyout (since SettingsFlyout now ships with .NET4.5.1..), SettingsContractWrapper, KeyboardKiller // other platforms unchanged
+
+2.1.0 CustomMessageBox for .NET4.5 (similar to WP, use CustomMessageBox.ShowAsync(...))</releaseNotes>
+    <copyright />
+    <language />
+    <tags>xaml winrt flyout settings win8 metro tcd windows phone wp7 messagebox WPF</tags>
+  </metadata>
+</package>
