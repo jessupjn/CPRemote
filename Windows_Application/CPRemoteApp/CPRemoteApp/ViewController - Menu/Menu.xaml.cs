@@ -27,15 +27,46 @@ namespace CPRemoteApp
             this.InitializeComponent();
             
             // customization of _goToRemote
+            _goToRemote.Background = new SolidColorBrush( Windows.UI.Colors.Black );
+            _goToRemote.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
+            _goToRemote.Content = "Remote";
+            _goToRemote.VerticalAlignment = VerticalAlignment.Center;
+            _goToRemote.Width = 500;
+            _goToRemote.Height = 500;
+            _goToRemote.BorderThickness = new Thickness(0);
+            _goToRemote.Click += new RoutedEventHandler(remoteClick);
+            Canvas.SetLeft(_goToRemote, (Window.Current.Bounds.Width -_goToRemote.Width) / 2 );
+            Canvas.SetTop(_goToRemote, 200);
 
         
             // customization of _goToSettings
-
-
-
+            _goToSettings.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+            _goToSettings.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
+            _goToSettings.Content = "Settings";
+            _goToSettings.Width = _goToRemote.Width;
+            _goToSettings.Height = 100;
+            _goToSettings.BorderThickness = new Thickness(0);
+            _goToSettings.Click += new RoutedEventHandler(settingsClick);
+            Canvas.SetLeft(_goToSettings, (Window.Current.Bounds.Width - _goToSettings.Width) / 2);
+            Canvas.SetTop(_goToSettings, Canvas.GetTop(_goToRemote) + _goToRemote.Height + 50);
 
 
             // customization of titleText
+
+
+
+
+
+        }
+
+        private void remoteClick(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate( typeof(ViewController___Remote.RemoteMenu) );
+        }
+
+        private void settingsClick(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate( typeof(ViewController___Settings.SettingsMenu) );
         }
     }
 }
