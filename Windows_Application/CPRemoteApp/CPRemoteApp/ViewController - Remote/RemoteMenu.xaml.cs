@@ -25,6 +25,15 @@ namespace CPRemoteApp.ViewController___Remote
         public RemoteMenu()
         {
             this.InitializeComponent();
+
+            _backButton.Click += new RoutedEventHandler(backClick);
+            Canvas.SetLeft(_backButton, 75);
+            Canvas.SetTop(_backButton, 50);
+        }
+
+        private void backClick(object sender, RoutedEventArgs e)
+        {
+            this.Frame.GoBack();
         }
     }
 }
