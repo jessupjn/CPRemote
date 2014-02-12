@@ -22,18 +22,84 @@ namespace CPRemoteApp.ViewController___Remote
     /// </summary>
     public sealed partial class RemoteMenu : Page
     {
+        private Point clickOrigin;
+        private int status = 0;
+
         public RemoteMenu()
         {
             this.InitializeComponent();
 
+            // setting the different properties of the back button.
             _backButton.Click += new RoutedEventHandler(backClick);
             Canvas.SetLeft(_backButton, 75);
             Canvas.SetTop(_backButton, 50);
+
+            // customization of _volume
+            _volume.Height = Window.Current.Bounds.Height;
+            _volume.Width = Window.Current.Bounds.Width / 2;
+            _volume.Fill = new SolidColorBrush(Windows.UI.Colors.Coral);
+            Canvas.SetLeft(_volume, 0);
+            Canvas.SetTop(_volume, 0);
+
+            // customization of _channelList
+            _channelList.Height = Window.Current.Bounds.Height;
+            _channelList.Width = Window.Current.Bounds.Width / 2;
+            _channelList.Fill = new SolidColorBrush(Windows.UI.Colors.PaleGreen);
+            Canvas.SetLeft(_channelList, Window.Current.Bounds.Width / 2);
+            Canvas.SetTop(_channelList, 0);
+
+            // customization of _divider
+            _divider.Height = Window.Current.Bounds.Height;
+            _divider.Width = 20;
+            _divider.Fill = new SolidColorBrush(Windows.UI.Colors.White);
+            Canvas.SetLeft(_divider, (Window.Current.Bounds.Width - _divider.Width) / 2);
+            Canvas.SetTop(_divider, 0);
+
+            // set up gestures;
+            _swipeDetector.Width = Window.Current.Bounds.Width;
+            _swipeDetector.Height = Window.Current.Bounds.Height;
+            _swipeDetector.Fill = new SolidColorBrush(Windows.UI.Colors.White);
+            _swipeDetector.Fill.Opacity = 0;
+
+            Canvas.SetLeft(_swipeDetector,0);
+            Canvas.SetTop(_swipeDetector, 0);
+            _swipeDetector.PointerPressed += new PointerEventHandler(swipe_click_down);
+            _swipeDetector.PointerReleased += new PointerEventHandler(swipe_click_up);
+
+            System.Diagnostics.Debug.WriteLine("DEBUGGER BEGINS");
+
+        }
+
+        private void swipe_click_down(object sender, PointerRoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("CLICK DOWN");
+
+            Windows.UI.Input.PointerPoint pt = e.GetCurrentPoint( _swipeDetector );
+            clickOrigin = pt.Position;
+        }
+        private void swipe_click_up(object sender, PointerRoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("CLICK UP");
+
+            Point newPoint = e.GetCurrentPoint(_swipeDetector).Position;
+            if ((newPoint.X - clickOrigin.X) > 0.2 * _swipeDetector.Width )
+            {
+                System.Diagnostics.Debug.WriteLine("Swipe Right");
+
+            }
+            else if ( (newPoint.X - clickOrigin.X) > 0.2 * _swipeDetector.Width )
+            {
+                System.Diagnostics.Debug.WriteLine("Swipe Left");
+
+            }
         }
 
         private void backClick(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
         }
+
+        
+    
     }
 }

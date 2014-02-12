@@ -25,6 +25,16 @@ namespace CPRemoteApp.ViewController___Settings
         public SettingsMenu()
         {
             this.InitializeComponent();
+
+            // setting the different properties of the back button.
+            _backButton.Click += new RoutedEventHandler(backClick);
+            Canvas.SetLeft(_backButton, 75);
+            Canvas.SetTop(_backButton, 50);
+        }
+
+        private void backClick(object sender, RoutedEventArgs e)
+        {
+            this.Frame.GoBack();
         }
     }
 }

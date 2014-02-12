@@ -8,8 +8,10 @@
     mc:Ignorable="d">
 
     <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Dark">
-        <Viewbox Name="_volume"/>
-        <Viewbox Name="_channelList"/>
+        <Rectangle Name="_volume"/>
+        <Rectangle Name="_channelList"/>
+        <Rectangle Name="_divider"/>
+        <Rectangle Name="_swipeDetector"/>
         <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
     </Canvas>
 </Page>
