@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,6 +25,7 @@ namespace CPRemoteApp.ViewController___Remote
     {
         private Point clickOrigin;
         private int status = 0;
+        bool clickedDown = false;
 
         public RemoteMenu()
         {
@@ -36,14 +38,14 @@ namespace CPRemoteApp.ViewController___Remote
 
             // customization of _volume
             _volume.Height = Window.Current.Bounds.Height;
-            _volume.Width = Window.Current.Bounds.Width / 2;
+            _volume.Width = Window.Current.Bounds.Width;
             _volume.Fill = new SolidColorBrush(Windows.UI.Colors.Coral);
-            Canvas.SetLeft(_volume, 0);
+            Canvas.SetLeft(_volume, -Window.Current.Bounds.Width/2);
             Canvas.SetTop(_volume, 0);
 
             // customization of _channelList
             _channelList.Height = Window.Current.Bounds.Height;
-            _channelList.Width = Window.Current.Bounds.Width / 2;
+            _channelList.Width = Window.Current.Bounds.Width;
             _channelList.Fill = new SolidColorBrush(Windows.UI.Colors.PaleGreen);
             Canvas.SetLeft(_channelList, Window.Current.Bounds.Width / 2);
             Canvas.SetTop(_channelList, 0);
@@ -64,7 +66,7 @@ namespace CPRemoteApp.ViewController___Remote
             Canvas.SetLeft(_swipeDetector,0);
             Canvas.SetTop(_swipeDetector, 0);
             _swipeDetector.PointerPressed += new PointerEventHandler(swipe_click_down);
-            _swipeDetector.PointerReleased += new PointerEventHandler(swipe_click_up);
+            _swipeDetector.PointerMoved += new PointerEventHandler(swipe_click_up);
 
             System.Diagnostics.Debug.WriteLine("DEBUGGER BEGINS");
 
@@ -72,26 +74,75 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void swipe_click_down(object sender, PointerRoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("CLICK DOWN");
-
-            Windows.UI.Input.PointerPoint pt = e.GetCurrentPoint( _swipeDetector );
-            clickOrigin = pt.Position;
+            clickOrigin = e.GetCurrentPoint( _swipeDetector ).Position;
+            clickedDown = true;
         }
+
         private void swipe_click_up(object sender, PointerRoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("CLICK UP");
-
             Point newPoint = e.GetCurrentPoint(_swipeDetector).Position;
-            if ((newPoint.X - clickOrigin.X) > 0.2 * _swipeDetector.Width )
+            if (clickedDown && Math.Abs(newPoint.X - clickOrigin.X) > 0.08 * _swipeDetector.Width)
             {
-                System.Diagnostics.Debug.WriteLine("Swipe Right");
+                clickedDown = false;
+                if ((newPoint.X - clickOrigin.X) > 0)
+                {
 
-            }
-            else if ( (newPoint.X - clickOrigin.X) > 0.2 * _swipeDetector.Width )
-            {
-                System.Diagnostics.Debug.WriteLine("Swipe Left");
+                    System.Diagnostics.Debug.WriteLine("Swipe Right");
+                    if (status == 0 || status == 1)
+                    {
+                        animate(true);
+                        status -= 1;
+                    }
 
+                }
+                else if ((newPoint.X - clickOrigin.X) < 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("Swipe Left");
+                    if (status == 0 || status == -1)
+                    {
+                        animate(false);
+                        status += 1;
+                    }
+                }
             }
+        }
+
+        private void animate(bool dir)
+        {
+            Storyboard storyboard = new Storyboard();
+            int offset = 130;
+
+            // animates the divider over.
+            DoubleAnimation animationManager = new DoubleAnimation();
+            Storyboard.SetTarget(animationManager, _divider);
+            Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            if (dir) animationManager.To = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
+            else animationManager.To = Canvas.GetLeft(_divider) - (Window.Current.Bounds.Width / 2 - offset);
+            storyboard.Children.Add(animationManager);
+
+            // animates the volume section over
+            animationManager = new DoubleAnimation();
+            Storyboard.SetTarget(animationManager, _volume);
+            Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            if (dir) animationManager.To = Canvas.GetLeft(_volume) + (Window.Current.Bounds.Width / 2 - offset);
+            else animationManager.To = Canvas.GetLeft(_volume) - (Window.Current.Bounds.Width / 2 - offset);
+
+            storyboard.Children.Add(animationManager);
+
+            // animates the channel list section over.
+            animationManager = new DoubleAnimation();
+            Storyboard.SetTarget(animationManager, _channelList);
+            Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            if (dir) animationManager.To = Canvas.GetLeft(_channelList) + (Window.Current.Bounds.Width / 2 - offset);
+            else animationManager.To = Canvas.GetLeft(_channelList) - (Window.Current.Bounds.Width / 2 - offset); 
+            storyboard.Children.Add(animationManager);
+
+            storyboard.Begin();
+
+
         }
 
         private void backClick(object sender, RoutedEventArgs e)
@@ -99,7 +150,7 @@ namespace CPRemoteApp.ViewController___Remote
             this.Frame.GoBack();
         }
 
-        
+
     
     }
 }
