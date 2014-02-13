@@ -23,10 +23,22 @@ namespace CPRemoteApp.ViewController___Remote
     /// </summary>
     public sealed partial class RemoteMenu : Page
     {
+        // customizable variables
+        // -------------------------
+        private int offset = 130;
+        
+
+        // -------------------------
+
         private Point clickOrigin;
         private int status = 0;
-        bool clickedDown = false;
+        private bool clickedDown = false;
+        private Border buttonList;
+        private bool canMove = true;
 
+
+        // ============================================================================================================================================
+        // Constructor
         public RemoteMenu()
         {
             this.InitializeComponent();
@@ -65,52 +77,94 @@ namespace CPRemoteApp.ViewController___Remote
 
             Canvas.SetLeft(_swipeDetector,0);
             Canvas.SetTop(_swipeDetector, 0);
-            _swipeDetector.PointerPressed += new PointerEventHandler(swipe_click_down);
-            _swipeDetector.PointerMoved += new PointerEventHandler(swipe_click_up);
+            _swipeDetector.PointerPressed += new PointerEventHandler(mouse_click_down);
+            _swipeDetector.PointerReleased += new PointerEventHandler(mouse_check_swipe);
+            _swipeDetector.PointerMoved += new PointerEventHandler(mouse_click_up);
 
             System.Diagnostics.Debug.WriteLine("DEBUGGER BEGINS");
 
-        }
+        } // constructor
+        // ============================================================================================================================================
+        // ============================================================================================================================================
 
-        private void swipe_click_down(object sender, PointerRoutedEventArgs e)
+
+
+
+
+
+
+        // ============================================================================================================================================
+        // Various touch screeen handlers that are used in this menu.
+
+        // COPIES LOCATION OF THE MOUSE WHEN IT HAS BEEN CLICKED
+        private void mouse_click_down(object sender, PointerRoutedEventArgs e)
         {
             clickOrigin = e.GetCurrentPoint( _swipeDetector ).Position;
             clickedDown = true;
-        }
+        } // mouse_click_down
 
-        private void swipe_click_up(object sender, PointerRoutedEventArgs e)
+
+
+        // HANDLES THE SWIPE FEATURE ADDED TO OUR UI
+        private void mouse_check_swipe(object sender, PointerRoutedEventArgs e)
         {
             Point newPoint = e.GetCurrentPoint(_swipeDetector).Position;
-            if (clickedDown && Math.Abs(newPoint.X - clickOrigin.X) > 0.08 * _swipeDetector.Width)
+            if (clickedDown && Math.Abs(newPoint.X - clickOrigin.X) > 0.08 * _swipeDetector.Width && canMove)
             {
                 clickedDown = false;
                 if ((newPoint.X - clickOrigin.X) > 0)
                 {
 
-                    System.Diagnostics.Debug.WriteLine("Swipe Right");
                     if (status == 0 || status == 1)
                     {
-                        animate(true);
+                        if (status != 0 && buttonList != null) _bg.Children.Remove(buttonList);
+
                         status -= 1;
+                        animate(true);
                     }
 
                 }
                 else if ((newPoint.X - clickOrigin.X) < 0)
                 {
-                    System.Diagnostics.Debug.WriteLine("Swipe Left");
+                    
                     if (status == 0 || status == -1)
                     {
-                        animate(false);
+                        if (status != 0 && buttonList != null) _bg.Children.Remove(buttonList);
+
                         status += 1;
+                        animate(false);
                     }
                 }
-            }
-        }
 
+            }
+        } // mouse_check_swipe
+        
+
+
+        // WHEN A CLICK HAS BEEN MADE AND A COMMAND NEEDS TO BE SENT
+        private void mouse_click_up(object sender, PointerRoutedEventArgs e)
+        {
+            Point newPoint = e.GetCurrentPoint(_swipeDetector).Position;
+            if(status != 0 &&  Math.Abs(newPoint.X - clickOrigin.X) < 0.04 * _swipeDetector.Width)
+            {
+                System.Diagnostics.Debug.WriteLine("-- a click has been made and needs to be handled.");
+            }
+        } // mouse_click_up
+
+        // ============================================================================================================================================
+        // ============================================================================================================================================
+
+
+
+
+
+
+
+        // ============================================================================================================================================
+        // animation function for _divider
         private void animate(bool dir)
         {
             Storyboard storyboard = new Storyboard();
-            int offset = 130;
 
             // animates the divider over.
             DoubleAnimation animationManager = new DoubleAnimation();
@@ -140,17 +194,60 @@ namespace CPRemoteApp.ViewController___Remote
             else animationManager.To = Canvas.GetLeft(_channelList) - (Window.Current.Bounds.Width / 2 - offset); 
             storyboard.Children.Add(animationManager);
 
+            // end story handler
+            storyboard.Completed += delegate { buildButtonList(dir, offset + _divider.Width); };
+            canMove = false;
+
             storyboard.Begin();
 
+        }
+        // ============================================================================================================================================
+        // ============================================================================================================================================
+
+
+
+
+        // ============================================================================================================================================
+        // builds and displays the clickable list.
+        private void buildButtonList(bool dir, double offset)
+        {
+            canMove = true;
+            if (status == 0) return;
+
+            System.Diagnostics.Debug.WriteLine("Created");
+
+            buttonList = new Border();
+            buttonList.Width = Window.Current.Bounds.Width - offset;
+            buttonList.Height = Window.Current.Bounds.Height;
+            buttonList.Background = new SolidColorBrush(Windows.UI.Colors.Purple);
+            buttonList.Name = "scrollList";
+
+            if (dir) Canvas.SetLeft(buttonList, 0);
+            else Canvas.SetLeft(buttonList, Canvas.GetLeft(_divider) + _divider.Width);
+            Canvas.SetTop(buttonList, 0);
+            _bg.Children.Add(buttonList);
+            Canvas.SetZIndex(buttonList, 10);
 
         }
+        // ============================================================================================================================================
+        // ============================================================================================================================================
 
+
+
+
+
+
+
+
+
+        // ============================================================================================================================================
+        // back button has been pressed.
         private void backClick(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
         }
+        // ============================================================================================================================================
+        // ============================================================================================================================================
 
-
-    
     }
 }
