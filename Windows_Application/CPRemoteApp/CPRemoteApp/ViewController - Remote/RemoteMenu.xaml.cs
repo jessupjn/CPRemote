@@ -89,7 +89,7 @@ namespace CPRemoteApp.ViewController___Remote
             {
                 Width = 300,
                 Height = 300,
-                //Source = new BitmapImage(new Uri(@"ms-appx://volume_symbol.png", UriKind.Relative))
+                Source = new BitmapImage(new Uri(@"ms-appx://volume_symbol.png", UriKind.Absolute))
             };
             _bg.Children.Add(vol);
             Canvas.SetLeft(vol, (_volume.Width - vol.Width) / 2);
