@@ -13,8 +13,5 @@
         <Rectangle Name="_divider"/>
         <Rectangle Name="_swipeDetector" Canvas.ZIndex="1000"/>
         <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" Canvas.ZIndex="1001"/>
-        <Border Width="200" Height="200">
-            <Image></Image>
-        </Border>
     </Canvas>
 </Page>

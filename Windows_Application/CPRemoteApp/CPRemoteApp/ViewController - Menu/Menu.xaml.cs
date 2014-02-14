@@ -27,7 +27,7 @@ namespace CPRemoteApp
             this.InitializeComponent();
             
             // customization of _goToRemote
-            _goToRemote.Background = new SolidColorBrush( Windows.UI.Colors.Black );
+            _goToRemote.Background = new SolidColorBrush( Windows.UI.Colors.MediumPurple );
             _goToRemote.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
             _goToRemote.Content = "Remote";
             _goToRemote.VerticalAlignment = VerticalAlignment.Center;
@@ -40,7 +40,7 @@ namespace CPRemoteApp
 
         
             // customization of _goToSettings
-            _goToSettings.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+            _goToSettings.Background = new SolidColorBrush(Windows.UI.Colors.MediumPurple);
             _goToSettings.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
             _goToSettings.Content = "Settings";
             _goToSettings.Width = _goToRemote.Width;

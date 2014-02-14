@@ -7,10 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Canvas Background="#99FF002E" Name="Background">
+    <Canvas Background="#FF8000FF" Name="Background">
 
         <TextBlock Name="titleText"/>
         <Button Name="_goToRemote"/>
+
         <Button Name="_goToSettings"/>
 
     </Canvas>

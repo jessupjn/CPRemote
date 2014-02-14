@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,6 +36,8 @@ namespace CPRemoteApp.ViewController___Remote
         private bool clickedDown = false;
         private Border buttonList;
         private bool canMove = true;
+        private Image vol;
+        private Image channel;
 
 
         // ============================================================================================================================================
@@ -64,7 +67,7 @@ namespace CPRemoteApp.ViewController___Remote
 
             // customization of _divider
             _divider.Height = Window.Current.Bounds.Height;
-            _divider.Width = 20;
+            _divider.Width = 15;
             _divider.Fill = new SolidColorBrush(Windows.UI.Colors.White);
             Canvas.SetLeft(_divider, (Window.Current.Bounds.Width - _divider.Width) / 2);
             Canvas.SetTop(_divider, 0);
@@ -81,9 +84,31 @@ namespace CPRemoteApp.ViewController___Remote
             _swipeDetector.PointerReleased += new PointerEventHandler(mouse_check_swipe);
             _swipeDetector.PointerMoved += new PointerEventHandler(mouse_click_up);
 
+
+            vol = new Image()
+            {
+                Width = 300,
+                Height = 300,
+                //Source = new BitmapImage(new Uri(@"ms-appx://volume_symbol.png", UriKind.Relative))
+            };
+            _bg.Children.Add(vol);
+            Canvas.SetLeft(vol, (_volume.Width - vol.Width) / 2);
+            Canvas.SetTop(vol, (Window.Current.Bounds.Height - vol.Height) / 2);
+
+            channel = new Image()
+            {
+                Width = 300,
+                Height = 300,
+                //Source = new ImageSource("ms-appx:///img/volume_symbol.png");
+            };
+            _bg.Children.Add(channel);
+            Canvas.SetLeft(channel, (Canvas.GetLeft(_channelList) + _channelList.Width - channel.Width) / 2);
+            Canvas.SetTop(channel, (Window.Current.Bounds.Height - channel.Height) / 2);
+
             System.Diagnostics.Debug.WriteLine("DEBUGGER BEGINS");
 
         } // constructor
+
         // ============================================================================================================================================
         // ============================================================================================================================================
 
@@ -112,28 +137,31 @@ namespace CPRemoteApp.ViewController___Remote
             if (clickedDown && Math.Abs(newPoint.X - clickOrigin.X) > 0.08 * _swipeDetector.Width && canMove)
             {
                 clickedDown = false;
-                if ((newPoint.X - clickOrigin.X) > 0)
+
+
+                // moving back towards the center;
+                if (status != 0 && buttonList != null)
                 {
-
-                    if (status == 0 || status == 1)
-                    {
-                        if (status != 0 && buttonList != null) _bg.Children.Remove(buttonList);
-
-                        status -= 1;
-                        animate(true);
-                    }
-
+                    _bg.Children.Remove(buttonList);
+                    vol.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                    channel.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 }
-                else if ((newPoint.X - clickOrigin.X) < 0)
+                else
                 {
-                    
-                    if (status == 0 || status == -1)
-                    {
-                        if (status != 0 && buttonList != null) _bg.Children.Remove(buttonList);
+                    vol.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    channel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                }
 
-                        status += 1;
-                        animate(false);
-                    }
+
+                if ((newPoint.X - clickOrigin.X) > 0 && (status == 0 || status == 1))
+                {
+                    status -= 1;
+                    animate(true);
+                }
+                else if ((newPoint.X - clickOrigin.X) < 0 && (status == 0 || status == -1))
+                {
+                    status += 1;
+                    animate(false);
                 }
 
             }
