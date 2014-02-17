@@ -7,11 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Canvas Name="_bg" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Dark">
-        <Rectangle Name="_volume"/>
-        <Rectangle Name="_channelList"/>
-        <Rectangle Name="_divider"/>
-        <Rectangle Name="_swipeDetector" Canvas.ZIndex="1000"/>
-        <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" Canvas.ZIndex="1001"/>
+    <Canvas Name="_bg" Background="#FF3E106C" RequestedTheme="Dark">
+        <Button Name="_volume" Background="#FF25106C" BorderThickness="0" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}" Click="_volume_Click"/>
+        <Button Name="_channelList" Background="#FF4F009E" BorderThickness="0" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}" Click="_channelList_Click"/>
+        
+        <Rectangle Name="_divider" Fill="White" Width="20" Height="{Binding ActualHeight, ElementName=_bg}"/>
+        
+        <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" />
     </Canvas>
 </Page>

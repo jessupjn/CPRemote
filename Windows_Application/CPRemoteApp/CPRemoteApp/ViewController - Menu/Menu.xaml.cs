@@ -27,28 +27,17 @@ namespace CPRemoteApp
             this.InitializeComponent();
             
             // customization of _goToRemote
-            _goToRemote.Background = new SolidColorBrush( Windows.UI.Colors.MediumPurple );
-            _goToRemote.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
-            _goToRemote.Content = "Remote";
-            _goToRemote.VerticalAlignment = VerticalAlignment.Center;
-            _goToRemote.Width = 500;
-            _goToRemote.Height = 500;
-            _goToRemote.BorderThickness = new Thickness(0);
+            _goToRemote.Width = 0.7 * Window.Current.Bounds.Height;
+            _goToRemote.Height = _goToRemote.Width;
             _goToRemote.Click += new RoutedEventHandler(remoteClick);
             Canvas.SetLeft(_goToRemote, (Window.Current.Bounds.Width -_goToRemote.Width) / 2 );
-            Canvas.SetTop(_goToRemote, 200);
+            Canvas.SetTop(_goToRemote, 0.15 * Window.Current.Bounds.Height);
 
         
             // customization of _goToSettings
-            _goToSettings.Background = new SolidColorBrush(Windows.UI.Colors.MediumPurple);
-            _goToSettings.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
-            _goToSettings.Content = "Settings";
-            _goToSettings.Width = _goToRemote.Width;
-            _goToSettings.Height = 100;
-            _goToSettings.BorderThickness = new Thickness(0);
             _goToSettings.Click += new RoutedEventHandler(settingsClick);
-            Canvas.SetLeft(_goToSettings, (Window.Current.Bounds.Width - _goToSettings.Width) / 2);
-            Canvas.SetTop(_goToSettings, Canvas.GetTop(_goToRemote) + _goToRemote.Height + 50);
+            Canvas.SetLeft(_goToSettings, Window.Current.Bounds.Width - 100);
+            Canvas.SetTop(_goToSettings, 25 );
 
 
             // customization of titleText

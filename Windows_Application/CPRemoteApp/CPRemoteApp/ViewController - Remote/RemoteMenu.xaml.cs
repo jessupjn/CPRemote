@@ -26,7 +26,7 @@ namespace CPRemoteApp.ViewController___Remote
     {
         // customizable variables
         // -------------------------
-        private int offset = 130;
+        private int offset = 160;
         
 
         // -------------------------
@@ -52,38 +52,16 @@ namespace CPRemoteApp.ViewController___Remote
             Canvas.SetTop(_backButton, 50);
 
             // customization of _volume
-            _volume.Height = Window.Current.Bounds.Height;
-            _volume.Width = Window.Current.Bounds.Width;
-            _volume.Fill = new SolidColorBrush(Windows.UI.Colors.Coral);
             Canvas.SetLeft(_volume, -Window.Current.Bounds.Width/2);
             Canvas.SetTop(_volume, 0);
 
             // customization of _channelList
-            _channelList.Height = Window.Current.Bounds.Height;
-            _channelList.Width = Window.Current.Bounds.Width;
-            _channelList.Fill = new SolidColorBrush(Windows.UI.Colors.PaleGreen);
             Canvas.SetLeft(_channelList, Window.Current.Bounds.Width / 2);
             Canvas.SetTop(_channelList, 0);
 
             // customization of _divider
-            _divider.Height = Window.Current.Bounds.Height;
-            _divider.Width = 15;
-            _divider.Fill = new SolidColorBrush(Windows.UI.Colors.White);
             Canvas.SetLeft(_divider, (Window.Current.Bounds.Width - _divider.Width) / 2);
             Canvas.SetTop(_divider, 0);
-
-            // set up gestures;
-            _swipeDetector.Width = Window.Current.Bounds.Width;
-            _swipeDetector.Height = Window.Current.Bounds.Height;
-            _swipeDetector.Fill = new SolidColorBrush(Windows.UI.Colors.White);
-            _swipeDetector.Fill.Opacity = 0;
-
-            Canvas.SetLeft(_swipeDetector,0);
-            Canvas.SetTop(_swipeDetector, 0);
-            _swipeDetector.PointerPressed += new PointerEventHandler(mouse_click_down);
-            _swipeDetector.PointerReleased += new PointerEventHandler(mouse_check_swipe);
-            _swipeDetector.PointerMoved += new PointerEventHandler(mouse_click_up);
-
 
             vol = new Image()
             {
@@ -91,19 +69,21 @@ namespace CPRemoteApp.ViewController___Remote
                 Height = 300,
                 Source = new BitmapImage(new Uri(@"ms-appx://volume_symbol.png", UriKind.Absolute))
             };
-            _bg.Children.Add(vol);
-            Canvas.SetLeft(vol, (_volume.Width - vol.Width) / 2);
-            Canvas.SetTop(vol, (Window.Current.Bounds.Height - vol.Height) / 2);
+            _volume.Content = vol;
+            //Canvas.SetZIndex(vol, 10);
+            //Canvas.SetLeft(vol, (Window.Current.Bounds.Width / 4) - (vol.Width / 2));
+            //Canvas.SetTop(vol, (Window.Current.Bounds.Height - vol.Height) / 2);
 
-            channel = new Image()
-            {
-                Width = 300,
-                Height = 300,
-                //Source = new ImageSource("ms-appx:///img/volume_symbol.png");
-            };
-            _bg.Children.Add(channel);
-            Canvas.SetLeft(channel, (Canvas.GetLeft(_channelList) + _channelList.Width - channel.Width) / 2);
-            Canvas.SetTop(channel, (Window.Current.Bounds.Height - channel.Height) / 2);
+            //channel = new Image()
+            //{
+            //    Width = 300,
+            //    Height = 300,
+            //    Source = new BitmapImage(new Uri(@"ms-appx://volume_symbol.png", UriKind.Absolute))
+            //};
+            //_bg.Children.Add(channel);
+            //Canvas.SetZIndex(vol, 10);
+            //Canvas.SetLeft(channel, (Canvas.GetLeft(_channelList) + _channelList.Width - channel.Width) / 2);
+            //Canvas.SetTop(channel, (Window.Current.Bounds.Height - channel.Height) / 2);
 
             System.Diagnostics.Debug.WriteLine("DEBUGGER BEGINS");
 
@@ -121,24 +101,17 @@ namespace CPRemoteApp.ViewController___Remote
         // ============================================================================================================================================
         // Various touch screeen handlers that are used in this menu.
 
-        // COPIES LOCATION OF THE MOUSE WHEN IT HAS BEEN CLICKED
-        private void mouse_click_down(object sender, PointerRoutedEventArgs e)
-        {
-            clickOrigin = e.GetCurrentPoint( _swipeDetector ).Position;
-            clickedDown = true;
-        } // mouse_click_down
+
 
 
 
         // HANDLES THE SWIPE FEATURE ADDED TO OUR UI
         private void mouse_check_swipe(object sender, PointerRoutedEventArgs e)
         {
-            Point newPoint = e.GetCurrentPoint(_swipeDetector).Position;
-            if (clickedDown && Math.Abs(newPoint.X - clickOrigin.X) > 0.08 * _swipeDetector.Width && canMove)
-            {
+
                 clickedDown = false;
 
-
+                Point newPoint;
                 // moving back towards the center;
                 if (status != 0 && buttonList != null)
                 {
@@ -164,20 +137,8 @@ namespace CPRemoteApp.ViewController___Remote
                     animate(false);
                 }
 
-            }
         } // mouse_check_swipe
-        
 
-
-        // WHEN A CLICK HAS BEEN MADE AND A COMMAND NEEDS TO BE SENT
-        private void mouse_click_up(object sender, PointerRoutedEventArgs e)
-        {
-            Point newPoint = e.GetCurrentPoint(_swipeDetector).Position;
-            if(status != 0 &&  Math.Abs(newPoint.X - clickOrigin.X) < 0.04 * _swipeDetector.Width)
-            {
-                System.Diagnostics.Debug.WriteLine("-- a click has been made and needs to be handled.");
-            }
-        } // mouse_click_up
 
         // ============================================================================================================================================
         // ============================================================================================================================================
@@ -198,7 +159,7 @@ namespace CPRemoteApp.ViewController___Remote
             DoubleAnimation animationManager = new DoubleAnimation();
             Storyboard.SetTarget(animationManager, _divider);
             Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
-            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.2));
             if (dir) animationManager.To = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
             else animationManager.To = Canvas.GetLeft(_divider) - (Window.Current.Bounds.Width / 2 - offset);
             storyboard.Children.Add(animationManager);
@@ -207,7 +168,7 @@ namespace CPRemoteApp.ViewController___Remote
             animationManager = new DoubleAnimation();
             Storyboard.SetTarget(animationManager, _volume);
             Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
-            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.2));
             if (dir) animationManager.To = Canvas.GetLeft(_volume) + (Window.Current.Bounds.Width / 2 - offset);
             else animationManager.To = Canvas.GetLeft(_volume) - (Window.Current.Bounds.Width / 2 - offset);
 
@@ -217,13 +178,13 @@ namespace CPRemoteApp.ViewController___Remote
             animationManager = new DoubleAnimation();
             Storyboard.SetTarget(animationManager, _channelList);
             Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
-            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.3));
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(0.2));
             if (dir) animationManager.To = Canvas.GetLeft(_channelList) + (Window.Current.Bounds.Width / 2 - offset);
             else animationManager.To = Canvas.GetLeft(_channelList) - (Window.Current.Bounds.Width / 2 - offset); 
             storyboard.Children.Add(animationManager);
 
             // end story handler
-            storyboard.Completed += delegate { buildButtonList(dir, offset + _divider.Width); };
+            //storyboard.Completed += delegate { buildButtonList(dir, offset + _divider.Width); };
             canMove = false;
 
             storyboard.Begin();
@@ -269,10 +230,28 @@ namespace CPRemoteApp.ViewController___Remote
 
 
         // ============================================================================================================================================
-        // back button has been pressed.
+        // event handlers for button clicks
         private void backClick(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
+        }
+
+        private void _volume_Click(object sender, RoutedEventArgs e)
+        {
+            if (status == 0 || status == 1)
+                {
+                    status -= 1;
+                    animate(true);
+                }
+        }
+
+        private void _channelList_Click(object sender, RoutedEventArgs e)
+        {
+            if (status == 0 || status == -1)
+                {
+                    status += 1;
+                    animate(false);
+                }
         }
         // ============================================================================================================================================
         // ============================================================================================================================================
