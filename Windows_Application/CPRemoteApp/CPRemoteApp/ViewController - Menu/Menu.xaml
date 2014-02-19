@@ -12,7 +12,7 @@
 
         <TextBlock Name="titleText"/>
         <Button Name="_goToRemote" Width="700" Height="700" Foreground="White" Canvas.Top="39" BorderThickness="0" Canvas.Left="330">
-            <Image Source="ms-appx:///img/remote_icon.png"/>
+            <Image Source="ms-appx:///img/remote_symbol.png"/>
         </Button>
 
         <Button Name="_goToSettings" Width="75" Height="75" Canvas.Top="7" BorderThickness="0" Canvas.Left="1284">

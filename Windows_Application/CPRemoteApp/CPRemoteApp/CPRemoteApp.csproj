@@ -133,8 +133,8 @@
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
-    <Content Include="img\channel_up_down.png" />
-    <Content Include="img\remote_icon.png" />
+    <Content Include="img\channel_logo.png" />
+    <Content Include="img\remote_symbol.png" />
     <Content Include="img\settings_gear.png" />
     <Content Include="img\volume_symbol.png" />
     <Page Include="ViewController - Settings\SettingsMenu.xaml">
