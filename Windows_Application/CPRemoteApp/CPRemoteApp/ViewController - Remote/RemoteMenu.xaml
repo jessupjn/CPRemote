@@ -8,15 +8,19 @@
     mc:Ignorable="d">
 
     <Canvas Name="_bg" Background="#FF3E106C" RequestedTheme="Dark">
-        <Canvas Name="_volume_bg" Background="Red" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}">
-            <Image Name="_volume_img" Canvas.Top="100" Source="ms-appx:///img/volume_symbol.png"/>
-            <Button Name="_volume" Canvas.Left="0" Canvas.Top="0" Height="200" Width="200" Click="_volume_Click"/>
+
+        <Canvas Name="_volume_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}">
+            <Rectangle Name="_volume_color" Fill="#FF9976BD"/>
+            <Image Name="_volume_img" Source="ms-appx:///img/volume_symbol.png"/>
+            <Button Name="_volume" BorderThickness="0" Click="_volume_Click"/>
         </Canvas>
         
-        <Button Name="_channelList" Background="#FF4F009E" BorderThickness="0" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}" Click="_channelList_Click">
+        <Canvas Name="_channel_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}">
+            <Rectangle Name="_channel_color" Fill="#FF791FD3"/>
             <Image Name="_channel_img" Source="ms-appx:///img/channel_logo.png"/>
-        </Button>
-        
+            <Button Name="_channel" BorderThickness="0" Click="_channelList_Click"/>
+        </Canvas>
+
         <Rectangle Name="_divider" Fill="White" Width="20" Height="{Binding ActualHeight, ElementName=_bg}"/>
         
         <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" />

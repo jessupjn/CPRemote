@@ -53,20 +53,20 @@ namespace CPRemoteApp.ViewController___Remote
             Canvas.SetTop(_backButton, 50);
 
             // customization of _volume
-            _volume.PointerReleased += _volume_Click;
             _volume.Width = Window.Current.Bounds.Width;
             _volume.Height = Window.Current.Bounds.Height;
             Canvas.SetLeft(_volume_bg, -Window.Current.Bounds.Width/2);
             Canvas.SetTop(_volume_bg, 0);
             Canvas.SetLeft(_volume_img, (0.75 * Window.Current.Bounds.Width) - (0.5 * _volume_img.Width));
             Canvas.SetTop(_volume_img, (Window.Current.Bounds.Height - _volume_img.Height) / 2);
-            System.Diagnostics.Debug.WriteLine(_volume.Width);
 
-
-            // customization of _channelList
-            _channelList.PointerReleased += _channelList_Click;
-            Canvas.SetLeft(_channelList, Window.Current.Bounds.Width / 2);
-            Canvas.SetTop(_channelList, 0);
+            // customization of _channel
+            _channel.Width = _channel_color.Width = Window.Current.Bounds.Width;
+            _channel.Height = _channel_color.Height = Window.Current.Bounds.Height;
+            Canvas.SetLeft(_channel_bg, Window.Current.Bounds.Width / 2);
+            Canvas.SetTop(_channel_bg, 0);
+            Canvas.SetLeft(_channel_img, (0.25 * Window.Current.Bounds.Width) - (0.5 * _channel_img.Width));
+            Canvas.SetTop(_channel_img, (Window.Current.Bounds.Height - _channel_img.Height) / 2);
 
             // customization of _divider
             Canvas.SetLeft(_divider, (Window.Current.Bounds.Width - _divider.Width) / 2);
@@ -103,21 +103,21 @@ namespace CPRemoteApp.ViewController___Remote
 
             // animates the volume section over
             animationManager = new DoubleAnimation();
-            Storyboard.SetTarget(animationManager, _volume);
+            Storyboard.SetTarget(animationManager, _volume_bg);
             Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
             animationManager.Duration = new Duration( TimeSpan.FromSeconds( animation_time ) );
-            if (dir) animationManager.To = Canvas.GetLeft(_volume) + (Window.Current.Bounds.Width / 2 - offset);
-            else animationManager.To = Canvas.GetLeft(_volume) - (Window.Current.Bounds.Width / 2 - offset);
+            if (dir) animationManager.To = Canvas.GetLeft(_volume_bg) + (Window.Current.Bounds.Width / 2 - offset);
+            else animationManager.To = Canvas.GetLeft(_volume_bg) - (Window.Current.Bounds.Width / 2 - offset);
 
             storyboard.Children.Add(animationManager);
 
             // animates the channel list section over.
             animationManager = new DoubleAnimation();
-            Storyboard.SetTarget(animationManager, _channelList);
+            Storyboard.SetTarget(animationManager, _channel_bg);
             Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
             animationManager.Duration = new Duration( TimeSpan.FromSeconds( animation_time ) );
-            if (dir) animationManager.To = Canvas.GetLeft(_channelList) + (Window.Current.Bounds.Width / 2 - offset);
-            else animationManager.To = Canvas.GetLeft(_channelList) - (Window.Current.Bounds.Width / 2 - offset); 
+            if (dir) animationManager.To = Canvas.GetLeft(_channel_bg) + (Window.Current.Bounds.Width / 2 - offset);
+            else animationManager.To = Canvas.GetLeft(_channel_bg) - (Window.Current.Bounds.Width / 2 - offset); 
             storyboard.Children.Add(animationManager);
 
 
