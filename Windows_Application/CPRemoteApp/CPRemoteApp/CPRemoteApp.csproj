@@ -133,6 +133,7 @@
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="img\bluetooth_symbol.png" />
     <Content Include="img\channel_logo.png" />
     <Content Include="img\remote_symbol.png" />
     <Content Include="img\settings_gear.png" />

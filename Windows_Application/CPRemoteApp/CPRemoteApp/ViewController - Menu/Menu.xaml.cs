@@ -36,11 +36,13 @@ namespace CPRemoteApp
         
             // customization of _goToSettings
             _goToSettings.Click += new RoutedEventHandler(settingsClick);
-            Canvas.SetLeft(_goToSettings, Window.Current.Bounds.Width - 100);
-            Canvas.SetTop(_goToSettings, 25 );
+            Canvas.SetLeft(_goToSettings_frame, Window.Current.Bounds.Width - 100);
+            Canvas.SetTop(_goToSettings_frame, 102 );
 
 
-            // customization of titleText
+            // customization of _bluetooth_status_frame
+            Canvas.SetLeft(_bluetooth_status_frame, Window.Current.Bounds.Width - 100);
+            Canvas.SetTop(_bluetooth_status_frame, 25);
 
 
 

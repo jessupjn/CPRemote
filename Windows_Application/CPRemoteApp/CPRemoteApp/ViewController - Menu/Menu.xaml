@@ -15,10 +15,18 @@
             <Image Source="ms-appx:///img/remote_symbol.png"/>
         </Button>
 
-        <Button Name="_goToSettings" Width="75" Height="75" Canvas.Top="7" BorderThickness="0" Canvas.Left="1284">
-            <Image Source="ms-appx:///img/settings_gear.png"/>
-        </Button>
+        <Canvas Name="_goToSettings_frame" Height="75" Width="75">
+            <Border Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
+            <Button Name="_goToSettings" Width="75" Height="75" BorderThickness="0">
+                <Image Source="ms-appx:///img/settings_gear.png"/>
+            </Button>
+        </Canvas>
 
+        <Canvas Name="_bluetooth_status_frame" Height="75" Width="75">
+            <Rectangle Name="_bluetooth_status_indicator" Height="75" Width="75"/>
+            <Border Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
+            <Image Canvas.Left="5" Canvas.Top="5" Height="65" Width="65" Source="ms-appx:///img/bluetooth_symbol.png"/>
+        </Canvas>
     </Canvas>
 
 
