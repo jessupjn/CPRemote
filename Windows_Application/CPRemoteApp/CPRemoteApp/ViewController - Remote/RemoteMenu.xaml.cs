@@ -86,13 +86,42 @@ namespace CPRemoteApp.ViewController___Remote
 
 
         // ============================================================================================================================================
-        // animation function for _divider
-        private void animate(bool dir)
+        // animation functions
+        private void hideButtons(bool dir)
         {
-
             Storyboard storyboard = new Storyboard();
+            DoubleAnimation animationManager = new DoubleAnimation();
+
+            if (status != 0)
+            {
+                // show/hide channel button
+                Storyboard.SetTarget(animationManager, _channel_img);
+                Storyboard.SetTargetProperty(animationManager, "Opacity");
+                animationManager.Duration = new Duration(TimeSpan.FromSeconds(animation_time / 1.5));
+                animationManager.To = 0;
+                storyboard.Children.Add(animationManager);
+
+                // show/hide volume button
+                animationManager = new DoubleAnimation();
+                Storyboard.SetTarget(animationManager, _volume_img);
+                Storyboard.SetTargetProperty(animationManager, "Opacity");
+                animationManager.Duration = new Duration(TimeSpan.FromSeconds(animation_time / 1.5));
+                animationManager.To = 0;
+                storyboard.Children.Add(animationManager);
+
+            }
+            storyboard.Completed += delegate
+            {
+                slide(dir);
+            };
+            storyboard.Begin();
+
+        }
+
+        private void slide(bool dir){
 
             // animates the divider over.
+            Storyboard storyboard = new Storyboard();
             DoubleAnimation animationManager = new DoubleAnimation();
             Storyboard.SetTarget(animationManager, _divider);
             Storyboard.SetTargetProperty(animationManager, "(Canvas.Left)");
@@ -121,31 +150,41 @@ namespace CPRemoteApp.ViewController___Remote
             storyboard.Children.Add(animationManager);
 
 
-            // show/hide channel button
-            animationManager = new DoubleAnimation();
-            Storyboard.SetTarget(animationManager, _channel_img);
-            Storyboard.SetTargetProperty(animationManager, "Opacity");
-            animationManager.Duration = new Duration( TimeSpan.FromSeconds( animation_time / 2 ) );
-            if (status != 0) animationManager.To = 0;
-            else animationManager.To = 100;
-            storyboard.Children.Add(animationManager);
-
-            // show/hide volume button
-            animationManager = new DoubleAnimation();
-            Storyboard.SetTarget(animationManager, _volume_img);
-            Storyboard.SetTargetProperty(animationManager, "Opacity");
-            animationManager.Duration = new Duration(TimeSpan.FromSeconds(animation_time / 2));
-            if (status != 0) animationManager.To = 0;
-            else animationManager.To = 100;
-            storyboard.Children.Add(animationManager);
-
             // end story handler
+            if (status == 0) storyboard.Completed += delegate
+                {
+                    showButtons();
+                };
             storyboard.Completed += delegate { 
                 buildButtonList(dir, offset + _divider.Width);
             };
 
             storyboard.Begin();
 
+        }
+
+        private void showButtons()
+        {
+            Storyboard storyboard = new Storyboard();
+            DoubleAnimation animationManager = new DoubleAnimation();
+
+            // show/hide channel button
+            animationManager = new DoubleAnimation();
+            Storyboard.SetTarget(animationManager, _channel_img);
+            Storyboard.SetTargetProperty(animationManager, "Opacity");
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(animation_time / 1.5));
+            animationManager.To = 100;
+            storyboard.Children.Add(animationManager);
+
+            // show/hide volume button
+            animationManager = new DoubleAnimation();
+            Storyboard.SetTarget(animationManager, _volume_img);
+            Storyboard.SetTargetProperty(animationManager, "Opacity");
+            animationManager.Duration = new Duration(TimeSpan.FromSeconds(animation_time / 1.5));
+            animationManager.To = 100;
+            storyboard.Children.Add(animationManager);
+
+            storyboard.Begin();
         }
         // ============================================================================================================================================
         // ============================================================================================================================================
@@ -185,7 +224,7 @@ namespace CPRemoteApp.ViewController___Remote
                 {
                     can_move = false;
                     status--;
-                    animate(true);
+                    hideButtons(true);
                 }
         }
 
@@ -195,7 +234,7 @@ namespace CPRemoteApp.ViewController___Remote
                 {
                     can_move = false;
                     status++;
-                    animate(false);
+                    hideButtons(false);
                 }
         }
         // ============================================================================================================================================
