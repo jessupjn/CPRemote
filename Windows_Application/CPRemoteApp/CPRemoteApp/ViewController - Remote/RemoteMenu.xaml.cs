@@ -42,10 +42,12 @@ namespace CPRemoteApp.ViewController___Remote
             this.InitializeComponent();
 
             double h_w = Window.Current.Bounds.Height / 2.5;
-            _volume_img.Width = h_w;
-            _volume_img.Height = h_w;
-            _channel_img.Width = h_w;
-            _channel_img.Height = h_w;
+            _volume_img.Width = _volume_img.Height = _channel_img.Width = _channel_img.Height = h_w;
+            _channel_highlight.Width = _volume_highlight.Width = _channel_highlight.Height = _volume_highlight.Height = h_w;
+
+            _channel_highlight.RadiusX = _channel_highlight.RadiusY = h_w / 2;
+            _volume_highlight.RadiusX = _volume_highlight.RadiusY = h_w / 2;
+
 
             // setting the different properties of the back button.
             _backButton.Click += new RoutedEventHandler(backClick);
@@ -53,18 +55,22 @@ namespace CPRemoteApp.ViewController___Remote
             Canvas.SetTop(_backButton, 50);
 
             // customization of _volume
-            _volume.Width = Window.Current.Bounds.Width;
-            _volume.Height = Window.Current.Bounds.Height;
+            _volume_color.Width = Window.Current.Bounds.Width;
+            _volume_color.Height = Window.Current.Bounds.Height;
             Canvas.SetLeft(_volume_bg, -Window.Current.Bounds.Width/2);
             Canvas.SetTop(_volume_bg, 0);
+            Canvas.SetLeft(_volume_highlight, (0.75 * Window.Current.Bounds.Width) - (0.5 * _volume_highlight.Width));
+            Canvas.SetTop(_volume_highlight, (Window.Current.Bounds.Height - _volume_highlight.Height) / 2);
             Canvas.SetLeft(_volume_img, (0.75 * Window.Current.Bounds.Width) - (0.5 * _volume_img.Width));
             Canvas.SetTop(_volume_img, (Window.Current.Bounds.Height - _volume_img.Height) / 2);
 
             // customization of _channel
-            _channel.Width = _channel_color.Width = Window.Current.Bounds.Width;
-            _channel.Height = _channel_color.Height = Window.Current.Bounds.Height;
+            _channel_color.Width = Window.Current.Bounds.Width;
+            _channel_color.Height = Window.Current.Bounds.Height;
             Canvas.SetLeft(_channel_bg, Window.Current.Bounds.Width / 2);
             Canvas.SetTop(_channel_bg, 0);
+            Canvas.SetLeft(_channel_highlight, (0.25 * Window.Current.Bounds.Width) - (0.5 * _channel_highlight.Width));
+            Canvas.SetTop(_channel_highlight, (Window.Current.Bounds.Height - _channel_highlight.Height) / 2);
             Canvas.SetLeft(_channel_img, (0.25 * Window.Current.Bounds.Width) - (0.5 * _channel_img.Width));
             Canvas.SetTop(_channel_img, (Window.Current.Bounds.Height - _channel_img.Height) / 2);
 
@@ -94,6 +100,8 @@ namespace CPRemoteApp.ViewController___Remote
 
             if (status != 0)
             {
+                _volume_highlight.Visibility = _channel_highlight.Visibility = Visibility.Collapsed;
+
                 // show/hide channel button
                 Storyboard.SetTarget(animationManager, _channel_img);
                 Storyboard.SetTargetProperty(animationManager, "Opacity");
@@ -220,6 +228,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void _volume_Click(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("VOL");
             if ((status == 0 || status == 1) && can_move)
                 {
                     can_move = false;
@@ -236,6 +245,20 @@ namespace CPRemoteApp.ViewController___Remote
                     status++;
                     hideButtons(false);
                 }
+        }
+
+        private void pointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(sender.Equals(_volume_bg).ToString() + "\n\n" + status.ToString());
+            if (sender.Equals(_volume_bg) && status == 0) _volume_highlight.Visibility = Visibility.Visible;
+            else if (sender.Equals(_channel_bg) && status == 0) _channel_highlight.Visibility = Visibility.Visible;
+        }
+        private void pointerExited(object sender, PointerRoutedEventArgs e)
+        {
+
+            if (sender.Equals(_volume_bg)) _volume_highlight.Visibility = Visibility.Collapsed;
+            else if (sender.Equals(_channel_bg)) _channel_highlight.Visibility = Visibility.Collapsed;
+
         }
         // ============================================================================================================================================
         // ============================================================================================================================================

@@ -29,7 +29,11 @@ namespace CPRemoteApp.ViewController___Settings
             // sets title box in center of screen.
             Canvas.SetLeft(title_box, (Window.Current.Bounds.Width - title_box.Width) / 2);
 
-            _scroller.Width = Window.Current.Bounds.Width;
+            _scroller.Width = _scroll_canvas.Width = Window.Current.Bounds.Width;
+            _scroller.Height = Window.Current.Bounds.Height - 100;
+
+            
+             
         }
 
         private void backClick(object sender, RoutedEventArgs e)

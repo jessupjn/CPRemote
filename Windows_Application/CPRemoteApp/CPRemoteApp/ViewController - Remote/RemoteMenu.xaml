@@ -9,16 +9,19 @@
 
     <Canvas Name="_bg" Background="#FF3E106C" RequestedTheme="Dark">
 
-        <Canvas Name="_volume_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}">
-            <Rectangle Name="_volume_color" Fill="#FF9976BD"/>
+        <Canvas Name="_volume_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}" 
+                PointerMoved="pointerEntered" PointerExited="pointerExited" PointerReleased="_volume_Click">
+            <Rectangle Name="_volume_color" Fill="#FF3E106C"/>
+            <Rectangle Name="_volume_highlight" Visibility="Collapsed" Fill="Black"/>
             <Image Name="_volume_img" Source="ms-appx:///img/volume_symbol.png"/>
-            <Button Name="_volume" BorderThickness="0" Click="_volume_Click"/>
+            <!-- <Button Name="_volume" BorderThickness="0"/> -->
         </Canvas>
-        
-        <Canvas Name="_channel_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}">
-            <Rectangle Name="_channel_color" Fill="#FF791FD3"/>
+
+        <Canvas Name="_channel_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}" 
+                PointerMoved="pointerEntered" PointerExited="pointerExited" PointerReleased="_channelList_Click">
+            <Rectangle Name="_channel_color" Fill="#FF6617B6"/>
+            <Rectangle Name="_channel_highlight" Visibility="Collapsed" Fill="Black"/>
             <Image Name="_channel_img" Source="ms-appx:///img/channel_logo.png"/>
-            <Button Name="_channel" BorderThickness="0" Click="_channelList_Click"/>
         </Canvas>
 
         <Rectangle Name="_divider" Fill="White" Width="20" Height="{Binding ActualHeight, ElementName=_bg}"/>

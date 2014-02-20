@@ -8,12 +8,12 @@
     mc:Ignorable="d">
     
     
-    <Canvas Background="#FF3E106C" Name="Background">
+    <Canvas Background="#FF3E106C" Name="Background" >
 
         <TextBlock Name="titleText"/>
         <Canvas Name="_goToRemote_frame" Height="700" Width="700" PointerReleased="remoteClick">
             <Rectangle Name="_goToRemote_indicator"/>
-            <Image Name="_goToRemote" Width="700" Height="700" Source="ms-appx:///img/remote_symbol.png" PointerEntered="enterHighlight" PointerExited="exitHighlight"/>
+            <Image Name="_goToRemote" Width="700" Height="700" Source="ms-appx:///img/remote_symbol.png" PointerMoved="enterHighlight" PointerExited="exitHighlight"/>
         </Canvas>
 
         <Canvas Name="_goToSettings_frame" Height="75" Width="75" PointerReleased="settingsClick">

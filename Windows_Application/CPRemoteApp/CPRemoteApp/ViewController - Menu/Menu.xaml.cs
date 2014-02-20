@@ -20,8 +20,12 @@ namespace CPRemoteApp
     /// <summary>
     /// The main menu and opening page for CPRemote.
     /// </summary>
+    /// 
     public sealed partial class Menu : Page
     {
+        private bool enteredRemote;
+        private bool enteredSettings;
+
         public Menu()
         {
             this.InitializeComponent();
@@ -51,26 +55,43 @@ namespace CPRemoteApp
 
         private void remoteClick(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate( typeof(ViewController___Remote.RemoteMenu) );
+            if(enteredRemote) this.Frame.Navigate( typeof(ViewController___Remote.RemoteMenu) );
         }
 
         private void settingsClick(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate( typeof(ViewController___Settings.SettingsMenu) );
+            if(enteredSettings) this.Frame.Navigate( typeof(ViewController___Settings.SettingsMenu) );
         }
 
         private void enterHighlight(object sender, PointerRoutedEventArgs e)
         {
             Windows.UI.Color fill = Windows.UI.Colors.Black;
-            if( sender.Equals(_goToRemote) ) _goToRemote_indicator.Fill = new SolidColorBrush(fill);
-            else if (sender.Equals(_goToSettings)) _goToSettings_indicator.Fill = new SolidColorBrush(fill);
+            if (sender.Equals(_goToRemote))
+            {
+                _goToRemote_indicator.Fill = new SolidColorBrush(fill);
+                enteredRemote = true;
+            }
+            else if (sender.Equals(_goToSettings))
+            {
+                _goToSettings_indicator.Fill = new SolidColorBrush(fill);
+                enteredSettings = true;
+            }
 
         }
 
         private void exitHighlight(object sender, PointerRoutedEventArgs e)
         {
-            if (sender.Equals(_goToRemote)) _goToRemote_indicator.Fill = null;
-            else if (sender.Equals(_goToSettings)) _goToSettings_indicator.Fill = null;
+            if (sender.Equals(_goToRemote))
+            {
+                _goToRemote_indicator.Fill = null;
+                enteredRemote = false;
+            }
+            else if (sender.Equals(_goToSettings))
+            {
+                _goToSettings_indicator.Fill = null;
+                enteredSettings = false;
+            }
         }
+
     }
 }
