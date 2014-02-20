@@ -7,8 +7,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Canvas Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+    <Canvas Name="_bg" Background="#FF2A0053">
 
+        <!-- settings menu title -->
+        <Canvas Width="340" Height="40" Name="title_box" Canvas.Top="50">
+            <Image Source="ms-appx:///img/settings_gear.png" Height="40" Canvas.Left="10"/>
+            <TextBlock Canvas.Left="60" Text="Settings Menu" FontSize="40" FontWeight="Bold"/>
+        </Canvas>
+
+        <!-- creates the scrollable settings menu -->
+        <ScrollViewer  Name="_scroller" Canvas.Top="100" Width="1000" Height="40" Background="Aqua">
+            <Canvas Width="700" Height="40">
+                <Rectangle Name="_volume_device_frame" Fill="#FF250544" Width="700" Height="40" RadiusX="12" RadiusY="12"/>
+                <Border Name="_volume_device_border" BorderBrush="White" BorderThickness="2" CornerRadius="12" Width="700" Height="40"/>
+                <TextBlock Name="_volume_device_text" Canvas.Left="20" Canvas.Top="8" Text="Please select a device for volume buttons:" Foreground="White" FontSize="24"/>
+                
+            </Canvas>
+        </ScrollViewer>
+
+        <!-- back button always on the very top-->
+        <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="backClick" Canvas.Left="75" Canvas.Top="50"/>
     </Canvas>
 </Page>

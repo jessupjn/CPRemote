@@ -26,10 +26,10 @@ namespace CPRemoteApp.ViewController___Settings
         {
             this.InitializeComponent();
 
-            // setting the different properties of the back button.
-            _backButton.Click += new RoutedEventHandler(backClick);
-            Canvas.SetLeft(_backButton, 75);
-            Canvas.SetTop(_backButton, 50);
+            // sets title box in center of screen.
+            Canvas.SetLeft(title_box, (Window.Current.Bounds.Width - title_box.Width) / 2);
+
+            _scroller.Width = Window.Current.Bounds.Width;
         }
 
         private void backClick(object sender, RoutedEventArgs e)
