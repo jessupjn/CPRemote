@@ -22,7 +22,7 @@
             <Image Name="_goToSettings" Source="ms-appx:///img/settings_gear.png" Canvas.Left="5" Canvas.Top="5" Width="65" Height="65" PointerEntered="enterHighlight" PointerExited="exitHighlight"/>
         </Canvas>
 
-        <Canvas Name="_bluetooth_status_frame" Height="75" Width="75">
+        <Canvas Name="_bluetooth_status_frame" Height="75" Width="75" PointerReleased="bluetoothClick">
             <Rectangle Name="_bluetooth_status_indicator" RadiusX="10" RadiusY="10" Fill="#FFC30B0B" Height="75" Width="75"/>
             <Border Name="mask" Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
             <Image Canvas.Left="5" Canvas.Top="5" Height="65" Width="65" Source="ms-appx:///img/bluetooth_symbol.png"/>

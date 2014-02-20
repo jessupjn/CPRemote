@@ -110,6 +110,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bluetooth Connections\BluetoothController.cs" />
+    <Compile Include="Bluetooth Connections\BluetoothConnectionManager.cs" />
     <Compile Include="Master Controller\MasterController.cs" />
     <Compile Include="ViewController - Menu\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
@@ -163,6 +164,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="TCD.Controls">
+      <HintPath>..\..\..\Hardware Stuff\Windows Sample Bluetooth Protocol\packages\TCD.Controls.2.1.0\lib\netcore451\TCD.Controls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

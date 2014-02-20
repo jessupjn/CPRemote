@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CPRemoteApp.Bluetooth_Connections; 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +26,7 @@ namespace CPRemoteApp
     {
         private bool enteredRemote;
         private bool enteredSettings;
+        public BluetoothController bluetoothManager = new BluetoothController(); 
 
         public Menu()
         {
@@ -61,6 +63,11 @@ namespace CPRemoteApp
         private void settingsClick(object sender, RoutedEventArgs e)
         {
             if(enteredSettings) this.Frame.Navigate( typeof(ViewController___Settings.SettingsMenu) );
+        }
+
+        private void bluetoothClick(object sender, RoutedEventArgs e)
+        {
+            bluetoothManager.ConnectButton_Click(sender, e); 
         }
 
         private void enterHighlight(object sender, PointerRoutedEventArgs e)
