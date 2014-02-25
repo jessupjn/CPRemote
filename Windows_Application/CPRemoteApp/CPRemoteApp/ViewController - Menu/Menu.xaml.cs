@@ -26,7 +26,6 @@ namespace CPRemoteApp
     {
         private bool enteredRemote;
         private bool enteredSettings;
-        public BluetoothController bluetoothManager = new BluetoothController(); 
 
         public Menu()
         {
@@ -67,7 +66,7 @@ namespace CPRemoteApp
 
         private void bluetoothClick(object sender, RoutedEventArgs e)
         {
-            bluetoothManager.ConnectButton_Click(sender, e); 
+            App.bm.ConnectButton_Click(sender, e); 
         }
 
         private void enterHighlight(object sender, PointerRoutedEventArgs e)

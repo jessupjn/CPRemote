@@ -66,14 +66,13 @@ namespace CPRemoteApp.Bluetooth_Connections
         #endregion
 
         #region Send & Receive
-        public async void OperateTVButton_Click(object sender, RoutedEventArgs e)
+        public async void OperateTVButton_Click(string message)
         {
             //send ON or OFF commands according to the LEDs last known state
-            string cmd = "IR_CODE=OxFFFF";
             //try to send this message
-            var res = await connectionManager.SendMessageAsync(cmd);
+            var res = await connectionManager.SendMessageAsync(message);
             if (res == 1)//log if successful
-                System.Diagnostics.Debug.WriteLine("Sent: " + cmd);
+                System.Diagnostics.Debug.WriteLine("Sent: " + message);
         }
         public void connectionManager_MessageReceived(object sender, string message)
         {

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CPRemoteApp.Bluetooth_Connections; 
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -24,6 +25,7 @@ namespace CPRemoteApp
     /// </summary>
     sealed partial class App : Application
     {
+        public static BluetoothController bm = new BluetoothController(); 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

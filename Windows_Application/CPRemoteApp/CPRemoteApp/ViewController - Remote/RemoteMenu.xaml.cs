@@ -224,11 +224,13 @@ namespace CPRemoteApp.ViewController___Remote
         private void backClick(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
+
         }
 
         private void _volume_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("VOL");
+            App.bm.OperateTVButton_Click("NEC.2189/");  
             if ((status == 0 || status == 1) && can_move)
                 {
                     can_move = false;
