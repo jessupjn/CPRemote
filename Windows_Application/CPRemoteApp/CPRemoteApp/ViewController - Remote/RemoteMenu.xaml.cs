@@ -1,8 +1,12 @@
-﻿using System;
+﻿// CPRemoteApp Namespaces
+using CPRemoteApp.Utility_Classes;
+// System Namespaces
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+// Windows Namespaces
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -14,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -47,7 +52,7 @@ namespace CPRemoteApp.ViewController___Remote
 
             _channel_highlight.RadiusX = _channel_highlight.RadiusY = h_w / 2;
             _volume_highlight.RadiusX = _volume_highlight.RadiusY = h_w / 2;
-
+            load_devices();
 
             // setting the different properties of the back button.
             _backButton.Click += new RoutedEventHandler(backClick);
@@ -87,7 +92,21 @@ namespace CPRemoteApp.ViewController___Remote
 
 
 
+        async void load_devices()
+        {
+            StorageFolder local_folder = App.appData.LocalFolder;
+            StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
+            //DeviceManager testController = new DeviceManager();
+            await ((App)(CPRemoteApp.App.Current)).deviceController.initialize(devices_folder);
+            // Button Scanner Panel Formatting
+            channel_scanner_panel.Height = Window.Current.Bounds.Height;
+            channel_scanner_panel.Width = 2 * Window.Current.Bounds.Width / 3;
+            channel_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner);
+            volume_scanner_panel.Height = Window.Current.Bounds.Height;
+            volume_scanner_panel.Width = 2 * Window.Current.Bounds.Width / 3;
 
+            volume_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner);
+        }
 
 
 
@@ -116,14 +135,12 @@ namespace CPRemoteApp.ViewController___Remote
                 animationManager.Duration = new Duration(TimeSpan.FromSeconds(animation_time / 1.5));
                 animationManager.To = 0;
                 storyboard.Children.Add(animationManager);
-
             }
             storyboard.Completed += delegate
             {
                 slide(dir);
             };
             storyboard.Begin();
-
         }
 
         private void slide(bool dir){
@@ -159,10 +176,24 @@ namespace CPRemoteApp.ViewController___Remote
 
 
             // end story handler
-            if (status == 0) storyboard.Completed += delegate
+            if (status == 0)
+            {
+                storyboard.Completed += delegate
                 {
                     showButtons();
                 };
+            }
+            else if (status == -1)
+            {
+                volume_scanner_panel.Opacity = 1.0;
+                ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.start();
+            }
+            else if (status == 1)
+            {
+                channel_scanner_panel.Opacity = 1.0;
+                ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.start();
+            }
+
             storyboard.Completed += delegate { 
                 buildButtonList(dir, offset + _divider.Width);
             };
@@ -231,9 +262,15 @@ namespace CPRemoteApp.ViewController___Remote
             System.Diagnostics.Debug.WriteLine("VOL");
             if ((status == 0 || status == 1) && can_move)
                 {
+                    if(status == 1)
+                    {
+                        channel_scanner_panel.Opacity = 0;
+                        ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.stop();
+                    }
                     can_move = false;
                     status--;
                     hideButtons(true);
+                    //
                 }
         }
 
@@ -241,6 +278,11 @@ namespace CPRemoteApp.ViewController___Remote
         {
             if ((status == 0 || status == -1) && can_move)
                 {
+                    if (status == -1)
+                    {
+                        volume_scanner_panel.Opacity = 0;
+                        ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.stop();
+                    }
                     can_move = false;
                     status++;
                     hideButtons(false);

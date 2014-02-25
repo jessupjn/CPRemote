@@ -14,7 +14,8 @@
             <Rectangle Name="_volume_color" Fill="#FF3E106C"/>
             <Rectangle Name="_volume_highlight" Visibility="Collapsed" Fill="Black"/>
             <Image Name="_volume_img" Source="ms-appx:///img/volume_symbol.png"/>
-            <!-- <Button Name="_volume" BorderThickness="0"/> -->
+            <StackPanel Name="volume_scanner_panel" Opacity="0" Canvas.Left="{Binding ElementName=_volume_bg, Path=Canvas.Left}" 
+                        Canvas.Top="{Binding ElementName=_volume_bg, Path=Canvas.Top}" />
         </Canvas>
 
         <Canvas Name="_channel_bg" Height="{Binding ActualHeight, ElementName=_bg}" Width="{Binding ActualWidth, ElementName=_bg}" 
@@ -22,7 +23,12 @@
             <Rectangle Name="_channel_color" Fill="#FF6617B6"/>
             <Rectangle Name="_channel_highlight" Visibility="Collapsed" Fill="Black"/>
             <Image Name="_channel_img" Source="ms-appx:///img/channel_logo.png"/>
+            <StackPanel Name="channel_scanner_panel" Opacity="0" Canvas.Left="{Binding ElementName=_channel_bg, Path=Canvas.Left}" Canvas.Top="{Binding ElementName=_channel_bg, Path=Canvas.Top}"/>
         </Canvas>
+        
+        
+ 
+            
 
         <Rectangle Name="_divider" Fill="White" Width="20" Height="{Binding ActualHeight, ElementName=_bg}"/>
         

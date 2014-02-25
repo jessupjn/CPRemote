@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
+
+// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
+
+namespace CPRemoteApp.ViewController___Remote
+{
+    public sealed partial class RemoteButtonScanner : UserControl
+    {
+        // -------------------------------------
+        private List<RemoteButton> buttons;
+        private System.Collections.ObjectModel.ObservableCollection<string> abbreviations;
+        private int cur_index;
+        private DispatcherTimer timer;
+        // -------------------------------------
+
+        public RemoteButtonScanner()
+        {
+            this.InitializeComponent();
+            buttons = new List<RemoteButton>();
+            abbreviations = new System.Collections.ObjectModel.ObservableCollection<string>();
+            cur_index = 0;
+            timer = new DispatcherTimer();
+            for (int i = 0; i < 5; i++ )
+            {
+                abbreviations.Insert(0, i.ToString());
+            }
+            buttonList.ItemsSource = abbreviations;
+            
+        }
+
+        //public RemoteButtonScanner()
+
+        //Should take in an input stream that it can read from to initialize all the buttons associated with it
+        public void initialize(Windows.Storage.StorageFile file)
+        {
+            
+        }
+
+        // Changes the interval for the button scanner to change buttons
+        public void changeTimerInterval(int new_interval)
+        {
+            timer.Interval = TimeSpan.FromSeconds(new_interval);
+        }
+    }
+}

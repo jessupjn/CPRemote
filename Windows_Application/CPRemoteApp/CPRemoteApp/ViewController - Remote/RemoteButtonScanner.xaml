@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="400"
+    >
+    
     <Border BorderBrush="Blue" BorderThickness="10">
         <Grid>
             <Grid.RowDefinitions>
@@ -15,32 +17,21 @@
                 <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
             
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <Button Background="White" Grid.Column="0" Grid.Row="0">
-                <TextBox HorizontalAlignment="Center" Text="Ch 1" />
-            </Button>
-            <Button Background="White" Grid.Column="1" Grid.Row="0">
-                <TextBox HorizontalAlignment="Center" Text="Ch 2" />
-            </Button>
-            <Border BorderBrush="Red" BorderThickness="5" Grid.Column="2" Grid.Row="0">
-            <Button Background="White" Margin="0" Padding="0">
-                <TextBox HorizontalAlignment="Center" Text="Ch 3" />
-            </Button>
-            </Border>
-            <Button Background="White" Grid.Column="3" Grid.Row="0">
-                <TextBox HorizontalAlignment="Center" Text="Ch 4" />
-            </Button>
-            <Button Background="White" Grid.Column="4" Grid.Row="0">
-                <TextBox HorizontalAlignment="Center" Text="Ch 5" />
-            </Button>
-            <Button Background="Black" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" HorizontalAlignment="Center" MinWidth="380" MinHeight="230">
+            <ListView Name="buttonList" HorizontalAlignment="Center" Grid.Row="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBox Text="{Binding}" IsReadOnly="True"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            <Button Name="selected_button" Background="Black" Grid.Row="1" HorizontalAlignment="Center" MinWidth="380" MinHeight="230">
                 <TextBox HorizontalAlignment="Center" Text="Channel 3" FontSize="64" Foreground="Blue" Background="Black"/>
             </Button>
         </Grid>
