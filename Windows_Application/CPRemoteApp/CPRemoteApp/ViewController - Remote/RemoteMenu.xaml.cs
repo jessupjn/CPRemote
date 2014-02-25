@@ -69,10 +69,10 @@ namespace CPRemoteApp.ViewController___Remote
             _volume_color.Width = Window.Current.Bounds.Width;
             _volume_color.Height = Window.Current.Bounds.Width;
 
-            Canvas.SetLeft(_volume_highlight, offset + Window.Current.Bounds.Width / 2);
-            Canvas.SetTop(_volume_highlight, (Window.Current.Bounds.Height - _volume_highlight.Height) / 2);
-            Canvas.SetLeft(_volume_img, offset + Window.Current.Bounds.Width/2);
+            Canvas.SetLeft(_volume_img, 0.75 * _volume_bg.Width - _volume_img.Width / 2); 
             Canvas.SetTop(_volume_img, (Window.Current.Bounds.Height - _volume_img.Height) / 2);
+            Canvas.SetLeft(_volume_highlight, 0.75 * _volume_bg.Width - _volume_highlight.Width / 2);
+            Canvas.SetTop(_volume_highlight, (Window.Current.Bounds.Height - _volume_highlight.Height) / 2);
 
             // customization of _channel
             _channel_bg.Width = Window.Current.Bounds.Width - offset;
@@ -80,10 +80,11 @@ namespace CPRemoteApp.ViewController___Remote
             Canvas.SetTop(_channel_bg, 0);
             _channel_color.Width = Window.Current.Bounds.Width;
             _channel_color.Height = Window.Current.Bounds.Height;
-            Canvas.SetLeft(_channel_highlight, _volume_bg.Width - Canvas.GetLeft(_volume_img) - _volume_img.Width);
-            Canvas.SetTop(_channel_highlight, (Window.Current.Bounds.Height - _channel_highlight.Height) / 2);
-            Canvas.SetLeft(_channel_img, _volume_bg.Width - Canvas.GetLeft(_volume_img) - _volume_img.Width);
+            
+            Canvas.SetLeft(_channel_img, 0.25 * _channel_bg.Width - _channel_img.Width / 2); 
             Canvas.SetTop(_channel_img, (Window.Current.Bounds.Height - _channel_img.Height) / 2);
+            Canvas.SetLeft(_channel_highlight, 0.25 * _channel_bg.Width - _channel_highlight.Width / 2);
+            Canvas.SetTop(_channel_highlight, (Window.Current.Bounds.Height - _channel_highlight.Height) / 2);
 
             // customization of _divider
             Canvas.SetLeft(_divider, (Window.Current.Bounds.Width - _divider.Width) / 2);
