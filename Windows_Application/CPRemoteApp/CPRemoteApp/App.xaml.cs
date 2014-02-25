@@ -1,10 +1,17 @@
-﻿using System;
+﻿// CPRemoteApp Namespaces
+using CPRemoteApp.Utility_Classes;
+// System Namespaces
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using System.Threading;
+// Windows Namesapces
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,6 +33,12 @@ namespace CPRemoteApp
     sealed partial class App : Application
     {
         public static BluetoothController bm = new BluetoothController(); 
+        // ----------- Customizable Application Settings -----------------------
+
+        public static int button_scanner_interval = 1;
+        public static ApplicationData appData;
+        public DeviceManager deviceController { set; get; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,6 +47,8 @@ namespace CPRemoteApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            appData = ApplicationData.Current;
+            deviceController = new DeviceManager();
         }
 
         /// <summary>
@@ -92,6 +107,13 @@ namespace CPRemoteApp
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+        }
+
+        async void loadDeviceManager()
+        {
+            StorageFolder local_folder = appData.LocalFolder;
+            StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
+            await deviceController.initialize(devices_folder);
         }
 
         /// <summary>
