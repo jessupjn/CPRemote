@@ -63,11 +63,8 @@ namespace CPRemoteApp.ViewController___Remote
             _volume_bg.Width = Window.Current.Bounds.Width - offset;
             Canvas.SetLeft(_volume_bg, -(Window.Current.Bounds.Width/2-offset));
             Canvas.SetTop(_volume_bg, 0);
-
-            Canvas.SetLeft(_volume_color, 0);
-            Canvas.SetTop(_volume_color, 0);
             _volume_color.Width = Window.Current.Bounds.Width;
-            _volume_color.Height = Window.Current.Bounds.Width;
+            _volume_color.Height = Window.Current.Bounds.Height;
 
             Canvas.SetLeft(_volume_img, 0.75 * _volume_bg.Width - _volume_img.Width / 2); 
             Canvas.SetTop(_volume_img, (Window.Current.Bounds.Height - _volume_img.Height) / 2);
@@ -199,12 +196,12 @@ namespace CPRemoteApp.ViewController___Remote
             }
             else if (status == -1)
             {
-                volume_scanner_panel.Opacity = 1.0;
+              volume_scanner_panel.Visibility = Visibility.Visible;
                 ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.start();
             }
             else if (status == 1)
             {
-                channel_scanner_panel.Opacity = 1.0;
+              channel_scanner_panel.Visibility = Visibility.Visible;
                 ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.start();
             }
 
@@ -280,7 +277,7 @@ namespace CPRemoteApp.ViewController___Remote
                 {
                     if(status == 1)
                     {
-                        channel_scanner_panel.Opacity = 0;
+                      channel_scanner_panel.Visibility = Visibility.Collapsed;
                         ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.stop();
                     }
                     can_move = false;
@@ -296,7 +293,7 @@ namespace CPRemoteApp.ViewController___Remote
                 {
                     if (status == -1)
                     {
-                        volume_scanner_panel.Opacity = 0;
+                      volume_scanner_panel.Visibility = Visibility.Collapsed;
                         ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.stop();
                     }
                     can_move = false;
@@ -307,7 +304,6 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void pointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(sender.Equals(_volume_bg).ToString() + "\n\n" + status.ToString());
             if (sender.Equals(_volume_bg) && status == 0) _volume_highlight.Visibility = Visibility.Visible;
             else if (sender.Equals(_channel_bg) && status == 0) _channel_highlight.Visibility = Visibility.Visible;
         }
