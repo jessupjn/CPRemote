@@ -38,7 +38,6 @@ namespace CPRemoteApp.ViewController___Remote
             buttonList.ItemsSource = abbreviations;
             buttonList.SelectedIndex = abbreviations.Count - 1;
             buttonList.SelectionMode = ListViewSelectionMode.Single;
-            
             timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
             timer.Tick += incrementScanner;
         }
@@ -51,6 +50,16 @@ namespace CPRemoteApp.ViewController___Remote
         public void stop()
         {
             timer.Stop();
+        }
+
+        public void setSelectedButtonWidth(double width_)
+        {
+            this.selected_button.Width = width_;
+        }
+
+        public void setSelectedButtonHeight(double height_)
+        {
+            this.selected_button.Height = height_;
         }
 
         public void add_button(RemoteButton btn)

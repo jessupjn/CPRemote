@@ -107,11 +107,18 @@ namespace CPRemoteApp.ViewController___Remote
             await ((App)(CPRemoteApp.App.Current)).deviceController.initialize(devices_folder);
             // Button Scanner Panel Formatting
             channel_scanner_panel.Height = Window.Current.Bounds.Height;
-            channel_scanner_panel.Width = 2 * Window.Current.Bounds.Width / 3;
+            channel_scanner_panel.Width = 3 * Window.Current.Bounds.Width / 4;
             channel_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner);
             volume_scanner_panel.Height = Window.Current.Bounds.Height;
-            volume_scanner_panel.Width = 2 * Window.Current.Bounds.Width / 3;
-
+            volume_scanner_panel.Width = 3 * Window.Current.Bounds.Width / 4;
+            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.Width = volume_scanner_panel.Width;
+            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.Height = volume_scanner_panel.Height;
+            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.setSelectedButtonWidth(channel_scanner_panel.Width - 10);
+            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.setSelectedButtonHeight((3 * channel_scanner_panel.Height) / 4);
+            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
+            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
+            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.setSelectedButtonWidth(volume_scanner_panel.Width - 10);
+            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.setSelectedButtonHeight((3 * volume_scanner_panel.Height) / 4);
             volume_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner);
         }
 
