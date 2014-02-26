@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 //Windows Namespaces
 using Windows.Storage;
 using Windows.Media;
-//using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls;
 
 namespace CPRemoteApp.Utility_Classes
 {
@@ -69,11 +69,11 @@ namespace CPRemoteApp.Utility_Classes
                 img_path = input[index++];
                 IR_code = Convert.ToInt32(input[index++]);
 
-                //Uri img_uri = new Uri(img_path);
+                Uri img_uri = new Uri(img_path);
                 //BitmapIcon icon = new BitmapIcon();
                 //icon.UriSource = img_uri;
                 
-                buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, IR_code, 1));
+                buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, IR_code, 1, img_uri));
             }
         }
 

@@ -16,7 +16,7 @@ using Windows.Storage.Streams;
 
 namespace CPRemoteApp.ViewController___Remote
 {
-    public sealed class RemoteButton : Windows.UI.Xaml.Controls.Button
+    public class RemoteButton
     {
 
         private int IR_code = 0;
@@ -24,46 +24,21 @@ namespace CPRemoteApp.ViewController___Remote
         private int IR_repititions = 1;
         private string name = "";
         private string abbreviation = "";
-        private BitmapIcon icon;
+        public Uri icon_path { get; set; }
 
         public RemoteButton()
         {
-            this.DefaultStyleKey = typeof(RemoteButton);
+            icon_path = new Uri("");
         }
 
-        public RemoteButton(string name_, string abbv, int code, int repititions, Uri icon_path = null)// Needs to initialize icon with a new parameter
+        public RemoteButton(string name_, string abbv, int code, int repititions, Uri icon_path_ = null)// Needs to initialize icon with a new parameter
         {
-            this.DefaultStyleKey = typeof(RemoteButton);
             IR_code = code;
             IR_repititions = repititions;
             name = name_;
             abbreviation = abbv;
-            //icon = icon_;
+            icon_path = icon_path_;
 
-            // Initializing Button Content
-            Grid btn_grid = new Grid();
-            RowDefinition row1 = new RowDefinition();
-            row1.Height = new GridLength(3, GridUnitType.Star);
-            btn_grid.RowDefinitions.Add(row1);
-            RowDefinition row2 = new RowDefinition();
-            row2.Height = new GridLength(1, GridUnitType.Star);
-            btn_grid.RowDefinitions.Add(row2);
-            if(icon == null)
-            {
-
-            }
-            else
-            {
-                icon = new BitmapIcon();
-                icon.UriSource = icon_path;
-                Grid.SetRow(icon, 0);
-            }
-            TextBox btn_name = new TextBox();
-            btn_name.Text = name;
-            btn_name.FontSize = 64.0;
-            btn_name.IsReadOnly = true;
-            Grid.SetRow(btn_name, 1);
-            this.Content = btn_grid;
         }
 
         public string getName()
@@ -81,7 +56,7 @@ namespace CPRemoteApp.ViewController___Remote
             List<string> output = new List<string>();
             output.Add(name);
             output.Add(abbreviation);
-            output.Add(icon.BaseUri.ToString());
+            output.Add(icon_path.AbsolutePath);
             output.Add(IR_code.ToString());
             return output;
         }

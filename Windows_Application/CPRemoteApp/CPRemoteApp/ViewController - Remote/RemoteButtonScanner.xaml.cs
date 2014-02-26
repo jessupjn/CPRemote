@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -24,6 +25,7 @@ namespace CPRemoteApp.ViewController___Remote
     {
         // -------------------------------------
         private List<RemoteButton> buttons;
+        public Button cur_button { get; set;}
         public ObservableCollection<string> abbreviations = new ObservableCollection<string>();
         private int cur_index = 0;
         private DispatcherTimer timer = new DispatcherTimer();
@@ -52,22 +54,25 @@ namespace CPRemoteApp.ViewController___Remote
             timer.Stop();
         }
 
-        public void setSelectedButtonWidth(double width_)
+        public void setCurrentImage(double dimmension)
         {
-            this.selected_button.Width = width_;
+            this.cur_image.Height = dimmension;
+            this.cur_image.Width = dimmension;
+            if (buttons[cur_index].icon_path != null)
+            {
+                this.cur_image.Source = new BitmapImage(buttons[cur_index].icon_path);
+            }
         }
 
-        public void setSelectedButtonHeight(double height_)
-        {
-            this.selected_button.Height = height_;
-        }
+        
 
         public void add_button(RemoteButton btn)
         {
             buttons.Add(btn);
             if(abbreviations.Count < MAX_BUTTONS_SHOWN)
             {
-                abbreviations.Add(btn.getName());
+                //abbreviations.Add(btn.getName());
+                abbreviations.Insert(0, btn.getName());
             }
         }
 
@@ -105,6 +110,7 @@ namespace CPRemoteApp.ViewController___Remote
                 abbreviations.RemoveAt(abbreviations.Count - 1);
                 abbreviations.Insert(0, to_add);
                 buttonList.SelectedIndex = abbreviations.Count - 1;
+                
             }
             else
             {
@@ -114,9 +120,11 @@ namespace CPRemoteApp.ViewController___Remote
                     index_to_add -= buttons.Count;
                 }
                 abbreviations.RemoveAt(abbreviations.Count - 1);
-                abbreviations.Insert(0, buttons.ElementAt(index_to_add).getAbbreviation());
+                abbreviations.Insert(0, buttons.ElementAt(index_to_add).getName());
                 buttonList.SelectedIndex = abbreviations.Count - 1;
             }
+            //cur_name.Text = buttons[cur_index].getName();
+            cur_image.Source = new BitmapImage(buttons[cur_index].icon_path);
         }
-    }
+    }// End of RemoteButtonScanner Class
 }

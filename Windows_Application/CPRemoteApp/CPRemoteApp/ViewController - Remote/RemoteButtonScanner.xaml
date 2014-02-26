@@ -10,18 +10,21 @@
     d:DesignWidth="400"
     >
     
-    <Border BorderBrush="Blue" BorderThickness="10">
+    <Border BorderBrush="Blue" BorderThickness="10" Margin="10 0">
         <Grid>
+            <Grid.Background>
+                <SolidColorBrush Color="White" Opacity=".25" />
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
             
-            <ListView Name="buttonList" HorizontalAlignment="Center" Grid.Row="0">
+            <ListView Name="buttonList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBox Text="{Binding}" IsReadOnly="True"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="{Binding}" FontSize="32" FontWeight="Bold" Foreground="Black" Margin="10"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -31,9 +34,12 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
-            <Button Name="selected_button" Background="Black" Grid.Row="1" HorizontalAlignment="Center" MinWidth="380" MinHeight="230">
-                <TextBox HorizontalAlignment="Center" Text="Channel 3" FontSize="64" Foreground="Blue" Background="Black"/>
-            </Button>
+            <StackPanel Name="cur_button_panel" Grid.Row="1">
+                <Image Name="cur_image">
+                    
+                </Image>
+                <!--<TextBlock Name="cur_name" FontSize="64" TextAlignment="Center"/> -->
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

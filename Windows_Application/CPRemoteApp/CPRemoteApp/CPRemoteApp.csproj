@@ -147,6 +147,8 @@
     <Content Include="img\cartoon_network_icon.png" />
     <Content Include="img\channel_logo.png" />
     <Content Include="img\disney_icon.png" />
+    <Content Include="img\media_volume_down.png" />
+    <Content Include="img\media_volume_up.png" />
     <Content Include="img\nickelodeon_icon.png" />
     <Content Include="img\remote_symbol.png" />
     <Content Include="img\settings_gear.png" />

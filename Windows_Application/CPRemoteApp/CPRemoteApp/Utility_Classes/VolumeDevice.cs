@@ -60,10 +60,12 @@ namespace CPRemoteApp.Utility_Classes
             {
                 down_name = "Down " + x.ToString();
                 down_abbv = "-" + x.ToString();
-                RemoteButton down_btn = new RemoteButton(down_name, down_abbv, volume_down_ir_code, x * volume_increments);
+                Uri down_icon_path = new Uri("ms-appx:///img/media_volume_down.png");
+                RemoteButton down_btn = new RemoteButton(down_name, down_abbv, volume_down_ir_code, x * volume_increments, down_icon_path);
                 up_name = "Up " + x.ToString();
                 up_abbv = "+" + x.ToString();
-                RemoteButton up_btn = new RemoteButton(up_name, up_abbv, volume_up_ir_code, x * volume_increments);
+                Uri up_icon_path = new Uri("ms-appx:///img/media_volume_up.png");
+                RemoteButton up_btn = new RemoteButton(up_name, up_abbv, volume_up_ir_code, x * volume_increments, up_icon_path);
                 buttonScanner.add_button(down_btn);
                 buttonScanner.add_button(up_btn);
             }
