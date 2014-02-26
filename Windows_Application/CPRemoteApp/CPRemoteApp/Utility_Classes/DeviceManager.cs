@@ -35,9 +35,13 @@ namespace CPRemoteApp.Utility_Classes
             {
                 // TODO: Display Warning about no devices
                 StorageFile chan_test = await devices_folder.CreateFileAsync("channel_test.txt", CreationCollisionOption.ReplaceExisting);
-                List<string> channel_file_test_lines = new List<string>() {"3", "Disney Channel", "Disn", "ms-appx:///img/disney_icon.png", "754",
+                List<string> channel_file_test_lines = new List<string>() {"7", "Disney Channel", "Disn", "ms-appx:///img/disney_icon.png", "754",
                                                                                                          "Cartoon Network", "Cart", "ms-appx:///img/cartoon_network_icon.png", "456",
-                                                                                                         "Nickelodeon", "Nick", "ms-appx:///img/nickelodeon_icon.png", "987"
+                                                                                                         "Nickelodeon", "Nick", "ms-appx:///img/nickelodeon_icon.png", "987",
+                                                                                                         "Toon Disney", "Toon", "ms-appx:///img/toon_disney_icon.png", "111",
+                                                                                                         "ABC", "ABC", "ms-appx:///img/abc_icon.png", "222",
+                                                                                                         "ESPN", "ESPN", "ms-appx:///img/espn_icon.jpg", "333",
+                                                                                                         "NBC", "NBC", "ms-appx:///img/nbc_icon.png", "212"
                 };
                 await FileIO.WriteLinesAsync(chan_test, channel_file_test_lines);
                 channelController = new ChannelDevice("Testing_channel", chan_test);

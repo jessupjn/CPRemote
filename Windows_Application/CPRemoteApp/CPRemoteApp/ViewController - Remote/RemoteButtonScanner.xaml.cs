@@ -38,7 +38,6 @@ namespace CPRemoteApp.ViewController___Remote
             
             buttons = new List<RemoteButton>();
             buttonList.ItemsSource = abbreviations;
-            buttonList.SelectedIndex = abbreviations.Count - 1;
             buttonList.SelectionMode = ListViewSelectionMode.Single;
             timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
             timer.Tick += incrementScanner;
@@ -46,6 +45,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         public void start()
         {
+            buttonList.SelectedIndex = abbreviations.Count - 1;
             timer.Start();
         }
 
@@ -58,10 +58,7 @@ namespace CPRemoteApp.ViewController___Remote
         {
             this.cur_image.Height = dimmension;
             this.cur_image.Width = dimmension;
-            if (buttons[cur_index].icon_path != null)
-            {
-                this.cur_image.Source = new BitmapImage(buttons[cur_index].icon_path);
-            }
+            this.cur_image.Source = buttons[cur_index].icon;
         }
 
         
@@ -71,7 +68,6 @@ namespace CPRemoteApp.ViewController___Remote
             buttons.Add(btn);
             if(abbreviations.Count < MAX_BUTTONS_SHOWN)
             {
-                //abbreviations.Add(btn.getName());
                 abbreviations.Insert(0, btn.getName());
             }
         }
@@ -123,8 +119,7 @@ namespace CPRemoteApp.ViewController___Remote
                 abbreviations.Insert(0, buttons.ElementAt(index_to_add).getName());
                 buttonList.SelectedIndex = abbreviations.Count - 1;
             }
-            //cur_name.Text = buttons[cur_index].getName();
-            cur_image.Source = new BitmapImage(buttons[cur_index].icon_path);
+            this.cur_image.Source = buttons[cur_index].icon;
         }
     }// End of RemoteButtonScanner Class
 }

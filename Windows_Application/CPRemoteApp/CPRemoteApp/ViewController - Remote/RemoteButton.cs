@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -24,21 +25,20 @@ namespace CPRemoteApp.ViewController___Remote
         private int IR_repititions = 1;
         private string name = "";
         private string abbreviation = "";
-        public Uri icon_path { get; set; }
+        public BitmapImage icon { get; set; }
 
         public RemoteButton()
         {
-            icon_path = new Uri("");
+            icon = new BitmapImage();
         }
 
-        public RemoteButton(string name_, string abbv, int code, int repititions, Uri icon_path_ = null)// Needs to initialize icon with a new parameter
+        public RemoteButton(string name_, string abbv, int code, int repititions, Uri icon_path)
         {
             IR_code = code;
             IR_repititions = repititions;
             name = name_;
             abbreviation = abbv;
-            icon_path = icon_path_;
-
+            icon = new BitmapImage(icon_path);
         }
 
         public string getName()
@@ -56,7 +56,7 @@ namespace CPRemoteApp.ViewController___Remote
             List<string> output = new List<string>();
             output.Add(name);
             output.Add(abbreviation);
-            output.Add(icon_path.AbsolutePath);
+            output.Add(icon.UriSource.AbsolutePath);
             output.Add(IR_code.ToString());
             return output;
         }
