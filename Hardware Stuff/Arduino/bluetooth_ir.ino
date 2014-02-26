@@ -96,6 +96,15 @@ int RECV_PIN =11;
 IRrecv My_Receiver(RECV_PIN);
 
 
+IRTYPES b_protocol_enum; 
+unsigned long b_code_long=0; 
+int b_nbits_long; 
+int b_repeat; 
+char recvddata[80];
+String b_protocol; 
+
+
+
 void setup()
 {
   Serial.begin(57600);  // Begin the serial monitor at 9600bps
@@ -108,30 +117,31 @@ void loop()
   // If the bluetooth sent any characters
   if(bluetooth.available())  
   {
-    char recvddata[80];
     memset(recvddata, 0, 80); 
-    String b_protocol=""; 
-    String b_code=""; 
-    String b_nbits=""; 
+    
     char endl='/'; 
     int len= bluetooth.readBytesUntil(endl, recvddata, 80);
     recvddata[len]='\0'; 
-    parseString(recvddata, b_protocol, b_code, b_nbits); 
-    Serial.println("Protocol: "+b_protocol); 
-    Serial.println("code: "+b_code); 
-    IRTYPES b_protocol_enum; 
-    unsigned long b_code_long=0; 
-    int b_nbits_long; 
+    
+    
+    parseString(); 
+   
+    
   
-    changeTypesofData (b_protocol, b_code, b_nbits, b_protocol_enum, b_code_long, b_nbits_long); 
+   // changeTypesofData (b_protocol, b_code, b_nbits, b_protocol_enum, b_code_long, b_nbits_long); 
     
     Serial.println("Now Sending "+ b_protocol); 
     Serial.print("with b_code "); 
     Serial.println( b_code_long, DEC); 
     Serial.print("and b_nbits "); 
     Serial.println( b_nbits_long, DEC);
-
-    My_Sender.send(b_protocol_enum,b_code_long,b_nbits_long);
+    Serial.print("and repeat "); 
+    Serial.println( b_repeat, DEC);
+    
+    for (int i=0; i<b_repeat;i++) {
+      My_Sender.send(b_protocol_enum,b_code_long,b_nbits_long);
+      delay(250);
+    }
  
     
 
@@ -143,61 +153,87 @@ void loop()
  
 }
 
-void changeTypesofData (String b_protocol, String b_code, String b_nbits,IRTYPES &b_protocol_enum, unsigned long &b_code_long, int &b_nbits_long){ 
-  char * pEnd; 
-  b_code_long = strtol(b_code.c_str(), &pEnd, 10); 
-  b_nbits_long = atoi(b_nbits.c_str()); 
+void changeTypesofData (String buff){ 
+   
 
-  if (b_protocol == "NEC") {
+  if (buff == "NEC") {
+     Serial.println("NEC FOUND"); 
      b_protocol_enum = NEC; 
   }
   
-  else if (b_protocol == "SONY") {
+  else if (buff == "SONY") {
     b_protocol_enum = SONY; 
   }
   
-  else if (b_protocol == "RC5") {
+  else if (buff == "RC5") {
       b_protocol_enum =RC5; 
   }
   
-  else if (b_protocol == "RC6") {
+  else if (buff == "RC6") {
      b_protocol_enum = RC6; 
   }
   
-  else if (b_protocol == "PANASONIC_OLD") {
+  else if (buff == "PANASONIC_OLD") {
        b_protocol_enum = PANASONIC_OLD; 
   }
   
   
-  else if (b_protocol == "JVC") {
+  else if (buff == "JVC") {
      b_protocol_enum = JVC; 
   }
   
-  else if (b_protocol == "NECX") {
+  else if (buff == "NECX") {
        b_protocol_enum = NECX; 
   }
   
-  else if (b_protocol == "GICABLE") {
+  else if (buff == "GICABLE") {
        b_protocol_enum = static_cast<IRTYPES>GICABLE; 
   }
   
+   b_protocol= buff; 
+  
 }
 
+int findIndex (char d, int index) {
+  for (int i=index; i<80; i++) {
+    if (recvddata[i] == d) {
+      return i; 
+    }
+  } 
+}
 
-void parseString (String message, String &b_protocol, String &b_code, String &b_nbits)
+void parseString ()
 {
   //Serial.println(message); 
-  int dashPos = message.indexOf('-');
-  int periodPos =  message.indexOf('.');
-  int periodPosLast =  message.indexOf('.', periodPos+1);
+  int dashPos = findIndex('-',0);
+  int periodPos1 =  findIndex('.',0);
+  int periodPos2 =  findIndex('.', periodPos1+1);
+  int periodPos3 =  findIndex('.', periodPos2+1);
+  
+  char buff[20]; 
+  memset(buff, 0, 20); 
+
+  memcpy(buff, recvddata+dashPos+1,periodPos1-dashPos-1); 
+  Serial.println(buff); 
+  changeTypesofData(buff); 
+  
+  memset(buff, 0, 20); 
+  memcpy(buff, recvddata+periodPos1+1,periodPos2-periodPos1-1); 
+  Serial.println(buff); 
+  char * pEnd; 
+  b_code_long = strtol(buff, &pEnd, 10); 
+  Serial.println(b_code_long,DEC); 
+  memset(buff, 0, 20); 
+  memcpy(buff, recvddata+periodPos2+1,periodPos3-periodPos2-1); 
+  b_nbits_long = atoi(buff); 
+  
+  
+  memset(buff, 0, 20); 
+  memcpy(buff, recvddata+periodPos3+1,4); 
+  b_repeat = atoi(buff);
 
   
-  if(dashPos != -1)
-  {
-     b_protocol = message.substring(dashPos+1,periodPos-dashPos);    
-     b_code = message.substring(periodPos+1,periodPosLast); 
-     b_nbits = message.substring(periodPosLast+1);
-  }
+ 
 }
 
 
