@@ -48,7 +48,7 @@ namespace CPRemoteApp.Utility_Classes
                 await channelController.initialize();
 
                 StorageFile vol_test = await devices_folder.CreateFileAsync("volume_test.txt", CreationCollisionOption.ReplaceExisting);
-                List<string> vol_file_test_lines = new List<string>() { "1", "234", "123" };
+                List<string> vol_file_test_lines = new List<string>() { "1", "NEC", "32", "2011254795", "2011246606" };
                 await FileIO.WriteLinesAsync(vol_test, vol_file_test_lines);
                 volumeController = new VolumeDevice("Testing_volume", vol_test);
                 await volumeController.initialize();

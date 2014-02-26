@@ -16,6 +16,8 @@ namespace CPRemoteApp.Utility_Classes
     public abstract class Device
     {
         public RemoteButtonScanner buttonScanner { set; get; }
+        public string IR_protocol = "";
+        public int IR_bits = 0;
         protected StorageFile device_info_file;
         private string name = "";
         

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 // Windows Namespaces
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -104,10 +105,10 @@ namespace CPRemoteApp.ViewController___Remote
             await ((App)(CPRemoteApp.App.Current)).deviceController.initialize(devices_folder);
             // Button Scanner Panel Formatting
             channel_scanner_panel.Height = Window.Current.Bounds.Height;
-            channel_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);//3 * Window.Current.Bounds.Width / 4;
+            channel_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
             channel_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner);
             volume_scanner_panel.Height = Window.Current.Bounds.Height;
-            volume_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);//3 * Window.Current.Bounds.Width / 4;
+            volume_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
             ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.Width = volume_scanner_panel.Width;
             ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.Height = volume_scanner_panel.Height;
             double image_dimension = 3 * channel_scanner_panel.Height / 4;
@@ -115,6 +116,7 @@ namespace CPRemoteApp.ViewController___Remote
             ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
             ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
             ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.setCurrentImage(image_dimension);
+            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
             volume_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner);
         }
 
@@ -271,7 +273,6 @@ namespace CPRemoteApp.ViewController___Remote
         private void _volume_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("VOL");
-            App.bm.OperateTVButton_Click("NEC.2189/");  
             if ((status == 0 || status == 1) && can_move)
                 {
                     if(status == 1)
@@ -299,6 +300,30 @@ namespace CPRemoteApp.ViewController___Remote
                     status++;
                     hideButtons(false);
                 }
+        }
+
+        private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            string to_send = "-";
+            to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_protocol;
+            to_send += ".";
+            RemoteButton cur_button = ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.getCurrentButton();
+            if (cur_button.abbreviation[0] == '-')
+            {
+                to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_down_ir_code;
+            }
+            else
+            {
+                to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_up_ir_code;
+            }
+            to_send += ".";
+            to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_bits.ToString();
+            //to_send += ".";
+            //int change_increment = ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments * cur_button.getRepitions();
+            //to_send += change_increment.ToString();
+            to_send += "/";
+            App.bm.OperateTVButton_Click(to_send);
+            System.Diagnostics.Debug.WriteLine(to_send);
         }
 
         private void pointerEntered(object sender, PointerRoutedEventArgs e)

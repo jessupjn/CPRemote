@@ -14,9 +14,9 @@ namespace CPRemoteApp.Utility_Classes
 {
     public class VolumeDevice : Device
     {
-        int volume_increments = 0;
-        int volume_up_ir_code = 0;
-        int volume_down_ir_code = 0;
+        public int volume_increments = 0;
+        public string volume_up_ir_code = "";
+        public string volume_down_ir_code = "";
 
         public VolumeDevice() { }
 
@@ -43,10 +43,16 @@ namespace CPRemoteApp.Utility_Classes
                         volume_increments = Convert.ToInt32(input[i]);
                         break;
                     case 1 :
-                        volume_up_ir_code = Convert.ToInt32(input[i]);
+                        IR_protocol = input[i];
                         break;
                     case 2 :
-                        volume_down_ir_code = Convert.ToInt32(input[i]);
+                        IR_bits = Convert.ToInt32(input[i]);
+                        break;
+                    case 3 :
+                        volume_up_ir_code = input[i];
+                        break;
+                    case 4 :
+                        volume_down_ir_code = input[i];
                         break;
                 }
                 data_lines_read++;

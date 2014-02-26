@@ -20,11 +20,10 @@ namespace CPRemoteApp.ViewController___Remote
     public class RemoteButton
     {
 
-        private int IR_code = 0;
-        private string IR_protocol = "";
-        private int IR_repititions = 1;
+        private string IR_code = "";
+        public int IR_repititions = 1;
         private string name = "";
-        private string abbreviation = "";
+        public string abbreviation = "";
         public BitmapImage icon { get; set; }
 
         public RemoteButton()
@@ -32,7 +31,7 @@ namespace CPRemoteApp.ViewController___Remote
             icon = new BitmapImage();
         }
 
-        public RemoteButton(string name_, string abbv, int code, int repititions, Uri icon_path)
+        public RemoteButton(string name_, string abbv, string code, int repititions, Uri icon_path)
         {
             IR_code = code;
             IR_repititions = repititions;
@@ -49,6 +48,11 @@ namespace CPRemoteApp.ViewController___Remote
         public string getAbbreviation()
         {
             return abbreviation;
+        }
+
+        public int getRepitions()
+        {
+            return IR_repititions;
         }
 
         public List<string> get_save_output()

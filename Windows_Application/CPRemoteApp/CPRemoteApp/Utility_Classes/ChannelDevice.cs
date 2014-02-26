@@ -57,7 +57,7 @@ namespace CPRemoteApp.Utility_Classes
                 input.RemoveAt(comment_line_numbers.Pop());
             }
             num_channels = Convert.ToInt32(input[0]);
-            int IR_code;
+            string IR_code;
             string img_path;
             string chan_name;
             string chan_abbv;
@@ -67,7 +67,7 @@ namespace CPRemoteApp.Utility_Classes
                 chan_name = input[index++];
                 chan_abbv = input[index++];
                 img_path = input[index++];
-                IR_code = Convert.ToInt32(input[index++]);
+                IR_code = input[index++];
 
                 Uri img_uri = new Uri(img_path);
                 //BitmapIcon icon = new BitmapIcon();

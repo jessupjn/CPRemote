@@ -83,6 +83,11 @@ namespace CPRemoteApp.ViewController___Remote
             return output;
         }
 
+        public RemoteButton getCurrentButton()
+        {
+            return buttons[cur_index];
+        }
+
         // Changes the interval for the button scanner to change buttons
         public void updateTimerInterval()
         {

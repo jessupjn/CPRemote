@@ -20,11 +20,12 @@
                 <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
             
+            <Border BorderBrush="White" BorderThickness="0 2">
             <ListView Name="buttonList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="{Binding}" FontSize="32" FontWeight="Bold" Foreground="Black" Margin="10"/>
+                            <TextBlock Text="{Binding}" FontSize="24" FontWeight="Bold" Foreground="White" Margin="15"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -34,7 +35,11 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
+            </Border>
             <StackPanel Name="cur_button_panel" Grid.Row="1">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="LightPink" Opacity=".25"></SolidColorBrush>
+                </StackPanel.Background>
                 <Image Name="cur_image">
                     
                 </Image>
