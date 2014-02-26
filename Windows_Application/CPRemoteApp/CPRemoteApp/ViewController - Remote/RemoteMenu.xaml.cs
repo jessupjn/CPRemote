@@ -318,9 +318,9 @@ namespace CPRemoteApp.ViewController___Remote
             }
             to_send += ".";
             to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_bits.ToString();
-            //to_send += ".";
-            //int change_increment = ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments * cur_button.getRepitions();
-            //to_send += change_increment.ToString();
+            to_send += ".";
+            int change_increment = ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments * cur_button.getRepitions();
+            to_send += change_increment.ToString();
             to_send += "/";
             App.bm.OperateTVButton_Click(to_send);
             System.Diagnostics.Debug.WriteLine(to_send);
