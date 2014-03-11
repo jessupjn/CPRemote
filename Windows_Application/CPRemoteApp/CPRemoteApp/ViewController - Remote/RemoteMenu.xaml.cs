@@ -47,6 +47,11 @@ namespace CPRemoteApp.ViewController___Remote
         {
             this.InitializeComponent();
 
+
+            // customization of _bluetooth_status_frame
+            Canvas.SetLeft(_bluetooth_status_frame, Window.Current.Bounds.Width - 100);
+            Canvas.SetTop(_bluetooth_status_frame, 25);
+
             double h_w = Window.Current.Bounds.Height / 2.5;
             _volume_img.Width = _volume_img.Height = _channel_img.Width = _channel_img.Height = h_w;
             _channel_highlight.Width = _volume_highlight.Width = _channel_highlight.Height = _volume_highlight.Height = h_w;

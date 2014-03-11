@@ -21,7 +21,7 @@
                 
                 <!--    object to set the bluetooth device     -->
                 <!--    TODO: interaction...                   -->
-                <Canvas Name="_bt_device" Canvas.Top="40">
+                <Canvas Name="_bt_device" Canvas.Top="40" PointerReleased="bluetoothClick">
                     <Rectangle Name="_bt_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_bt_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_bt_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select your bluetooth device:" Foreground="White" FontSize="24"/>
