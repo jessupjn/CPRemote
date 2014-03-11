@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -45,6 +47,41 @@ namespace CPRemoteApp.ViewController___Settings
         private void bluetoothClick(object sender, RoutedEventArgs e)
         {
           App.bm.ConnectButton_Click(sender, e);
+        }
+
+        private void channelClick(object sender, RoutedEventArgs e)
+        {
+          enumerateListAsync((sender as Canvas), false);
+        }
+
+        private void volumeClick(object sender, RoutedEventArgs e)
+        {
+          enumerateListAsync((sender as Canvas), true);
+        }
+
+
+
+
+        private async void enumerateListAsync(object sender, bool channel_or_volume) { await buildList((sender as Canvas), channel_or_volume); }
+        private async Task buildList(Canvas sender, bool channel_or_volume)
+        {
+          PopupMenu menu = new PopupMenu();
+
+          var result = await menu.ShowForSelectionAsync( GetElementRect(sender) );
+          if (result == null)
+          {
+            menu.Commands.Add(new UICommand("No device found."));
+            result = await menu.ShowForSelectionAsync( GetElementRect(sender) );
+          }
+
+        }
+
+
+        private Rect GetElementRect(FrameworkElement element)
+        {
+          GeneralTransform buttonTransform = element.TransformToVisual(null);
+          Point point = buttonTransform.TransformPoint(new Point());
+          return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
         }
     }
 }

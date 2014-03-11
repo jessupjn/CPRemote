@@ -73,11 +73,12 @@ namespace TCD.Arduino.Bluetooth
             var result = await menu.ShowForSelectionAsync(invokerRect);
             if (result == null)
             {
-                menu.Commands.Add(new UICommand("No device found"));
+                menu.Commands.Add(new UICommand("No device found."));
                 result = await menu.ShowForSelectionAsync(invokerRect);
                 this.State = BluetoothConnectionState.Disconnected;
             }
         }
+
         private async void ConnectToServiceAsync(IUICommand command)
         {
             DeviceInformation serviceInfo = (DeviceInformation)command.Id;

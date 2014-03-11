@@ -44,7 +44,7 @@ namespace CPRemoteApp.Bluetooth_Connections
         public async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             //ask the user to connect
-            await connectionManager.EnumerateDevicesAsync((sender as Canvas).GetElementRect());
+          await connectionManager.EnumerateDevicesAsync((sender as Canvas).GetElementRect());
 
         }
         public void CancelButton_Click(object sender, RoutedEventArgs e)
