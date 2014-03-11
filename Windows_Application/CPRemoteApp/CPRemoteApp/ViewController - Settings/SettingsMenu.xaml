@@ -25,6 +25,7 @@
                     <Rectangle Name="_bt_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_bt_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_bt_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select your bluetooth device:" Foreground="White" FontSize="24"/>
+                    <TextBlock Name="_bt_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
                 </Canvas>
                 
                 <!--    object to set the volume device        -->
@@ -33,6 +34,7 @@
                     <Rectangle Name="_volume_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_volume_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_volume_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for volume buttons:" Foreground="White" FontSize="24"/>
+                    <TextBlock Name="_volume_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
                 </Canvas>
 
                 <!--    object to set the channel device       -->
@@ -41,6 +43,7 @@
                     <Rectangle Name="_channel_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_channel_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_channel_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for channel buttons:" Foreground="White" FontSize="24"/>
+                    <TextBlock Name="_channel_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
                 </Canvas>
             </Canvas>
         </ScrollViewer>
