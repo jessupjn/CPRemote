@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using CPRemoteApp.Bluetooth_Connections; 
+using CPRemoteApp.Bluetooth_Connections;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,6 +26,7 @@ namespace CPRemoteApp
     {
         private bool enteredRemote;
         private bool enteredSettings;
+        private DispatcherTimer timer = new DispatcherTimer();
 
         public Menu()
         {
@@ -48,9 +49,21 @@ namespace CPRemoteApp
             Canvas.SetLeft(_bluetooth_status_frame, Window.Current.Bounds.Width - 100);
             Canvas.SetTop(_bluetooth_status_frame, 25);
 
+            // check for bluetooth status every 0.2 seconds.
+            timer.Interval = TimeSpan.FromSeconds(0.2);
+            timer.Tick += checkBluetoothStatus;
+            timer.Start();
+
+
+        }
 
 
 
+
+
+
+        private void checkBluetoothStatus(object sender, object e)
+        {
 
         }
 

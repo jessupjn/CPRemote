@@ -39,6 +39,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         private int status = 0;
         private bool can_move = true;
+        private DispatcherTimer timer = new DispatcherTimer();
 
 
         // ============================================================================================================================================
@@ -46,6 +47,11 @@ namespace CPRemoteApp.ViewController___Remote
         public RemoteMenu()
         {
             this.InitializeComponent();
+
+            // check for bluetooth status every 0.2 seconds
+            timer.Interval = TimeSpan.FromSeconds(0.2);
+            timer.Tick += checkBluetoothStatus;
+            timer.Start();
 
 
             // customization of _bluetooth_status_frame
@@ -104,27 +110,34 @@ namespace CPRemoteApp.ViewController___Remote
 
         async void load_devices()
         {
+            DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
             StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
-            //DeviceManager testController = new DeviceManager();
-            await ((App)(CPRemoteApp.App.Current)).deviceController.initialize(devices_folder);
+
+            await device_manager.initialize(devices_folder);
+
             // Button Scanner Panel Formatting
             channel_scanner_panel.Height = Window.Current.Bounds.Height;
             channel_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
-            channel_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner);
+            channel_scanner_panel.Children.Add(device_manager.channelController.buttonScanner);
             volume_scanner_panel.Height = Window.Current.Bounds.Height;
             volume_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
-            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.Width = volume_scanner_panel.Width;
-            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.Height = volume_scanner_panel.Height;
+            device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
+            device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
             double image_dimension = 3 * channel_scanner_panel.Height / 4;
-            ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.setCurrentImage(image_dimension);
-            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
-            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
-            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.setCurrentImage(image_dimension);
-            ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
-            volume_scanner_panel.Children.Add(((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner);
+            device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
+            device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
+            device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
+            device_manager.volumeController.buttonScanner.setCurrentImage(image_dimension);
+            device_manager.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
+            volume_scanner_panel.Children.Add(device_manager.volumeController.buttonScanner);
         }
 
+
+        private void checkBluetoothStatus(object sender, object e)
+        {
+
+        }
 
 
         // ============================================================================================================================================
