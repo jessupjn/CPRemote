@@ -30,9 +30,9 @@ namespace CPRemoteApp.ViewController___Settings
             _scroller.Height = Window.Current.Bounds.Height - 100;
 
             Canvas.SetLeft(title_box, (Window.Current.Bounds.Width - title_box.Width) / 2);
-//            Canvas.SetLeft(_bt_device, (Window.Current.Bounds.Width - _bt_device.Width) / 2);
-//            Canvas.SetLeft(_volume_device, (Window.Current.Bounds.Width - _bt_device.Width) / 2);
-//            Canvas.SetLeft(_channel_device, (Window.Current.Bounds.Width - _bt_device.Width) / 2);
+            Canvas.SetLeft(_bt_device, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(_volume_device, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(_channel_device, (Window.Current.Bounds.Width - 700) / 2);
 
              
         }

@@ -16,12 +16,12 @@
         </Canvas>
 
         <!-- creates the scrollable settings menu -->
-        <ScrollViewer  Name="_scroller" Canvas.Top="100" Width="700" Height="400">
+        <ScrollViewer  Name="_scroller" Canvas.Top="100" Width="700" Height="400" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
             <Canvas Name="_scroll_canvas" Width="700" Height="700">
                 
                 <!--    object to set the bluetooth device     -->
                 <!--    TODO: interaction...                   -->
-                <Canvas Name="_bt_device" Canvas.Top="40" PointerReleased="bluetoothClick">
+                <Canvas Name="_bt_device" Canvas.Top="10" PointerReleased="bluetoothClick">
                     <Rectangle Name="_bt_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_bt_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_bt_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select your bluetooth device:" Foreground="White" FontSize="24"/>
@@ -29,7 +29,7 @@
                 
                 <!--    object to set the volume device        -->
                 <!--    TODO: interaction...                   -->
-                <Canvas Name="_volume_device" Canvas.Top="110">
+                <Canvas Name="_volume_device" Canvas.Top="90">
                     <Rectangle Name="_volume_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_volume_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_volume_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for volume buttons:" Foreground="White" FontSize="24"/>
@@ -37,7 +37,7 @@
 
                 <!--    object to set the channel device       -->
                 <!--    TODO: interaction...                   -->
-                <Canvas Name="_channel_device" Canvas.Top="180">
+                <Canvas Name="_channel_device" Canvas.Top="170">
                     <Rectangle Name="_channel_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
                     <Border Name="_channel_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
                     <TextBlock Name="_channel_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for channel buttons:" Foreground="White" FontSize="24"/>
