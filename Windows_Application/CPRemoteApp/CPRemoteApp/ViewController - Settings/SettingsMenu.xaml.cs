@@ -62,18 +62,33 @@ namespace CPRemoteApp.ViewController___Settings
 
 
 
-        private async void enumerateListAsync(object sender, bool channel_or_volume) { await buildList((sender as Canvas), channel_or_volume); }
-        private async Task buildList(Canvas sender, bool channel_or_volume)
+        private async void enumerateListAsync(object sender, bool channel_or_volume) { await buildList( GetElementRect(sender as Canvas), channel_or_volume); }
+        private async Task buildList(Rect invokerRect, bool channel_or_volume)
         {
           PopupMenu menu = new PopupMenu();
 
-          var result = await menu.ShowForSelectionAsync( GetElementRect(sender) );
+          //
+          // GET DEVICES FROM SOURCE BASE ON channel_or_volume
+          // true = volume devices
+          // false = channel devices
+          // if there is an iteam in the list, also add "Add new device..." at bottom of the list.
+
+          var result = await menu.ShowForSelectionAsync(invokerRect);
           if (result == null)
           {
-            menu.Commands.Add(new UICommand("No device found."));
-            result = await menu.ShowForSelectionAsync( GetElementRect(sender) );
+            menu.Commands.Add(new UICommand("Add new device...", new UICommandInvokedHandler(addNewDevice)));
+            result = await menu.ShowForSelectionAsync(invokerRect);
           }
 
+        }
+
+        private async void addNewDevice(IUICommand command)
+        {
+          return;
+        }
+        private async void selectListItem(IUICommand command)
+        {
+          return;
         }
 
 
