@@ -35,29 +35,52 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_bt_device, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_volume_device, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channel_device, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
 
+
+            populateChannelList();
              
         }
 
-        private void backClick(object sender, RoutedEventArgs e)
+        private void populateChannelList()
         {
-            this.Frame.GoBack();
+          _channellist_listbox.Height = 40 * 4; // TODO: fill with number of channels.
+
+          ListBoxItem item;
+          // TODO: for each in channellist... populate with items....
+          for(int i = 0; i < 4; i++)
+          {
+
+
+          }
+          item = new ListBoxItem();
+            
         }
+        // ===================================================================================================
+        // ===================================================================================================
+
+
+
+
+
+        // ===================================================================================================
+        // Click handlers for different objects on the screen.
+
+        private void backClick(object sender, RoutedEventArgs e)
+        { this.Frame.GoBack(); }
 
         private void bluetoothClick(object sender, RoutedEventArgs e)
-        {
-          App.bm.ConnectButton_Click(sender, e);
-        }
+        {  App.bm.ConnectButton_Click(sender, e); }
 
         private void channelClick(object sender, RoutedEventArgs e)
-        {
-          enumerateListAsync((sender as Canvas), false);
-        }
+        { enumerateListAsync((sender as Canvas), false); }
 
         private void volumeClick(object sender, RoutedEventArgs e)
-        {
-          enumerateListAsync((sender as Canvas), true);
-        }
+        { enumerateListAsync((sender as Canvas), true); }
+
+        // ===================================================================================================
+        // ===================================================================================================
 
 
 
