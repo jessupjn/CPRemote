@@ -44,9 +44,10 @@
         </Canvas>
 
         <TextBlock Name="_channellist_label" Canvas.Top="270" Width="700" Height="26" Text="Channels:" Foreground="White" FontSize="24"/>
-        <ListBox Name="_channellist_listbox" Canvas.Top="300" Width="700" Height="50">
-          <ListBoxItem HorizontalAlignment="Center">hi</ListBoxItem>
-        </ListBox>
+        <ListBox Name="_channellist_listbox" Canvas.Top="300" Width="700" Height="50" Background="Blue"/>
+
+
+
 
       </Canvas>
     </ScrollViewer>

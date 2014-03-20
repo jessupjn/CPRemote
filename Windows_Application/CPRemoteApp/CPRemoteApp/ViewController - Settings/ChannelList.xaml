@@ -1,0 +1,16 @@
+﻿<UserControl
+    x:Class="CPRemoteApp.ViewController___Settings.ChannelList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CPRemoteApp.ViewController___Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="60"
+    d:DesignWidth="700">
+
+  <Canvas Width="650" Height="40" Background="Black">
+    <TextBlock Name="_channel_name" Text="name" Width="350" Height="30" Canvas.Top="5" Canvas.Left="50" Foreground="White" TextAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+
+  </Canvas>
+</UserControl>

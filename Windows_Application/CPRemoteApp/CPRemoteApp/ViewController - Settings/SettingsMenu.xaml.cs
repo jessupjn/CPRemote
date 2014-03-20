@@ -24,6 +24,8 @@ namespace CPRemoteApp.ViewController___Settings
     /// </summary>
     public sealed partial class SettingsMenu : Page
     {
+        private DispatcherTimer timer = new DispatcherTimer();
+
         public SettingsMenu()
         {
             this.InitializeComponent();
@@ -38,8 +40,11 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
 
-
             populateChannelList();
+
+            //timer.Interval = TimeSpan.FromSeconds(0.2);
+            //timer.Tick += populateChannelList;
+            //timer.Start();
              
         }
 
@@ -48,14 +53,23 @@ namespace CPRemoteApp.ViewController___Settings
           _channellist_listbox.Height = 40 * 4; // TODO: fill with number of channels.
 
           ListBoxItem item;
+          ChannelList content;
+
           // TODO: for each in channellist... populate with items....
           for(int i = 0; i < 4; i++)
           {
+            item = new ListBoxItem();
+            content = new ChannelList();
 
-
+            item.Content = content;
+            _channellist_listbox.Items.Add(item);
           }
           item = new ListBoxItem();
-            
+          content = new ChannelList("Add a new channel...");
+
+          item.Content = content;
+          _channellist_listbox.Items.Add(item);
+
         }
         // ===================================================================================================
         // ===================================================================================================
