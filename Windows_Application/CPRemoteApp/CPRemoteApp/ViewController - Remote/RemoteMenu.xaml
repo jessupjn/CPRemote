@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Canvas Name="_bg" Background="Red" RequestedTheme="Dark">
+    <Canvas Name="_bg" Background="black" RequestedTheme="Dark">
 
       <Canvas Name="_volume_bg" Height="{Binding ActualHeight, ElementName=_bg}" PointerMoved="pointerEntered" PointerExited="pointerExited" PointerReleased="_volume_Click">
         <Rectangle Name="_volume_color" Fill="#FF3E106C"/>

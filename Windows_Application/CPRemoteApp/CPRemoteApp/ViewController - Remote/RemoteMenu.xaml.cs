@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -134,10 +135,35 @@ namespace CPRemoteApp.ViewController___Remote
         }
 
 
+
+
+
+
+
         private void checkBluetoothStatus(object sender, object e)
         {
+          bool connected = true;
+          SolidColorBrush fill;
+
+          if (connected)
+          {
+            Color color = Colors.GreenYellow;
+            color.A = 160;
+            fill = new SolidColorBrush(color);
+          }
+          else
+          {
+            Color color = Colors.DarkRed;
+            color.A = 160;
+            fill = new SolidColorBrush(color);
+          }
+
+          _bluetooth_status_indicator.Fill = fill;
 
         }
+
+
+
 
 
         // ============================================================================================================================================

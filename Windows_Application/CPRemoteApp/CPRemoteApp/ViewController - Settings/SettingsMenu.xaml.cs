@@ -30,15 +30,16 @@ namespace CPRemoteApp.ViewController___Settings
         {
             this.InitializeComponent();
 
-            _scroller.Width = _scroll_canvas.Width = Window.Current.Bounds.Width;
-            _scroller.Height = Window.Current.Bounds.Height - 100;
+            _scroll_canvas.Width = Window.Current.Bounds.Width;
+            _scroll_canvas.Height = Window.Current.Bounds.Height - 175;
 
             Canvas.SetLeft(title_box, (Window.Current.Bounds.Width - title_box.Width) / 2);
             Canvas.SetLeft(_bt_device, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_volume_device, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channel_device, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
-            Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2 + 10);
+            Canvas.SetLeft(_channellist_border, (Window.Current.Bounds.Width - 700) / 2);
 
             populateChannelList();
 
@@ -50,25 +51,29 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void populateChannelList()
         {
-          _channellist_listbox.Height = 40 * 4; // TODO: fill with number of channels.
+          int num = 4; // number of channels.
+          if (65 * (num+1) > 400)
+          {
+            _channellist_listbox.Height = 400;
+            _channellist_border.Height = 410;
+          }
+          else
+          {
+            _channellist_listbox.Height = 65 * (num + 1);
+            _channellist_border.Height = 65 * (num + 1) + 10;
+          }
 
-          ListBoxItem item;
           ChannelList content;
 
           // TODO: for each in channellist... populate with items....
-          for(int i = 0; i < 4; i++)
+          for(int i = 0; i < num; i++)
           {
-            item = new ListBoxItem();
             content = new ChannelList();
 
-            item.Content = content;
-            _channellist_listbox.Items.Add(item);
+            _channellist_listbox.Items.Add(content);
           }
-          item = new ListBoxItem();
           content = new ChannelList("Add a new channel...");
-
-          item.Content = content;
-          _channellist_listbox.Items.Add(item);
+          _channellist_listbox.Items.Add(content);
 
         }
         // ===================================================================================================
@@ -135,5 +140,6 @@ namespace CPRemoteApp.ViewController___Settings
           Point point = buttonTransform.TransformPoint(new Point());
           return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
         }
+
     }
 }

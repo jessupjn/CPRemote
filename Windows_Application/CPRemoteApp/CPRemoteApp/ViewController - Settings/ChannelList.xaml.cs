@@ -33,5 +33,15 @@ namespace CPRemoteApp.ViewController___Settings
 
     }
 
+    private void pointerMoved(object sender, object e)
+    {
+      _channel_canvas.Background = new SolidColorBrush(Windows.UI.Colors.OrangeRed);
+
+    }
+    private void pointerExited(object sender, object e)
+    {
+      _channel_canvas.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+    }
+
   }
 }

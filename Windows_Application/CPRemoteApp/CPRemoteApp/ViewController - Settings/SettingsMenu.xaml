@@ -7,8 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-  <Canvas Name="_bg" Background="#FF2A0053">
-
+  <Canvas Name="_bg">
+    <Canvas.Background>
+      <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="Black" Offset="0"/>
+        <GradientStop Color="#FF080A2C" Offset="0.5"/>
+        <GradientStop Color="Black" Offset="1"/>
+      </LinearGradientBrush>
+    </Canvas.Background>
+    
+    
+    
     <!-- settings menu title -->
     <Canvas Width="340" Height="40" Name="title_box" Canvas.Top="50">
       <Image Source="ms-appx:///img/settings_gear.png" Height="40" Canvas.Left="10"/>
@@ -16,12 +25,11 @@
     </Canvas>
 
     <!-- creates the scrollable settings menu -->
-    <ScrollViewer  Name="_scroller" Canvas.Top="100" Width="700" Height="400" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
-      <Canvas Name="_scroll_canvas" Width="700" Height="700">
+      <Canvas Name="_scroll_canvas" Width="700" Height="700" Canvas.Top="175">
 
         <!--    object to set the bluetooth device     -->
         <Canvas Name="_bt_device" Canvas.Top="10" Width="700" Height="50" PointerReleased="bluetoothClick">
-          <Rectangle Name="_bt_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
+        <Rectangle Name="_bt_device_frame" Fill="#FF1D2163" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
           <Border Name="_bt_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
           <TextBlock Name="_bt_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select your bluetooth device:" Foreground="White" FontSize="24"/>
           <TextBlock Name="_bt_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
@@ -29,7 +37,7 @@
 
         <!--    object to set the volume device        -->
         <Canvas Name="_volume_device" Canvas.Top="90" Width="700" Height="50" PointerReleased="volumeClick">
-          <Rectangle Name="_volume_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
+        <Rectangle Name="_volume_device_frame" Fill="#FF1D2163" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
           <Border Name="_volume_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
           <TextBlock Name="_volume_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for volume buttons:" Foreground="White" FontSize="24"/>
           <TextBlock Name="_volume_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
@@ -37,20 +45,20 @@
 
         <!--    object to set the channel device       -->
         <Canvas Name="_channel_device" Canvas.Top="170" Width="700" Height="50" PointerReleased="channelClick">
-          <Rectangle Name="_channel_device_frame" Fill="#FF250544" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
+        <Rectangle Name="_channel_device_frame" Fill="#FF1D2163" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
           <Border Name="_channel_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
           <TextBlock Name="_channel_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for channel buttons:" Foreground="White" FontSize="24"/>
           <TextBlock Name="_channel_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
         </Canvas>
 
-        <TextBlock Name="_channellist_label" Canvas.Top="270" Width="700" Height="26" Text="Channels:" Foreground="White" FontSize="24"/>
-        <ListBox Name="_channellist_listbox" Canvas.Top="300" Width="700" Height="50" Background="Blue"/>
+        <TextBlock Name="_channellist_label" Canvas.Top="270" Width="700" Height="26" Text="Channel List:" Foreground="White" FontSize="24"/>
+      <ListBox Name="_channellist_listbox" Canvas.Top="305" Width="680" Height="290"/>
+        <Border Name="_channellist_border" Canvas.Top="300" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="300"/>
 
 
 
 
-      </Canvas>
-    </ScrollViewer>
+    </Canvas>
 
     <!-- back button always on the very top-->
     <Button Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="backClick" Canvas.Left="75" Canvas.Top="50"/>
