@@ -76,12 +76,12 @@ namespace CPRemoteApp.ViewController___Settings
           for(int i = 0; i < num; i++)
           {
             item = new ListBoxItem();
-            content = new ChannelList("channel " + i.ToString());
+            content = new ChannelList("channel " + i.ToString(), channels.Count);
             item.Content = content;
             channels.Add(item);
           }
           item = new ListBoxItem();
-          content = new ChannelList("Add New Channel");
+          content = new ChannelList("Add New Channel", channels.Count);
           item.Content = content;
           channels.Add(item);
 
@@ -111,7 +111,6 @@ namespace CPRemoteApp.ViewController___Settings
       private void clickerIn(object sender, RoutedEventArgs e)
       {
         Canvas source = sender as Canvas;
-        Debug.WriteLine(source.Name);
         SolidColorBrush color = new SolidColorBrush(Color.FromArgb(255, 29, 33, 99));
         switch (source.Name)
         {
@@ -129,7 +128,6 @@ namespace CPRemoteApp.ViewController___Settings
       private void clickerOut(object sender, RoutedEventArgs e)
       {
         Canvas source = sender as Canvas;
-        Debug.WriteLine(source.Name);
         SolidColorBrush color = new SolidColorBrush(Colors.Transparent);
         switch (source.Name)
         {
