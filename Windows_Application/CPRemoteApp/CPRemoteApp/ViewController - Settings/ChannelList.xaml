@@ -7,22 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="60"
-    d:DesignWidth="700">
+    d:DesignWidth="700"
+    Background="Transparent">
 
-  <Canvas Name="_channel_canvas" Height="40" Width="680" Background="Black" PointerMoved="pointerMoved" PointerExited="pointerExited">
-    <TextBlock Name="_channel_name" Text="name" Width="350" Height="30" Canvas.Top="5" Canvas.Left="50" Foreground="White" TextAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
-    
-    <Canvas Name="_edit_button" Height="30" Width="60" Canvas.Left="450" Canvas.Top="5">
+  <Canvas Name="_channel_canvas" Height="60" Width="700" Background="Transparent">
+    <TextBlock Name="_channel_name" Text="name" Width="350" Height="30" Canvas.Top="15" Canvas.Left="50" Foreground="White" TextAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+
+    <Canvas Name="_edit_button" Height="30" Width="60" Canvas.Left="450" Canvas.Top="15" PointerReleased="editClicked">
       <Rectangle Name="_edit_button_bg" RadiusX="10" RadiusY="10" Fill="CadetBlue" Height="30" Width="60"/>
       <Border Name="_edit_button_border" Height="30" Width="60" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
       <TextBlock Text="Edit" Canvas.Top="6" Height="18" Width="60" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
     </Canvas>
 
-    <Canvas Name="_remove_button" Height="30" Width="60" Canvas.Left="520" Canvas.Top="5">
+    <Canvas Name="_remove_button" Height="30" Width="60" Canvas.Left="520" Canvas.Top="15" PointerReleased="deleteClicked">
       <Rectangle Name="_remove_button_bg" RadiusX="10" RadiusY="10" Fill="RosyBrown" Height="30" Width="60"/>
       <Border Name="_remove_button_border" Height="30" Width="60" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
       <TextBlock Text="Remove" Canvas.Top="6" Height="18" Width="60" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="14" FontWeight="Bold"/>
     </Canvas>
 
+    <Rectangle Fill="#7FFFFFFF" Width="680" Height="1" Canvas.Left="10" Canvas.Top="56"/>
   </Canvas>
 </UserControl>

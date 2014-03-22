@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,26 +24,30 @@ namespace CPRemoteApp.ViewController___Settings
     public ChannelList()
     {
       this.InitializeComponent();
+      this.Background = new SolidColorBrush(Colors.Transparent);
       _channel_name.Text = "name";
     }
 
     public ChannelList(string name)
     {
       this.InitializeComponent();
-
+      this.Background = new SolidColorBrush(Colors.Transparent);
       _channel_name.Text = name;
 
     }
 
-    private void pointerMoved(object sender, object e)
-    {
-      _channel_canvas.Background = new SolidColorBrush(Windows.UI.Colors.OrangeRed);
 
-    }
-    private void pointerExited(object sender, object e)
+    private void editClicked(object sender, object e)
     {
-      _channel_canvas.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+      Debug.WriteLine("edit");
+      // SHOW EDIT MENU
     }
+
+    private void deleteClicked(object sender, object e)
+    {
+      Debug.WriteLine("delete");
+    }
+
 
   }
 }
