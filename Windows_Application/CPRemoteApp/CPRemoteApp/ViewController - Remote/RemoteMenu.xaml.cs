@@ -125,7 +125,7 @@ namespace CPRemoteApp.ViewController___Remote
             volume_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
             device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
-            double image_dimension = 3 * channel_scanner_panel.Height / 4;
+            double image_dimension = 1.5 * channel_scanner_panel.Height / 4;
             device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
             device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;

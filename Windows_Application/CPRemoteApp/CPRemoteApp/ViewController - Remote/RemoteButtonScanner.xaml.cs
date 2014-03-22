@@ -35,7 +35,10 @@ namespace CPRemoteApp.ViewController___Remote
         public RemoteButtonScanner()
         {
             this.InitializeComponent();
-            
+
+            imgCanvas.Width = cur_button_panel.Width;
+            imgCanvas.Height = cur_button_panel.Height;
+
             buttons = new List<RemoteButton>();
             buttonList.ItemsSource = abbreviations;
             buttonList.SelectionMode = ListViewSelectionMode.Single;
@@ -58,6 +61,10 @@ namespace CPRemoteApp.ViewController___Remote
         {
             this.cur_image.Height = dimmension;
             this.cur_image.Width = dimmension;
+
+            //Canvas.SetLeft(this.cur_image, (this.imgCanvas.Width - this.cur_image.Width) / 2);
+            //Canvas.SetTop(this.cur_image, (this.imgCanvas.Height - this.cur_image.Height) / 2);
+
             this.cur_image.Source = buttons[cur_index].icon;
         }
 

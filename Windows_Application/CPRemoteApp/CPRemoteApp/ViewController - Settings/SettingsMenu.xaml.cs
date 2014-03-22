@@ -58,15 +58,15 @@ namespace CPRemoteApp.ViewController___Settings
         private void populateChannelList()
         {
           int num = 4; // number of channels.
-          if (65 * (num+1) > 600)
+          if (85 * (num + 1) > 600)
           {
             _channellist_listbox.Height = 600;
             _channellist_border.Height = 610;
           }
           else
           {
-            _channellist_listbox.Height = 65 * (num + 1);
-            _channellist_border.Height = 65 * (num + 1) + 10;
+            _channellist_listbox.Height = 85 * (num + 1);
+            _channellist_border.Height = 85 * (num + 1) + 10;
           }
           _channellist_listbox.Background = _channellist_listbox.Foreground = new SolidColorBrush(Colors.Transparent);
 
