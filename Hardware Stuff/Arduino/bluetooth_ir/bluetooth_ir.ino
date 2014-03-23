@@ -4,7 +4,7 @@
 
 //Format of strings -<protocol>.<code>.<nbits>/
 
-int bluetoothTx =5 ;  // TX-O pin of bluetooth mate 
+int bluetoothTx = 5 ;  // TX-O pin of bluetooth mate 
 int bluetoothRx = 4;  // RX-I pin of bluetooth mate
 
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
@@ -93,7 +93,13 @@ MyCustomSend My_Sender;
 
 int RECV_PIN =11;
 
+bool isLearn;
+
 IRrecv My_Receiver(RECV_PIN);
+IRTYPES codeType; // The type of code
+unsigned long codeValue; // The data bits
+int codeBits; // The length of the code in bits
+bool GotOne; 
 
 
 IRTYPES b_protocol_enum; 
@@ -109,6 +115,8 @@ void setup()
 {
   Serial.begin(57600);  // Begin the serial monitor at 9600bps
   bluetooth.begin(57600);  // Start bluetooth serial at 9600
+  
+  My_Receiver.enableIRIn();
 }
 
 
@@ -123,11 +131,11 @@ void loop()
     int len= bluetooth.readBytesUntil(endl, recvddata, 80);
     recvddata[len]='\0'; 
     
+    isLearn = false;
     
-    parseString(); 
+    isLearn = parseString();
+    Serial.println(isLearn); 
    
-    
-  
    // changeTypesofData (b_protocol, b_code, b_nbits, b_protocol_enum, b_code_long, b_nbits_long); 
     
     Serial.println("Now Sending "+ b_protocol); 
@@ -142,10 +150,23 @@ void loop()
       My_Sender.send(b_protocol_enum,b_code_long,b_nbits_long);
       delay(250);
     }
- 
-    
-
-   
+  }
+  
+  if (My_Receiver.GetResults(&My_Decoder)) {
+    My_Decoder.decode();
+    if(My_Decoder.decode_type == UNKNOWN) {
+      Serial.println(F("Unknown type received. Ignoring."));
+    } else {
+      codeType = My_Decoder.decode_type;
+      codeValue = My_Decoder.value;
+      codeBits = My_Decoder.bits;
+      GotOne=true;
+    }
+    My_Decoder.DumpResults();
+    Serial.println(My_Decoder.value, HEX);
+    Serial.println(Pnames(My_Decoder.decode_type));
+    delay(1000);
+    My_Receiver.resume();
   }
   
   //check if you need to send anything via bluetooth 
@@ -202,38 +223,46 @@ int findIndex (char d, int index) {
   } 
 }
 
-void parseString ()
+bool parseString ()
 {
   //Serial.println(message); 
   int dashPos = findIndex('-',0);
   int periodPos1 =  findIndex('.',0);
   int periodPos2 =  findIndex('.', periodPos1+1);
   int periodPos3 =  findIndex('.', periodPos2+1);
+  int periodPos4 =  findIndex('.', periodPos3+1);
   
   char buff[20]; 
+  
   memset(buff, 0, 20); 
-
   memcpy(buff, recvddata+dashPos+1,periodPos1-dashPos-1); 
-  Serial.println(buff); 
-  changeTypesofData(buff); 
+  Serial.println(buff);
+  
+  if (buff[0] == 'L') {
+    return true;
+  }
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos1+1,periodPos2-periodPos1-1); 
   Serial.println(buff); 
-  char * pEnd; 
-  b_code_long = strtol(buff, &pEnd, 10); 
-  Serial.println(b_code_long,DEC); 
+  changeTypesofData(buff);
+   
+  
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos2+1,periodPos3-periodPos2-1); 
-  b_nbits_long = atoi(buff); 
-  
+  char * pEnd; 
+  b_code_long = strtol(buff, &pEnd, 10); 
+  Serial.println(b_code_long,DEC);
   
   memset(buff, 0, 20); 
-  memcpy(buff, recvddata+periodPos3+1,4); 
-  b_repeat = atoi(buff);
-
+  memcpy(buff, recvddata+periodPos3+1,periodPos4-periodPos3-1);
+  b_nbits_long = atoi(buff); 
   
- 
+  memset(buff, 0, 20); 
+  memcpy(buff, recvddata+periodPos4+1,4);
+  b_repeat = atoi(buff);
+  
+  return false;
 }
 
 
