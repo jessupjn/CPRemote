@@ -348,7 +348,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
         {
-            string to_send = "-";
+            string to_send = "-L.";
             to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_protocol;
             to_send += ".";
             RemoteButton cur_button = ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.getCurrentButton();

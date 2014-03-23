@@ -7,6 +7,10 @@ using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using Windows.UI.Popups;
 
+using Windows.Storage;
+using CPRemoteApp;
+
+
 namespace TCD.Arduino.Bluetooth
 {
     public class BluetoothConnectionManager
@@ -74,15 +78,24 @@ namespace TCD.Arduino.Bluetooth
             if (result == null)
             {
                 menu.Commands.Add(new UICommand("No device found."));
-                result = await menu.ShowForSelectionAsync(invokerRect);
+                //result = await menu.ShowForSelectionAsync(invokerRect);
                 this.State = BluetoothConnectionState.Disconnected;
             }
         }
-
+        
         private async void ConnectToServiceAsync(IUICommand command)
         {
             DeviceInformation serviceInfo = (DeviceInformation)command.Id;
-            this.State = BluetoothConnectionState.Connecting;
+            StorageFolder local_folder = App.appData.LocalFolder;
+            StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
+            StorageFile bluetooth_file = (StorageFile)await devices_folder.TryGetItemAsync("bluetooth_file.txt");
+            string bluetooth_file_line = await FileIO.ReadTextAsync(bluetooth_file);
+            System.Diagnostics.Debug.WriteLine(bluetooth_file_line);
+            //serviceInfo.Id = bluetooth_file_line; 
+
+            //this.State = BluetoothConnectionState.Connecting;
+            this.Disconnect(); 
+
             try
             {
                 // Initialize the target Bluetooth RFCOMM device service
@@ -90,6 +103,7 @@ namespace TCD.Arduino.Bluetooth
                 rfcommService = await connectService;
                 if (rfcommService != null)
                 {
+                    System.Diagnostics.Debug.WriteLine("1");
                     // Create a socket and connect to the target 
                     socket = new StreamSocket();
                     connectAction = socket.ConnectAsync(rfcommService.ConnectionHostName, rfcommService.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
@@ -98,16 +112,31 @@ namespace TCD.Arduino.Bluetooth
                     reader = new DataReader(socket.InputStream);
                     Task listen = ListenForMessagesAsync();
                     this.State = BluetoothConnectionState.Connected;
+
+                    //write device information
+
+                    StorageFile device_info = await devices_folder.CreateFileAsync("bluetooth_file.txt", CreationCollisionOption.ReplaceExisting);
+
+                    await FileIO.WriteTextAsync(device_info, serviceInfo.Id);
+
                 }
                 else
+                {
                     OnExceptionOccuredEvent(this, new Exception("Unable to create service.\nMake sure that the 'bluetooth.rfcomm' capability is declared with a function of type 'name:serialPort' in Package.appxmanifest."));
+                    System.Diagnostics.Debug.WriteLine("2"); 
+
+                }
             }
             catch (TaskCanceledException)
             {
+                System.Diagnostics.Debug.WriteLine("3"); 
+
                 this.State = BluetoothConnectionState.Disconnected;
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine("4"); 
+
                 this.State = BluetoothConnectionState.Disconnected;
                 OnExceptionOccuredEvent(this, ex);
             }
@@ -128,8 +157,10 @@ namespace TCD.Arduino.Bluetooth
         /// </summary>
         public void Disconnect()
         {
-            if (reader != null)
+            if (reader != null) {
                 reader = null;
+            }
+
             if (writer != null)
             {
                 writer.DetachStream();
@@ -141,8 +172,32 @@ namespace TCD.Arduino.Bluetooth
                 socket = null;
             }
             if (rfcommService != null)
+            {
                 rfcommService = null;
+            }
             this.State = BluetoothConnectionState.Disconnected;
+        }
+
+
+        public bool isConnected ()
+        {
+            
+        
+            try
+            {
+                if (this.State == BluetoothConnectionState.Connected)
+                {
+                    return true;
+                }
+                else
+                    return false; 
+            }
+
+            catch
+            {
+                this.State = BluetoothConnectionState.Disconnected;
+                return false;
+            }
         }
         #endregion
 
@@ -155,12 +210,19 @@ namespace TCD.Arduino.Bluetooth
         public async Task<uint> SendMessageAsync(string message)
         {
             uint sentMessageSize = 0;
-            if (writer != null)
+            try
             {
-                uint messageSize = writer.MeasureString(message);
-                writer.WriteByte((byte)messageSize);
-                sentMessageSize = writer.WriteString(message);
-                await writer.StoreAsync();
+                if (writer != null)
+                {
+                    uint messageSize = writer.MeasureString(message);
+                    writer.WriteByte((byte)messageSize);
+                    sentMessageSize = writer.WriteString(message);
+                    await writer.StoreAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                this.State = BluetoothConnectionState.Disconnected;
             }
             return sentMessageSize;
         }
@@ -177,7 +239,7 @@ namespace TCD.Arduino.Bluetooth
                         // The underlying socket was closed before we were able to read the whole data. 
                         return;
                     }
-
+                    
                     // Read the message. 
                     uint messageLength = reader.ReadByte();
                     uint actualMessageLength = await reader.LoadAsync(messageLength);
@@ -193,7 +255,10 @@ namespace TCD.Arduino.Bluetooth
                 catch (Exception ex)
                 {
                     if (reader != null)
+                    {
+                        this.State = BluetoothConnectionState.Disconnected;
                         OnExceptionOccuredEvent(this, ex);
+                    }
                 }
             }
         }

@@ -30,7 +30,7 @@ namespace CPRemoteApp.Utility_Classes
         {
             // Device Manager Metadata Initialization 
             devices_folder = devices_folder_;
-            devices_info_file = (StorageFile) await devices_folder.TryGetItemAsync("devices_info.txt");
+            devices_info_file = (StorageFile) await devices_folder.TryGetItemAsync("devices_info1.txt");
             if(devices_info_file == null)
             {
                 // TODO: Display Warning about no devices
@@ -59,6 +59,9 @@ namespace CPRemoteApp.Utility_Classes
             int cur_index = 1;
             String device_name;
             StorageFile cur_device_input_file;
+
+          
+
 
             // Channel Device Initialization
 

@@ -56,6 +56,7 @@ namespace CPRemoteApp
             timer.Interval = TimeSpan.FromSeconds(0.2);
             timer.Tick += checkBluetoothStatus;
             timer.Start();
+            
 
 
         }
@@ -67,7 +68,9 @@ namespace CPRemoteApp
 
         private void checkBluetoothStatus(object sender, object e)
         {
-          bool connected = true;
+          bool connected = App.bm.connectionManager_isConnected(sender);
+          System.Diagnostics.Debug.WriteLine(connected);
+
           SolidColorBrush fill;
 
           if(connected)
