@@ -181,15 +181,17 @@ namespace CPRemoteApp.Utility_Classes
                 postfix = 'c';
             }
             string file_name = get_input_file_name(dev_name, postfix);
-            StorageFile input_file = (StorageFile)await devices_folder.TryGetItemAsync(file_name);
+            StorageFile input_file = (StorageFile) await devices_folder.TryGetItemAsync(file_name);
+            bool r_val;
             if (input_file.IsEqual(null))
             {
-                return false;
+                r_val = false;
             }
             else
             {
-                return true;
+                r_val = true;
             }
+            return r_val;
         }
 
         private async Task<StorageFile> get_input_file_from_name(string name, char postfix)

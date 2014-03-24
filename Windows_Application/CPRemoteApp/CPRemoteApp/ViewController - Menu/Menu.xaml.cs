@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CPRemoteApp.Bluetooth_Connections;
 using Windows.UI;
+using CPRemoteApp.Utility_Classes;
+using Windows.Storage;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -56,12 +58,20 @@ namespace CPRemoteApp
             timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += checkBluetoothStatus;
             timer.Start();
+            loadDeviceManager();
             
-
 
         }
 
+        private async void loadDeviceManager()
+        {
+            DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
+            StorageFolder local_folder = App.appData.LocalFolder;
+            StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
 
+            //TODO: Should check the return value of device_manager to ensure devices were loaded properly
+            await device_manager.initialize(devices_folder);
+        }
 
 
 

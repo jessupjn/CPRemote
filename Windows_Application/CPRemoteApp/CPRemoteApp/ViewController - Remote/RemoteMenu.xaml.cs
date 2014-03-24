@@ -112,11 +112,11 @@ namespace CPRemoteApp.ViewController___Remote
         async void load_devices()
         {
             DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
-            StorageFolder local_folder = App.appData.LocalFolder;
+            /*StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
 
             //TODO: Should check the return value of device_manager to ensure devices were loaded properly
-            await device_manager.initialize(devices_folder);
+            await device_manager.initialize(devices_folder);*/
 
             // Button Scanner Panel Formatting
             channel_scanner_panel.Height = Window.Current.Bounds.Height;

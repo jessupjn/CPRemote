@@ -27,12 +27,12 @@ namespace CPRemoteApp.ViewController___Settings
         {
             // Check to make sure the name isn't blank or already used then change to first button to train screen
             string name = device_name_text.Text;
-            bool name_exists = await ((App)CPRemoteApp.App.Current).deviceController.device_input_file_exists(name, channel_or_volume);
-            if(name_exists)
-            {
+            //bool name_exists = await ((App)CPRemoteApp.App.Current).deviceController.device_input_file_exists(name, channel_or_volume);
+            //if(name_exists)
+            //{
                 // TODO: Display warning/Confirmation Dialog
-                return;
-            }
+            //    return;
+            //}
             
             device_name_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             device_name_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
