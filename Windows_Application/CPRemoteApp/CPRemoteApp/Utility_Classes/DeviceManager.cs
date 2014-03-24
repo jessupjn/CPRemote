@@ -131,10 +131,41 @@ namespace CPRemoteApp.Utility_Classes
 
         }
 
-        private async Task<StorageFile> get_input_file_from_name(string name, char postfix)
+        private string get_input_file_name(string name, char postfix)
         {
             name.Replace(" ", "_");
             name += "_" + postfix;
+            return name;
+        }
+
+        public async Task<bool> device_input_file_exists(string dev_name, bool channel_or_volume)
+        {
+            char postfix;
+            if(channel_or_volume)
+            {
+                postfix = 'v';
+            }
+            else
+            {
+                postfix = 'c';
+            }
+            string file_name = get_input_file_name(dev_name, postfix);
+            StorageFile input_file = (StorageFile)await devices_folder.TryGetItemAsync(file_name);
+            if (input_file.IsEqual(null))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private async Task<StorageFile> get_input_file_from_name(string name, char postfix)
+        {
+            //name.Replace(" ", "_");
+            //name += "_" + postfix;
+            name = get_input_file_name(name, postfix);
             StorageFile input_file = (StorageFile) await devices_folder.TryGetItemAsync(name);
             if(input_file.IsEqual(null))
             {

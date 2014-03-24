@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 // CPRemote Using Statements
 using CPRemoteApp.Utility_Classes;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -34,13 +36,24 @@ namespace CPRemoteApp.ViewController___Settings
         public async void validateName(object sender, RoutedEventArgs e)
         {
             // Check to make sure the name isn't blank or already used then change to first button to train screen
+            string name = device_name_text.Text;
+            bool name_exists = await ((App)CPRemoteApp.App.Current).deviceController.device_input_file_exists(name, channel_or_volume);
+            if(name_exists)
+            {
+                // TODO: Display warning/Confirmation Dialog
+                return;
+            }
+            
+            device_name_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            device_name_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            
             if(channel_or_volume)
             {
-                trainVolumeUp();
+                await trainVolumeDevice(name);
             }
             else
             {
-                trainDigits();
+                await trainChannelDevice(name);
             }
         }
 
@@ -57,22 +70,25 @@ namespace CPRemoteApp.ViewController___Settings
             }
         }
 
-        private void trainVolumeUp()
+        private async Task<string> trainVolumeDevice(string name)
         {
+            string result = "";
+            // [0] protocol, [1] # IR Bits, [2] Vol Up IR Code, [3] Vol Down IR Code, [4] Mute IR Code
+            List<string> IR_info = new List<string>();
+            // TODO: Set the UI
+            // Wait for the IR Info
+            // If Successful display success
+                // Wait 1 Sec
+                // return result
+            // Else
+                // Display Error Message
+
+            return result;
 
         }
 
-        private void trainVolumeDown()
-        {
 
-        }
-
-        private void trainVolumeMute()
-        {
-
-        }
-
-        private void trainDigits()
+        private async void trainChannelDevice(string name)
         {
             for(int digit = 0; digit < 10; digit++)
             {
@@ -82,6 +98,11 @@ namespace CPRemoteApp.ViewController___Settings
 
         // Parameters TBD, will set the content to notify the user of which button to train
         private void setContent()
+        {
+
+        }
+
+        private async Task<string> getIRInfo()
         {
 
         }

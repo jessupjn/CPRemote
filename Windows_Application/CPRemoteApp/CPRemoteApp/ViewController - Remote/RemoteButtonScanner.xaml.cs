@@ -59,13 +59,14 @@ namespace CPRemoteApp.ViewController___Remote
 
         public void setCurrentImage(double dimmension)
         {
-            this.cur_image.Height = dimmension;
-            this.cur_image.Width = dimmension;
-
             //Canvas.SetLeft(this.cur_image, (this.imgCanvas.Width - this.cur_image.Width) / 2);
             //Canvas.SetTop(this.cur_image, (this.imgCanvas.Height - this.cur_image.Height) / 2);
-
-            this.cur_image.Source = buttons[cur_index].icon;
+            if (cur_index < buttons.Count)
+            {
+                this.cur_image.Height = dimmension;
+                this.cur_image.Width = dimmension;
+                this.cur_image.Source = buttons[cur_index].icon;
+            }
         }
 
         

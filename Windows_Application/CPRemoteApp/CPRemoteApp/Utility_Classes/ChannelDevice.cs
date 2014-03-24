@@ -95,6 +95,10 @@ namespace CPRemoteApp.Utility_Classes
         public async void saveDevice()
         {
             List<string> output = new List<string>();
+            for (int i = 0; i < 10; i++ )
+            {
+                output.Add(digit_IR_codes[i]);
+            }
             output.Add(num_channels.ToString());
             output.AddRange(buttonScanner.get_save_output());
             await FileIO.WriteLinesAsync(device_info_file, output);
