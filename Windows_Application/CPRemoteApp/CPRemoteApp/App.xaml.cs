@@ -49,6 +49,7 @@ namespace CPRemoteApp
             this.Suspending += OnSuspending;
             appData = ApplicationData.Current;
             deviceController = new DeviceManager();
+            bm.connectToDefault(null, null); 
         }
 
         /// <summary>

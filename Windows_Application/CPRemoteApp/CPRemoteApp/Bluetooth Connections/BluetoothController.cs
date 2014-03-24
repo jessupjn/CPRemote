@@ -40,6 +40,7 @@ namespace CPRemoteApp.Bluetooth_Connections
             connectionManager.MessageReceived += connectionManager_MessageReceived;
             connectionManager.StateChanged += connectionManager_StateChanged;
             connectionManager.State = BluetoothConnectionState.Disconnected;//to trigger UI update
+
         }
 
         #region Lifecycle
@@ -58,6 +59,11 @@ namespace CPRemoteApp.Bluetooth_Connections
         {
             connectionManager.Disconnect();//disconnect
         }
+
+        public async void connectToDefault(object sender, RoutedEventArgs e)
+        {
+            connectionManager.ConnectToServiceAsync(null); 
+        }
         //react
         public void connectionManager_StateChanged(object sender, BluetoothConnectionState state)
         {
@@ -70,17 +76,16 @@ namespace CPRemoteApp.Bluetooth_Connections
         //react
         public bool connectionManager_isConnected(object sender)
         {
-            TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0); 
+           TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0); 
             
             TimeSpan sub= DateTime.Now.Subtract(last_alive_time);
             System.Diagnostics.Debug.WriteLine(sub);
-            System.Diagnostics.Debug.WriteLine(five_second);
             if (sub.CompareTo(five_second) == -1)
             {
                 return true;
             }
-
             return false; 
+
          }
         #endregion
 
@@ -98,7 +103,7 @@ namespace CPRemoteApp.Bluetooth_Connections
             switch (message)//interpret other messages
             {
                 case "-ALIVE/":
-                    System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
+                   System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
                    last_alive_time = DateTime.Now;
                 break; 
             }

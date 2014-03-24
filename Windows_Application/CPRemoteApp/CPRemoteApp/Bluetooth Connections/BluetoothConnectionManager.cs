@@ -83,23 +83,33 @@ namespace TCD.Arduino.Bluetooth
             }
         }
         
-        private async void ConnectToServiceAsync(IUICommand command)
+        public async void ConnectToServiceAsync(IUICommand command)
         {
-            DeviceInformation serviceInfo = (DeviceInformation)command.Id;
+           
             StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
             StorageFile bluetooth_file = (StorageFile)await devices_folder.TryGetItemAsync("bluetooth_file.txt");
             string bluetooth_file_line = await FileIO.ReadTextAsync(bluetooth_file);
             System.Diagnostics.Debug.WriteLine(bluetooth_file_line);
-            //serviceInfo.Id = bluetooth_file_line; 
+            //serviceInfo.Id = bluetooth_file_line;
 
+            string serviceString;
+            if (command != null)
+            {
+                DeviceInformation serviceInfo = (DeviceInformation)command.Id;
+                serviceString = serviceInfo.Id; 
+            }
+            else
+            {
+                serviceString = bluetooth_file_line; 
+            }
             //this.State = BluetoothConnectionState.Connecting;
             this.Disconnect(); 
 
             try
             {
                 // Initialize the target Bluetooth RFCOMM device service
-                connectService = RfcommDeviceService.FromIdAsync(serviceInfo.Id);
+                connectService = RfcommDeviceService.FromIdAsync(serviceString);
                 rfcommService = await connectService;
                 if (rfcommService != null)
                 {
@@ -112,11 +122,14 @@ namespace TCD.Arduino.Bluetooth
                     Task listen = ListenForMessagesAsync();
                     this.State = BluetoothConnectionState.Connected;
 
+
                     //write device information
+                    if (command != null)
+                    {
+                        StorageFile device_info = await devices_folder.CreateFileAsync("bluetooth_file.txt", CreationCollisionOption.ReplaceExisting);
 
-                    StorageFile device_info = await devices_folder.CreateFileAsync("bluetooth_file.txt", CreationCollisionOption.ReplaceExisting);
-
-                    await FileIO.WriteTextAsync(device_info, serviceInfo.Id);
+                        await FileIO.WriteTextAsync(device_info, serviceString);
+                    }
 
                 }
                 else
@@ -175,23 +188,12 @@ namespace TCD.Arduino.Bluetooth
 
         public bool isConnected ()
         {
-            
-        
-            try
-            {
-                if (this.State == BluetoothConnectionState.Connected)
-                {
-                    return true;
-                }
-                else
-                    return false; 
-            }
 
-            catch
-            {
-                this.State = BluetoothConnectionState.Disconnected;
-                return false;
-            }
+            if (this.State == BluetoothConnectionState.Connected)
+                return true;
+            else
+                return false; 
+
         }
         #endregion
 
@@ -212,6 +214,11 @@ namespace TCD.Arduino.Bluetooth
                     writer.WriteByte((byte)messageSize);
                     sentMessageSize = writer.WriteString(message);
                     await writer.StoreAsync();
+
+                    if (sentMessageSize <= 0)
+                    {
+                        Disconnect(); 
+                    }
                 }
             }
             catch (Exception ex)
