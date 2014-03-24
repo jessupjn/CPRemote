@@ -34,7 +34,7 @@ namespace CPRemoteApp.Utility_Classes
             if(devices_info_file == null)
             {
                 // TODO: Display Warning about no devices
-                StorageFile chan_test = await devices_folder.CreateFileAsync("channel_test.txt", CreationCollisionOption.ReplaceExisting);
+                /*StorageFile chan_test = await devices_folder.CreateFileAsync("channel_test.txt", CreationCollisionOption.ReplaceExisting);
                 List<string> channel_file_test_lines = new List<string>() {"7", "Disney Channel", "Disn", "ms-appx:///img/disney_icon.png", "754",
                                                                                                          "Cartoon Network", "Cart", "ms-appx:///img/cartoon_network_icon.png", "456",
                                                                                                          "Nickelodeon", "Nick", "ms-appx:///img/nickelodeon_icon.png", "987",
@@ -52,7 +52,7 @@ namespace CPRemoteApp.Utility_Classes
                 await FileIO.WriteLinesAsync(vol_test, vol_file_test_lines);
                 volumeController = new VolumeDevice("Testing_volume", vol_test);
                 await volumeController.initialize();
-                return;
+                return;*/
             }
             IList<string> input = await FileIO.ReadLinesAsync(devices_info_file);
             int num_channel_devices = Convert.ToInt32(input[0]);
