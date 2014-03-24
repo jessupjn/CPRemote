@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Storage;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -125,7 +126,7 @@ namespace CPRemoteApp.ViewController___Remote
             volume_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
             device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
-            double image_dimension = 3 * channel_scanner_panel.Height / 4;
+            double image_dimension = 1.5 * channel_scanner_panel.Height / 4;
             device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
             device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
@@ -135,10 +136,35 @@ namespace CPRemoteApp.ViewController___Remote
         }
 
 
+
+
+
+
+
         private void checkBluetoothStatus(object sender, object e)
         {
+          bool connected = true;
+          SolidColorBrush fill;
+
+          if (connected)
+          {
+            Color color = Colors.GreenYellow;
+            color.A = 160;
+            fill = new SolidColorBrush(color);
+          }
+          else
+          {
+            Color color = Colors.DarkRed;
+            color.A = 160;
+            fill = new SolidColorBrush(color);
+          }
+
+          _bluetooth_status_indicator.Fill = fill;
 
         }
+
+
+
 
 
         // ============================================================================================================================================
@@ -323,7 +349,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
         {
-            string to_send = "-";
+            string to_send = "-L.";
             to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_protocol;
             to_send += ".";
             RemoteButton cur_button = ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.getCurrentButton();

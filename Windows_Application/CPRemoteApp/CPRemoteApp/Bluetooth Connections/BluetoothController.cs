@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using TCD.Controls;
 using Windows.UI.Xaml.Controls;
 using TCD.Arduino.Bluetooth;
+using Windows.Storage;
 
 
 namespace CPRemoteApp.Bluetooth_Connections
@@ -30,7 +31,9 @@ namespace CPRemoteApp.Bluetooth_Connections
         /// 
 
         private BluetoothConnectionManager connectionManager = new BluetoothConnectionManager();//mange the connection to another device
+        DateTime last_alive_time = new DateTime();
 
+        
         public BluetoothController()
         {
             connectionManager.ExceptionOccured += delegate(object sender, Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "\n"); };
@@ -63,13 +66,28 @@ namespace CPRemoteApp.Bluetooth_Connections
             //cancelButton.IsEnabled = (state == BluetoothConnectionState.Connecting);
             // disconnectButton.IsEnabled = (state == BluetoothConnectionState.Connected);
         }
+
+        //react
+        public bool connectionManager_isConnected(object sender)
+        {
+            TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0); 
+            
+            TimeSpan sub= DateTime.Now.Subtract(last_alive_time);
+            System.Diagnostics.Debug.WriteLine(sub);
+            System.Diagnostics.Debug.WriteLine(five_second);
+            if (sub.CompareTo(five_second) == -1)
+            {
+                return true;
+            }
+
+            return false; 
+         }
         #endregion
 
         #region Send & Receive
         public async void OperateTVButton_Click(string message)
         {
-            //send ON or OFF commands according to the LEDs last known state
-            //try to send this message
+         
             var res = await connectionManager.SendMessageAsync(message);
             if (res == 1)//log if successful
                 System.Diagnostics.Debug.WriteLine("Sent: " + message);
@@ -79,8 +97,12 @@ namespace CPRemoteApp.Bluetooth_Connections
 
             switch (message)//interpret other messages
             {
-                case "Channel_Changed": System.Diagnostics.Debug.WriteLine("Channel Changed\n"); break; //remember the LED state
+                case "-ALIVE/":
+                    System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
+                   last_alive_time = DateTime.Now;
+                break; 
             }
+
 
             //log incoming transmission
             System.Diagnostics.Debug.WriteLine("Received: " + message);

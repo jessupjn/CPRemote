@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,16 +24,19 @@ namespace CPRemoteApp.ViewController___Settings
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
     public sealed partial class SettingsMenu : Page
     {
         private DispatcherTimer timer = new DispatcherTimer();
+        private List<ListBoxItem> channels = new List<ListBoxItem>();
+
 
         public SettingsMenu()
         {
             this.InitializeComponent();
 
-            _scroller.Width = _scroll_canvas.Width = Window.Current.Bounds.Width;
-            _scroller.Height = Window.Current.Bounds.Height - 100;
+            _scroll_canvas.Width = Window.Current.Bounds.Width;
+            _scroll_canvas.Height = Window.Current.Bounds.Height - 175;
 
             Canvas.SetLeft(title_box, (Window.Current.Bounds.Width - title_box.Width) / 2);
             Canvas.SetLeft(_bt_device, (Window.Current.Bounds.Width - 700) / 2);
@@ -39,7 +44,9 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_channel_device, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(_channellist_border, (Window.Current.Bounds.Width - 700) / 2);
 
+            _channellist_listbox.ItemsSource = channels;
             populateChannelList();
 
             //timer.Interval = TimeSpan.FromSeconds(0.2);
@@ -50,25 +57,33 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void populateChannelList()
         {
-          _channellist_listbox.Height = 40 * 4; // TODO: fill with number of channels.
+          int num = 4; // number of channels.
+          if (85 * (num + 1) > 600)
+          {
+            _channellist_listbox.Height = 600;
+            _channellist_border.Height = 610;
+          }
+          else
+          {
+            _channellist_listbox.Height = 85 * (num + 1);
+            _channellist_border.Height = 85 * (num + 1) + 10;
+          }
+          _channellist_listbox.Background = _channellist_listbox.Foreground = new SolidColorBrush(Colors.Transparent);
 
           ListBoxItem item;
           ChannelList content;
-
           // TODO: for each in channellist... populate with items....
-          for(int i = 0; i < 4; i++)
+          for(int i = 0; i < num; i++)
           {
             item = new ListBoxItem();
-            content = new ChannelList();
-
+            content = new ChannelList("channel " + i.ToString(), channels.Count);
             item.Content = content;
-            _channellist_listbox.Items.Add(item);
+            channels.Add(item);
           }
           item = new ListBoxItem();
-          content = new ChannelList("Add a new channel...");
-
+          content = new ChannelList("Add New Channel", channels.Count);
           item.Content = content;
-          _channellist_listbox.Items.Add(item);
+          channels.Add(item);
 
         }
         // ===================================================================================================
@@ -92,6 +107,42 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void volumeClick(object sender, RoutedEventArgs e)
         { enumerateListAsync((sender as Canvas), true); }
+
+      private void clickerIn(object sender, RoutedEventArgs e)
+      {
+        Canvas source = sender as Canvas;
+        SolidColorBrush color = new SolidColorBrush(Color.FromArgb(255, 29, 33, 99));
+        switch (source.Name)
+        {
+          case "_bt_device":
+            _bt_device_frame.Fill = color; 
+            break;
+          case "_volume_device":
+            _volume_device_frame.Fill = color;  
+            break;
+          case "_channel_device":
+            _channel_device_frame.Fill = color; 
+            break;
+        }
+      }
+      private void clickerOut(object sender, RoutedEventArgs e)
+      {
+        Canvas source = sender as Canvas;
+        SolidColorBrush color = new SolidColorBrush(Colors.Transparent);
+        switch (source.Name)
+        {
+          case "_bt_device":
+            _bt_device_frame.Fill = color;
+            break;
+          case "_volume_device":
+            _volume_device_frame.Fill = color;
+            break;
+          case "_channel_device":
+            _channel_device_frame.Fill = color;
+            break;
+        }
+      }
+
 
         // ===================================================================================================
         // ===================================================================================================
@@ -135,5 +186,6 @@ namespace CPRemoteApp.ViewController___Settings
           Point point = buttonTransform.TransformPoint(new Point());
           return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
         }
+
     }
 }

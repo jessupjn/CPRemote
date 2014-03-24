@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CPRemoteApp.Bluetooth_Connections;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,7 +32,9 @@ namespace CPRemoteApp
         public Menu()
         {
             this.InitializeComponent();
-            
+
+            Canvas.SetLeft(titleText, (Window.Current.Bounds.Width - titleText.Width) / 2);
+
             // customization of _goToRemote
             _goToRemote_frame.Width = 0.7 * Window.Current.Bounds.Height;
             _goToRemote_frame.Height = _goToRemote.Width = _goToRemote.Height = _goToRemote_indicator.Width = _goToRemote_indicator.Height = _goToRemote_frame.Width;
@@ -41,8 +44,8 @@ namespace CPRemoteApp
 
         
             // customization of _goToSettings
-            Canvas.SetLeft(_goToSettings_frame, Window.Current.Bounds.Width - 100);
-            Canvas.SetTop(_goToSettings_frame, 102 );
+            Canvas.SetLeft(_goToSettings_frame, 25);
+            Canvas.SetTop(_goToSettings_frame, 25 );
 
 
             // customization of _bluetooth_status_frame
@@ -53,6 +56,7 @@ namespace CPRemoteApp
             timer.Interval = TimeSpan.FromSeconds(0.2);
             timer.Tick += checkBluetoothStatus;
             timer.Start();
+            
 
 
         }
@@ -64,6 +68,25 @@ namespace CPRemoteApp
 
         private void checkBluetoothStatus(object sender, object e)
         {
+          bool connected = App.bm.connectionManager_isConnected(sender);
+          System.Diagnostics.Debug.WriteLine(connected);
+
+          SolidColorBrush fill;
+
+          if(connected)
+          {
+            Color color = Colors.GreenYellow;
+            color.A = 160;
+            fill = new SolidColorBrush(color);
+          }
+          else
+          {
+            Color color = Colors.DarkRed;
+            color.A = 160;
+            fill = new SolidColorBrush(color);
+          }
+
+          _bluetooth_status_indicator.Fill = fill;
 
         }
 
@@ -87,13 +110,13 @@ namespace CPRemoteApp
             Windows.UI.Color fill = Windows.UI.Colors.Black;
             if (sender.Equals(_goToRemote))
             {
-                _goToRemote_indicator.Fill = new SolidColorBrush(fill);
-                enteredRemote = true;
+              _goToRemote_indicator.Visibility = Visibility.Visible;
+              enteredRemote = true;
             }
             else if (sender.Equals(_goToSettings))
             {
-                _goToSettings_indicator.Fill = new SolidColorBrush(fill);
-                enteredSettings = true;
+              _goToSettings_indicator.Visibility = Visibility.Visible;
+              enteredSettings = true;
             }
 
         }
@@ -102,12 +125,12 @@ namespace CPRemoteApp
         {
             if (sender.Equals(_goToRemote))
             {
-                _goToRemote_indicator.Fill = null;
+                _goToRemote_indicator.Visibility = Visibility.Collapsed;
                 enteredRemote = false;
             }
             else if (sender.Equals(_goToSettings))
             {
-                _goToSettings_indicator.Fill = null;
+                _goToSettings_indicator.Visibility = Visibility.Collapsed;
                 enteredSettings = false;
             }
         }

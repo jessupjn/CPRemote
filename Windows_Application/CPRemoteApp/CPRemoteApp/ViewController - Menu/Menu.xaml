@@ -6,28 +6,37 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
+
+  <Canvas Name="Background" >
+    <Canvas.Background>
+      <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="Black" Offset="0"/>
+        <GradientStop Color="#FF080A2C" Offset="0.5"/>
+        <GradientStop Color="Black" Offset="1"/>
+      </LinearGradientBrush>
+    </Canvas.Background>
+
+    <TextBlock Name="titleText" Text="CPRemote" Width="600" Height="60" Canvas.Top="30" FontSize="60" FontWeight="ExtraBold" TextAlignment="Center"/>
     
     
-    <Canvas Background="#FF3E106C" Name="Background" >
-
-        <TextBlock Name="titleText"/>
-        <Canvas Name="_goToRemote_frame" Height="700" Width="700" PointerReleased="remoteClick">
-            <Rectangle Name="_goToRemote_indicator"/>
-            <Image Name="_goToRemote" Width="700" Height="700" Source="ms-appx:///img/remote_symbol.png" PointerMoved="enterHighlight" PointerExited="exitHighlight"/>
-        </Canvas>
-
-        <Canvas Name="_goToSettings_frame" Height="75" Width="75" PointerReleased="settingsClick">
-            <Rectangle Name="_goToSettings_indicator" RadiusX="10" RadiusY="10" Width="75" Height="75"/>
-            <Border Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
-            <Image Name="_goToSettings" Source="ms-appx:///img/settings_gear.png" Canvas.Left="5" Canvas.Top="5" Width="65" Height="65" PointerEntered="enterHighlight" PointerExited="exitHighlight"/>
-        </Canvas>
-
-        <Canvas Name="_bluetooth_status_frame" Height="75" Width="75">
-            <Rectangle Name="_bluetooth_status_indicator" RadiusX="10" RadiusY="10" Fill="#FFC30B0B" Height="75" Width="75"/>
-            <Border Name="mask" Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
-            <Image Canvas.Left="5" Canvas.Top="5" Height="65" Width="65" Source="ms-appx:///img/bluetooth_symbol.png"/>
-        </Canvas>
+    <Canvas Name="_goToRemote_frame" Height="700" Width="700" PointerReleased="remoteClick">
+      <Rectangle Name="_goToRemote_indicator" Fill="#8C29347C" Visibility="Collapsed"/>
+      <Image Name="_goToRemote" Width="700" Height="700" Source="ms-appx:///img/remote_symbol.png" PointerMoved="enterHighlight" PointerExited="exitHighlight"/>
     </Canvas>
+
+    <Canvas Name="_goToSettings_frame" Height="75" Width="75" Canvas.Left="25" Canvas.Top="25" PointerReleased="settingsClick">
+      <Rectangle Name="_goToSettings_indicator" Visibility="Collapsed" Fill="#B229347C" RadiusX="10" RadiusY="10" Width="75" Height="75"/>
+      <Border Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
+      <Image Name="_goToSettings" Source="ms-appx:///img/settings_gear.png" Canvas.Left="5" Canvas.Top="5" Width="65" Height="65" PointerEntered="enterHighlight" PointerExited="exitHighlight"/>
+    </Canvas>
+
+    <Canvas Name="_bluetooth_status_frame" Height="75" Width="75">
+      <Rectangle Name="_bluetooth_status_indicator" RadiusX="10" RadiusY="10" Fill="#998B0000" Height="75" Width="75"/>
+      <Border Name="mask" Height="75" Width="75" BorderThickness="2" CornerRadius="10" BorderBrush="White"/>
+      <Image Canvas.Left="5" Canvas.Top="5" Height="65" Width="65" Source="ms-appx:///img/bluetooth_symbol.png"/>
+    </Canvas>
+  </Canvas>
 
 
 </Page>

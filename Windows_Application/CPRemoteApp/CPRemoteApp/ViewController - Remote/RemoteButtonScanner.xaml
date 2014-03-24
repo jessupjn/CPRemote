@@ -10,14 +10,14 @@
     d:DesignWidth="400"
     >
     
-    <Border BorderBrush="Blue" BorderThickness="10" Margin="10 0">
+    <Border BorderBrush="Transparent" BorderThickness="10" Margin="10 0">
         <Grid>
             <Grid.Background>
-                <SolidColorBrush Color="White" Opacity=".25" />
+                <SolidColorBrush Color="Transparent" Opacity=".25" />
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
             
             <Border BorderBrush="White" BorderThickness="0 2">
@@ -38,12 +38,12 @@
             </Border>
             <StackPanel Name="cur_button_panel" Grid.Row="1">
                 <StackPanel.Background>
-                    <SolidColorBrush Color="LightPink" Opacity=".25"></SolidColorBrush>
+                    <SolidColorBrush Color="Transparent" Opacity=".25"></SolidColorBrush>
                 </StackPanel.Background>
-                <Image Name="cur_image">
-                    
-                </Image>
-                <!--<TextBlock Name="cur_name" FontSize="64" TextAlignment="Center"/> -->
+                <Canvas Name="imgCanvas" Background="Red">
+                   <Image Name="cur_image"/>
+                </Canvas>
+               
             </StackPanel>
         </Grid>
     </Border>

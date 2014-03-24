@@ -7,17 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Canvas Name="_bg" Background="Red" RequestedTheme="Dark">
-
-      <Canvas Name="_volume_bg" Height="{Binding ActualHeight, ElementName=_bg}" PointerMoved="pointerEntered" PointerExited="pointerExited" PointerReleased="_volume_Click">
-        <Rectangle Name="_volume_color" Fill="#FF3E106C"/>
+    <Canvas Name="_bg" RequestedTheme="Dark">
+      <Canvas.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="Black" Offset="0"/>
+          <GradientStop Color="#FF080A2C" Offset="0.5"/>
+          <GradientStop Color="Black" Offset="1"/>
+        </LinearGradientBrush>
+      </Canvas.Background>
+      
+    <Canvas Name="_volume_bg" Height="{Binding ActualHeight, ElementName=_bg}" PointerMoved="pointerEntered" PointerExited="pointerExited" PointerReleased="_volume_Click">
+        <Rectangle Name="_volume_color" Fill="Transparent"/>
         <Rectangle Name="_volume_highlight" Visibility="Collapsed" Fill="Black"/>
         <Image Name="_volume_img" Source="ms-appx:///img/volume_symbol.png"/>
         <StackPanel Name="volume_scanner_panel" Visibility="Collapsed" Canvas.Left="{Binding ElementName=_volume_bg, Path=Canvas.Left}" Canvas.Top="{Binding ElementName=_volume_bg, Path=Canvas.Top}" />
       </Canvas>
 
         <Canvas Name="_channel_bg" Height="{Binding ActualHeight, ElementName=_bg}" PointerMoved="pointerEntered" PointerExited="pointerExited" PointerReleased="_channelList_Click">
-            <Rectangle Name="_channel_color" Fill="#FF6617B6"/>
+            <Rectangle Name="_channel_color" Fill="Transparent"/>
             <Rectangle Name="_channel_highlight" Visibility="Collapsed" Fill="Black"/>
             <Image Name="_channel_img" Source="ms-appx:///img/channel_logo.png"/>
             <StackPanel Name="channel_scanner_panel" Visibility="Collapsed" Canvas.Left="{Binding ElementName=_channel_bg, Path=Canvas.Left}" Canvas.Top="{Binding ElementName=_channel_bg, Path=Canvas.Top}">
