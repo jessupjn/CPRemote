@@ -103,7 +103,6 @@ namespace TCD.Arduino.Bluetooth
                 rfcommService = await connectService;
                 if (rfcommService != null)
                 {
-                    System.Diagnostics.Debug.WriteLine("1");
                     // Create a socket and connect to the target 
                     socket = new StreamSocket();
                     connectAction = socket.ConnectAsync(rfcommService.ConnectionHostName, rfcommService.ConnectionServiceName, SocketProtectionLevel.BluetoothEncryptionAllowNullAuthentication);
@@ -123,20 +122,15 @@ namespace TCD.Arduino.Bluetooth
                 else
                 {
                     OnExceptionOccuredEvent(this, new Exception("Unable to create service.\nMake sure that the 'bluetooth.rfcomm' capability is declared with a function of type 'name:serialPort' in Package.appxmanifest."));
-                    System.Diagnostics.Debug.WriteLine("2"); 
 
                 }
             }
             catch (TaskCanceledException)
             {
-                System.Diagnostics.Debug.WriteLine("3"); 
-
                 this.State = BluetoothConnectionState.Disconnected;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("4"); 
-
                 this.State = BluetoothConnectionState.Disconnected;
                 OnExceptionOccuredEvent(this, ex);
             }
