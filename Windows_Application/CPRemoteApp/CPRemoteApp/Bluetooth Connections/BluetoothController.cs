@@ -32,7 +32,6 @@ namespace CPRemoteApp.Bluetooth_Connections
 
         private BluetoothConnectionManager connectionManager = new BluetoothConnectionManager();//mange the connection to another device
         DateTime last_alive_time = new DateTime();
-
         
         public BluetoothController()
         {
@@ -73,6 +72,11 @@ namespace CPRemoteApp.Bluetooth_Connections
             // disconnectButton.IsEnabled = (state == BluetoothConnectionState.Connected);
         }
 
+        public string connectedDeviceName()
+        {
+            return connectionManager.connectedDeviceName(); 
+        }
+
         //react
         public bool connectionManager_isConnected(object sender)
         {
@@ -105,7 +109,14 @@ namespace CPRemoteApp.Bluetooth_Connections
                 case "-ALIVE/":
                    //System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
                    last_alive_time = DateTime.Now;
-                break; 
+                break;  
+            }
+
+            if (message.StartsWith("-L."))
+            {
+                System.Diagnostics.Debug.WriteLine("Learn code received");
+                rcvd_code = message; 
+
             }
 
 

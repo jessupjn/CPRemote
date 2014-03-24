@@ -49,6 +49,7 @@ namespace TCD.Arduino.Bluetooth
         private StreamSocket socket;
         private DataReader reader;
         private DataWriter writer;
+        private string connectedBluetoothDeviceName=null; 
 
         private BluetoothConnectionState _State;
         /// <summary>
@@ -85,6 +86,15 @@ namespace TCD.Arduino.Bluetooth
             var result = await menu.ShowForSelectionAsync(invokerRect);
 
 
+        }
+
+        public string connectedDeviceName()
+        {
+            if (this.State == BluetoothConnectionState.Connected)
+            {
+                return connectedBluetoothDeviceName; 
+            }
+            return null; 
         }
         
         public async void ConnectToServiceAsync(IUICommand command)
@@ -149,6 +159,7 @@ namespace TCD.Arduino.Bluetooth
 
                         await FileIO.WriteTextAsync(device_info, serviceNameString+ ','+ serviceIDString);
                     }
+                    connectedBluetoothDeviceName = serviceNameString; 
 
                 }
                 else
