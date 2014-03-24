@@ -101,14 +101,45 @@ namespace CPRemoteApp.Utility_Classes
             await volumeController.initialize();
         }
 
-        public void addChannelDevice()
+        public async void saveDeviceList()
         {
-
+            // # of channel devices, name of each channel device, cur channel device, 
+            StorageFile info_file = await devices_folder.CreateFileAsync("device_info.txt", CreationCollisionOption.ReplaceExisting);
+            List<string> save_output = new List<string>();
+            save_output.Add(channel_devices.Count.ToString());
+            foreach(ChannelDevice cur_dev in channel_devices)
+            {
+                save_output.Add(cur_dev.get_name());
+            }
+            save_output.Add(channelController.get_name());
+            //# of vol devices, name of vol devices, cur vol device
+            save_output.Add(volume_devices.Count.ToString());
+            foreach(VolumeDevice cur_dev in volume_devices)
+            {
+                save_output.Add(cur_dev.get_name());
+            }
+            save_output.Add(volumeController.get_name());
+            await FileIO.WriteLinesAsync(info_file, save_output);
         }
 
-        public void addVolumeDevice()
+        public async void addChannelDevice(string name, List<string> IR_info)
         {
+            string i_file_name = get_input_file_name(name, 'c');
+            StorageFile chan_file = await devices_folder.CreateFileAsync(i_file_name, CreationCollisionOption.ReplaceExisting);
+            ChannelDevice channel_dev = new ChannelDevice(name, chan_file, IR_info);
+            channel_devices.Add(channel_dev);
+            channel_dev.saveDevice();
+            saveDeviceList();
+        }
 
+        public async void addVolumeDevice(string name, List<string> IR_info)
+        {
+            string i_file_name = get_input_file_name(name, 'v');
+            StorageFile vol_file = await devices_folder.CreateFileAsync(i_file_name, CreationCollisionOption.ReplaceExisting);
+            VolumeDevice vol_dev = new VolumeDevice(name, vol_file, IR_info);
+            volume_devices.Add(vol_dev);
+            vol_dev.saveDevice();
+            saveDeviceList();
         }
 
         public void removeChannelDevice()

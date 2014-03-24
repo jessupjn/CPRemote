@@ -62,7 +62,6 @@ namespace CPRemoteApp.ViewController___Settings
 
         private async void trainVolumeDevice(string name)
         {
-            string result = "";
             // [0] protocol, [1] # IR Bits, [2] Vol Up IR Code, [3] Vol Down IR Code, [4] Mute IR Code
             List<string> IR_info = new List<string>();
             // TODO: Set the UI
@@ -75,6 +74,9 @@ namespace CPRemoteApp.ViewController___Settings
             IR_info.Add(protocol);
             IR_info.Add(num_bits);
             IR_info.Add(vol_up_ir_code);
+            System.Diagnostics.Debug.WriteLine("protocol: " + protocol);
+            System.Diagnostics.Debug.WriteLine("Num Bits: " + num_bits);
+            System.Diagnostics.Debug.WriteLine("Vol up IR Code: " + vol_up_ir_code);
             string vol_down_info = await getIRInfo();
             getNextData(ref vol_down_info);
             string protocol_2 = getNextData(ref vol_down_info);
@@ -84,6 +86,7 @@ namespace CPRemoteApp.ViewController___Settings
             }
             string vol_down_ir_code = getNextData(ref vol_down_info);
             IR_info.Add(vol_down_ir_code);
+            System.Diagnostics.Debug.WriteLine(vol_down_ir_code);
             string mute_info = await getIRInfo();
             getNextData(ref mute_info);
             string mute_protocol = getNextData(ref mute_info);
@@ -93,6 +96,7 @@ namespace CPRemoteApp.ViewController___Settings
             }
             string mute_ir_code = getNextData(ref mute_info);
             IR_info.Add(mute_ir_code);
+            ((App)CPRemoteApp.App.Current).deviceController.addVolumeDevice(name, IR_info);
         }
 
 

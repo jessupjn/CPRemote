@@ -26,9 +26,12 @@ namespace CPRemoteApp.Utility_Classes
  
         }
 
-        public ChannelDevice(string name_, StorageFile input_file, string[] digit_codes) : base(name_, input_file)
+        public ChannelDevice(string name_, StorageFile input_file, List<string> dev_info) : base(name_, input_file, dev_info)
         {
-            digit_IR_codes = digit_codes;
+            for (int i = 0; i < 10; ++i)
+            {
+                digit_IR_codes[i] = dev_info[i + 2];
+            }
         }
 
         public void add_channel()
@@ -65,7 +68,7 @@ namespace CPRemoteApp.Utility_Classes
             }*/
             // Protocol[0], IR_Bits[1], Digit IR Codes[2-11], Num Buttons[12]
             IR_protocol = input[0];
-            IR_bits = Convert.ToInt32(input[1]);
+            IR_bits = input[1];
             // Initialize the Digit IR Codes
             for(int i = 0; i < 10; ++i)
             {

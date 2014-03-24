@@ -349,7 +349,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
         {
-            string to_send = "-L.";
+            string to_send = "-S.";
             to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_protocol;
             to_send += ".";
             RemoteButton cur_button = ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.getCurrentButton();
@@ -362,7 +362,7 @@ namespace CPRemoteApp.ViewController___Remote
                 to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_up_ir_code;
             }
             to_send += ".";
-            to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_bits.ToString();
+            to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_bits;
             to_send += ".";
             int change_increment = ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments * cur_button.getRepitions();
             to_send += change_increment.ToString();
