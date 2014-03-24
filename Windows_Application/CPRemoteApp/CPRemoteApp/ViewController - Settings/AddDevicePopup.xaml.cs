@@ -88,12 +88,14 @@ namespace CPRemoteApp.ViewController___Settings
         }
 
 
-        private async void trainChannelDevice(string name)
+        private async Task<string> trainChannelDevice(string name)
         {
             for(int digit = 0; digit < 10; digit++)
             {
                 //Do Bluetooth call and wait for response.
             }
+            string result = "";
+            return result;
         }
 
         // Parameters TBD, will set the content to notify the user of which button to train
@@ -102,10 +104,11 @@ namespace CPRemoteApp.ViewController___Settings
 
         }
 
-        private async Task<string> getIRInfo()
+        /*private async Task<string> getIRInfo()
         {
-
-        }
+            string learn_ir_command = "learn";
+            App.bm.OperateTVButton_Click(learn_ir_command);
+        }*/
 
         private void displaySuccessMessage()
         {
