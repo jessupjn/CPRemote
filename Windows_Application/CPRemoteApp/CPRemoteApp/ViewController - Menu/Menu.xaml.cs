@@ -69,7 +69,7 @@ namespace CPRemoteApp
         private void checkBluetoothStatus(object sender, object e)
         {
           bool connected = App.bm.connectionManager_isConnected(sender);
-          System.Diagnostics.Debug.WriteLine(connected);
+          //System.Diagnostics.Debug.WriteLine(connected);
 
           SolidColorBrush fill;
 

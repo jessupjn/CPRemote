@@ -74,13 +74,17 @@ namespace TCD.Arduino.Bluetooth
             PopupMenu menu = new PopupMenu();
             foreach (var serviceInfo in serviceInfoCollection)
                 menu.Commands.Add(new UICommand(serviceInfo.Name, new UICommandInvokedHandler(ConnectToServiceAsync), serviceInfo));
-            var result = await menu.ShowForSelectionAsync(invokerRect);
-            if (result == null)
+            if (serviceInfoCollection.Count == 0)
             {
-                menu.Commands.Add(new UICommand("No device found."));
-                //result = await menu.ShowForSelectionAsync(invokerRect);
+                menu.Commands.Add(new UICommand("No device found..."));
+                await menu.ShowForSelectionAsync(invokerRect);
                 this.State = BluetoothConnectionState.Disconnected;
+                return; 
             }
+
+            var result = await menu.ShowForSelectionAsync(invokerRect);
+
+
         }
         
         public async void ConnectToServiceAsync(IUICommand command)
@@ -89,23 +93,34 @@ namespace TCD.Arduino.Bluetooth
             StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
             StorageFile bluetooth_file = (StorageFile)await devices_folder.TryGetItemAsync("bluetooth_file.txt");
-            if(bluetooth_file == null)
+           
+            string bluetooth_file_line=null; 
+            //if file doesn't exist, return and wanting to connect at initialization, return 
+            if(bluetooth_file == null && command == null)
             {
-                return;
+                return; 
             }
-            string bluetooth_file_line = await FileIO.ReadTextAsync(bluetooth_file);
-            System.Diagnostics.Debug.WriteLine(bluetooth_file_line);
-            //serviceInfo.Id = bluetooth_file_line;
+            //read from bluetooth file 
+            if (bluetooth_file != null) { 
+                bluetooth_file_line = await FileIO.ReadTextAsync(bluetooth_file);
+                System.Diagnostics.Debug.WriteLine(bluetooth_file_line);
+            }
 
-            string serviceString;
-            if (command != null)
+            string serviceIDString;
+            string serviceNameString;  
+
+            if (command == null)
             {
-                DeviceInformation serviceInfo = (DeviceInformation)command.Id;
-                serviceString = serviceInfo.Id; 
+                string[] parse_bluetooth_file_line = bluetooth_file_line.Split(',');
+                serviceNameString = parse_bluetooth_file_line[0];
+                serviceIDString = parse_bluetooth_file_line[1]; 
+               
             }
             else
             {
-                serviceString = bluetooth_file_line; 
+                DeviceInformation serviceInfo = (DeviceInformation)command.Id;
+                serviceIDString = serviceInfo.Id;
+                serviceNameString = serviceInfo.Name;
             }
             //this.State = BluetoothConnectionState.Connecting;
             this.Disconnect(); 
@@ -113,7 +128,7 @@ namespace TCD.Arduino.Bluetooth
             try
             {
                 // Initialize the target Bluetooth RFCOMM device service
-                connectService = RfcommDeviceService.FromIdAsync(serviceString);
+                connectService = RfcommDeviceService.FromIdAsync(serviceIDString);
                 rfcommService = await connectService;
                 if (rfcommService != null)
                 {
@@ -132,7 +147,7 @@ namespace TCD.Arduino.Bluetooth
                     {
                         StorageFile device_info = await devices_folder.CreateFileAsync("bluetooth_file.txt", CreationCollisionOption.ReplaceExisting);
 
-                        await FileIO.WriteTextAsync(device_info, serviceString);
+                        await FileIO.WriteTextAsync(device_info, serviceNameString+ ','+ serviceIDString);
                     }
 
                 }

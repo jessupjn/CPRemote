@@ -79,7 +79,7 @@ namespace CPRemoteApp.Bluetooth_Connections
            TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0); 
             
             TimeSpan sub= DateTime.Now.Subtract(last_alive_time);
-            System.Diagnostics.Debug.WriteLine(sub);
+            //System.Diagnostics.Debug.WriteLine(sub);
             if (sub.CompareTo(five_second) == -1)
             {
                 return true;
@@ -103,7 +103,7 @@ namespace CPRemoteApp.Bluetooth_Connections
             switch (message)//interpret other messages
             {
                 case "-ALIVE/":
-                   System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
+                   //System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
                    last_alive_time = DateTime.Now;
                 break; 
             }
