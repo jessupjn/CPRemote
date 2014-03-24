@@ -1,21 +1,10 @@
-﻿using System;
+﻿// CPRemote Using Statements
+using CPRemoteApp.Utility_Classes;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-// CPRemote Using Statements
-using CPRemoteApp.Utility_Classes;
-using Windows.Storage;
-using System.Threading.Tasks;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -27,6 +16,7 @@ namespace CPRemoteApp.ViewController___Settings
         private ChannelDevice chan_device = new ChannelDevice();
         // volume = true, channel = false
         private bool channel_or_volume = true;
+        private bool time_left = true;
         
         public AddDevicePopup()
         {
@@ -49,7 +39,7 @@ namespace CPRemoteApp.ViewController___Settings
             next_button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             if(channel_or_volume)
             {
-                await trainVolumeDevice(name);
+                trainVolumeDevice(name);
             }
             else
             {
@@ -70,21 +60,39 @@ namespace CPRemoteApp.ViewController___Settings
             }
         }
 
-        private async Task<string> trainVolumeDevice(string name)
+        private async void trainVolumeDevice(string name)
         {
             string result = "";
             // [0] protocol, [1] # IR Bits, [2] Vol Up IR Code, [3] Vol Down IR Code, [4] Mute IR Code
             List<string> IR_info = new List<string>();
             // TODO: Set the UI
-            // Wait for the IR Info
-            // If Successful display success
-                // Wait 1 Sec
-                // return result
-            // Else
-                // Display Error Message
-
-            return result;
-
+            string vol_up_info = await getIRInfo();
+            // get rid of -L on front of message
+            getNextData(ref vol_up_info);
+            string protocol = getNextData(ref vol_up_info);
+            string vol_up_ir_code = getNextData(ref vol_up_info);
+            string num_bits = getNextData(ref vol_up_info);
+            IR_info.Add(protocol);
+            IR_info.Add(num_bits);
+            IR_info.Add(vol_up_ir_code);
+            string vol_down_info = await getIRInfo();
+            getNextData(ref vol_down_info);
+            string protocol_2 = getNextData(ref vol_down_info);
+            if(protocol_2 != protocol)
+            {
+                // TODO: Handle Mismatching Protocols
+            }
+            string vol_down_ir_code = getNextData(ref vol_down_info);
+            IR_info.Add(vol_down_ir_code);
+            string mute_info = await getIRInfo();
+            getNextData(ref mute_info);
+            string mute_protocol = getNextData(ref mute_info);
+            if(mute_protocol != protocol)
+            {
+                // TODO: Handle Mismatching Protocols. Probably try again.
+            }
+            string mute_ir_code = getNextData(ref mute_info);
+            IR_info.Add(mute_ir_code);
         }
 
 
@@ -104,21 +112,54 @@ namespace CPRemoteApp.ViewController___Settings
 
         }
 
-        /*private async Task<string> getIRInfo()
+        private async Task<string> getIRInfo()
         {
-            string learn_ir_command = "learn";
+            string learn_ir_command = "-L";
+            App.bm.rcvd_code = "";
             App.bm.OperateTVButton_Click(learn_ir_command);
-        }*/
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Tick += setTimeLeftFalse;
+            timer.Start();
+            time_left = true;
+            while(App.bm.rcvd_code == "" && time_left)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(.1));
+            }
+            timer.Stop();
+            if(!time_left)
+            {
+                displayErrorMessage("Didn't receive remote input");
+                await Task.Delay(TimeSpan.FromSeconds(2));
+                return await getIRInfo();
+            }
+            string IR_info = App.bm.rcvd_code;
+            return IR_info;
+        }
+
+        private void setTimeLeftFalse(Object sender, object e)
+        {
+            time_left = false;
+        }
 
         private void displaySuccessMessage()
         {
 
         }
 
-        private void displayErrorMessage()
+        private void displayErrorMessage(string message)
         {
 
         }
+
+        private string getNextData(ref string info)
+        {
+            int index = info.IndexOf('.');
+            string data = info.Substring(0, index);
+            info = info.Substring(index + 1);
+            return data;
+        }
+
 
     }// End of AddDevicePopup Class
 }
