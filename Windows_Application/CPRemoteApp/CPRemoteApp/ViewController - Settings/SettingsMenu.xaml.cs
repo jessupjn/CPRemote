@@ -30,7 +30,7 @@ namespace CPRemoteApp.ViewController___Settings
     {
         private DispatcherTimer timer = new DispatcherTimer();
         private List<ListBoxItem> channels = new List<ListBoxItem>();
-
+        private Popup add_device_popup = new Popup();
 
         public SettingsMenu()
         {
@@ -206,11 +206,15 @@ namespace CPRemoteApp.ViewController___Settings
             };
 
             //border.Background.Opacity = 0.5;
-            Popup add_device_popup = new Popup
+            add_device_popup = new Popup
             {
                 Child = border,
                 IsLightDismissEnabled = true
             };
+
+            add_device_popup.Closed +=add_device_popup_Closed;
+
+            //add_device_popup.Closed += add_device_popup_Closed;
 
             border.Loaded += (loadedSender, loadedArgs) =>
                 {
@@ -220,6 +224,12 @@ namespace CPRemoteApp.ViewController___Settings
 
             add_device_popup.IsOpen = true;
             return;
+        }
+
+        // Called when the pop-up is closed. Needs to cancel bluetooth learning process
+        private void add_device_popup_Closed(object sender, object e)
+        {
+            //TODO: 
         }
         private async void selectListItem(IUICommand command)
         {

@@ -105,6 +105,11 @@ namespace CPRemoteApp.ViewController___Remote
         private void incrementScanner(Object sender, object e)
         {
             // Check for current index going past the end
+            if(buttons.Count == 0)
+            {
+                System.Diagnostics.Debug.WriteLine("No Buttons in Button Scanner");
+                return;
+            }
             if(cur_index == buttons.Count - 1)
             {
                 cur_index = 0;

@@ -46,7 +46,7 @@ namespace CPRemoteApp.ViewController___Settings
             
             device_name_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             device_name_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            
+            next_button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             if(channel_or_volume)
             {
                 await trainVolumeDevice(name);
