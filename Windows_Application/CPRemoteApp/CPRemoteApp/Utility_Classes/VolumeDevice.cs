@@ -14,15 +14,22 @@ namespace CPRemoteApp.Utility_Classes
 {
     public class VolumeDevice : Device
     {
-        public int volume_increments = 0;
+        public int volume_increments = 1;
         public string volume_up_ir_code = "";
         public string volume_down_ir_code = "";
-
+        public string mute_ir_code = "";
         public VolumeDevice() { }
 
         public VolumeDevice(string name_, StorageFile input_file) : base(name_, input_file)
         {
 
+        }
+
+        public VolumeDevice(string name_, StorageFile input_file, List<string> device_info) : base(name_, input_file, device_info)
+        {
+            volume_up_ir_code = device_info[2];
+            volume_down_ir_code = device_info[3];
+            mute_ir_code = device_info[4];
         }
 
         // Must return a Task, so that it can be awaited on
@@ -40,19 +47,22 @@ namespace CPRemoteApp.Utility_Classes
                 switch (data_lines_read)
                 {
                     case 0 :
-                        volume_increments = Convert.ToInt32(input[i]);
-                        break;
-                    case 1 :
                         IR_protocol = input[i];
                         break;
+                    case 1 :
+                        IR_bits = input[i];
+                        break;
                     case 2 :
-                        IR_bits = Convert.ToInt32(input[i]);
+                        volume_increments = Convert.ToInt32(input[i]);
                         break;
                     case 3 :
                         volume_up_ir_code = input[i];
                         break;
                     case 4 :
                         volume_down_ir_code = input[i];
+                        break;
+                    case 5 :
+                        mute_ir_code = input[i];
                         break;
                 }
                 data_lines_read++;
@@ -79,10 +89,14 @@ namespace CPRemoteApp.Utility_Classes
 
         public async void saveDevice()
         {
-            List<String> output = new List<string>() {volume_increments.ToString(), volume_up_ir_code.ToString(), volume_down_ir_code.ToString() };
+            List<String> output = new List<string>() { IR_protocol,
+                                                        IR_bits,
+                                                        volume_increments.ToString(), 
+                                                        volume_up_ir_code, 
+                                                        volume_down_ir_code,
+                                                        mute_ir_code};
             await FileIO.WriteLinesAsync(device_info_file, output);
         }
 
-        
     }// End of Volume Device Class
 }// End of Namespace

@@ -17,7 +17,7 @@ namespace CPRemoteApp.Utility_Classes
     {
         public RemoteButtonScanner buttonScanner { set; get; }
         public string IR_protocol = "";
-        public int IR_bits = 0;
+        public string IR_bits = "";
         protected StorageFile device_info_file;
         private string name = "";
         
@@ -32,6 +32,15 @@ namespace CPRemoteApp.Utility_Classes
             name = name_;
             buttonScanner = new RemoteButtonScanner();
             device_info_file = input_file;
+        }
+
+        public Device(string name_, StorageFile input_file, List<string> IR_info)
+        {
+            name = name_;
+            buttonScanner = new RemoteButtonScanner();
+            device_info_file = input_file;
+            IR_protocol = IR_info[0];
+            IR_bits = IR_info[1];
         }
 
         public string get_name()
