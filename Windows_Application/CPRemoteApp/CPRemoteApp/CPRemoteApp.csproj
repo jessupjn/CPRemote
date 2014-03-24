@@ -128,6 +128,9 @@
     <Compile Include="ViewController - Remote\RemoteMenu.xaml.cs">
       <DependentUpon>RemoteMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController - Settings\AddDevicePopup.xaml.cs">
+      <DependentUpon>AddDevicePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController - Settings\ChannelList.xaml.cs">
       <DependentUpon>ChannelList.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,10 @@
     <Content Include="img\toon_disney_icon.png" />
     <Content Include="img\volume_symbol.png" />
     <Page Include="ViewController - Remote\RemoteButtonScanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewController - Settings\AddDevicePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

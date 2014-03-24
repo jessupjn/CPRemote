@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CPRemoteApp.Utility_Classes;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -162,17 +163,63 @@ namespace CPRemoteApp.ViewController___Settings
           // if there is an iteam in the list, also add "Add new device..." at bottom of the list.
 
           var result = await menu.ShowForSelectionAsync(invokerRect);
-          if (result == null)
+          if (result == null && channel_or_volume)
           {
-            menu.Commands.Add(new UICommand("Add new device...", new UICommandInvokedHandler(addNewDevice)));
+            menu.Commands.Add(new UICommand("Add new volume device...", new UICommandInvokedHandler(addNewVolumeDevice)));
             result = await menu.ShowForSelectionAsync(invokerRect);
+          }
+          else if(result == null)
+          {
+              menu.Commands.Add(new UICommand("Add new channel device...", new UICommandInvokedHandler(addNewChannelDevice)));
+              result = await menu.ShowForSelectionAsync(invokerRect);
           }
 
         }
 
-        private async void addNewDevice(IUICommand command)
+        private async void addNewChannelDevice(IUICommand command)
         {
           return;
+        }
+
+        private async void addNewVolumeDevice(IUICommand command)
+        {
+            //StackPanel popup_content = new StackPanel();
+            /*TextBox name_field = new TextBox();
+            name_field.Text = "Please Enter Device Name";
+            popup_content.Children.Add(name_field);
+            Button next_button = new Button();
+            TextBlock next_txt = new TextBlock();
+            next_txt.Text = "Next";
+            next_button.Content = next_txt;
+            next_button.Click += () =>
+                { };
+            popup_content.Children.Add(next_button);*/
+            AddDevicePopup popup_content = new AddDevicePopup();
+            popup_content.setDevice(new VolumeDevice(), true);
+            Border border = new Border
+            {
+                Child = popup_content,
+                Background = new SolidColorBrush(Colors.LightBlue),
+                BorderBrush = new SolidColorBrush(Colors.Red),
+                BorderThickness = new Thickness(4),
+                Padding = new Thickness(24),
+            };
+
+            //border.Background.Opacity = 0.5;
+            Popup add_device_popup = new Popup
+            {
+                Child = border,
+                IsLightDismissEnabled = true
+            };
+
+            border.Loaded += (loadedSender, loadedArgs) =>
+                {
+                    add_device_popup.HorizontalOffset = Window.Current.Bounds.Width / 2;
+                    add_device_popup.VerticalOffset = Window.Current.Bounds.Height / 3;
+                };
+
+            add_device_popup.IsOpen = true;
+            return;
         }
         private async void selectListItem(IUICommand command)
         {

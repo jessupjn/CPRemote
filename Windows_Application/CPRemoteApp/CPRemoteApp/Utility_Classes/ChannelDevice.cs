@@ -17,11 +17,18 @@ namespace CPRemoteApp.Utility_Classes
     {
         private int num_channels = 0;
         private string[] digit_IR_codes = new string[10];
+        
         public ChannelDevice() { }
 
+        // Used when creating a channel device from a text file
         public ChannelDevice(string name_, StorageFile input_file) : base(name_, input_file)
         {
  
+        }
+
+        public ChannelDevice(string name_, StorageFile input_file, string[] digit_codes) : base(name_, input_file)
+        {
+            digit_IR_codes = digit_codes;
         }
 
         public void add_channel()

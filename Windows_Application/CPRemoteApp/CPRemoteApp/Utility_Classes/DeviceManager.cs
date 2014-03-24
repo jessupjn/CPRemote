@@ -34,6 +34,7 @@ namespace CPRemoteApp.Utility_Classes
             if(devices_info_file == null)
             {
                 // TODO: Display Warning about no devices
+                return;
                 /*StorageFile chan_test = await devices_folder.CreateFileAsync("channel_test.txt", CreationCollisionOption.ReplaceExisting);
                 List<string> channel_file_test_lines = new List<string>() {"7", "Disney Channel", "Disn", "ms-appx:///img/disney_icon.png", "754",
                                                                                                          "Cartoon Network", "Cart", "ms-appx:///img/cartoon_network_icon.png", "456",
@@ -100,12 +101,32 @@ namespace CPRemoteApp.Utility_Classes
             await volumeController.initialize();
         }
 
-        public void add_device()
+        public void addChannelDevice()
         {
 
         }
 
-        public void remove_device()
+        public void addVolumeDevice()
+        {
+
+        }
+
+        public void removeChannelDevice()
+        {
+
+        }
+
+        public void removeVolumeDevice()
+        {
+
+        }
+
+        public void editChannelDevice()
+        {
+
+        }
+
+        public void editVolumeDevice()
         {
 
         }
