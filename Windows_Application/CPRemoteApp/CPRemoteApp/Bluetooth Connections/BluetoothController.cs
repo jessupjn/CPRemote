@@ -50,6 +50,10 @@ namespace CPRemoteApp.Bluetooth_Connections
         {
             //ask the user to connect
           await connectionManager.EnumerateDevicesAsync((sender as Canvas).GetElementRect());
+          if (connectionManager.isConnected())
+          {
+              last_alive_time = DateTime.Now;
+          }
 
         }
         public void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +67,11 @@ namespace CPRemoteApp.Bluetooth_Connections
 
         public async void connectToDefault(object sender, RoutedEventArgs e)
         {
-            connectionManager.ConnectToServiceAsync(null); 
+            connectionManager.ConnectToServiceAsync(null);
+            if (connectionManager.isConnected())
+            {
+                last_alive_time = DateTime.Now;
+            }
         }
         //react
         public void connectionManager_StateChanged(object sender, BluetoothConnectionState state)
@@ -82,14 +90,19 @@ namespace CPRemoteApp.Bluetooth_Connections
         //react
         public bool connectionManager_isConnected(object sender)
         {
-           TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0); 
+           TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0);
+
+           if (connectionManager.isConnected())
+           {
+               OperateTVButton_Click("-P./"); 
+               TimeSpan sub = DateTime.Now.Subtract(last_alive_time);
+               //System.Diagnostics.Debug.WriteLine(sub);
+               if (sub.CompareTo(five_second) == -1)
+               {
+                   return true;
+               }
+           }
             
-            TimeSpan sub= DateTime.Now.Subtract(last_alive_time);
-            //System.Diagnostics.Debug.WriteLine(sub);
-            if (sub.CompareTo(five_second) == -1)
-            {
-                return true;
-            }
             return false; 
 
          }
@@ -108,10 +121,7 @@ namespace CPRemoteApp.Bluetooth_Connections
 
             switch (message)//interpret other messages
             {
-                case "-ALIVE/":
-                   //System.Diagnostics.Debug.WriteLine("ALIVE RECEIVED");
-                   last_alive_time = DateTime.Now;
-                break;  
+               
             }
 
             if (message.StartsWith("-L."))
@@ -120,6 +130,9 @@ namespace CPRemoteApp.Bluetooth_Connections
                 rcvd_code = message; 
 
             }
+
+            //for every received message, reset the timer
+            last_alive_time = DateTime.Now;
 
 
             //log incoming transmission

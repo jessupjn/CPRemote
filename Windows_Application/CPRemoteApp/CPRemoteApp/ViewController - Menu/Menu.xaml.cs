@@ -53,7 +53,7 @@ namespace CPRemoteApp
             Canvas.SetTop(_bluetooth_status_frame, 25);
 
             // check for bluetooth status every 0.2 seconds.
-            timer.Interval = TimeSpan.FromSeconds(0.2);
+            timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += checkBluetoothStatus;
             timer.Start();
             
@@ -69,7 +69,7 @@ namespace CPRemoteApp
         private void checkBluetoothStatus(object sender, object e)
         {
           bool connected = App.bm.connectionManager_isConnected(sender);
-          //System.Diagnostics.Debug.WriteLine(connected);
+          System.Diagnostics.Debug.WriteLine(connected);
 
           SolidColorBrush fill;
 
