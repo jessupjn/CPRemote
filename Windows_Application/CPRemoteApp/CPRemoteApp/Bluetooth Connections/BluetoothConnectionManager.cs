@@ -89,6 +89,10 @@ namespace TCD.Arduino.Bluetooth
             StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
             StorageFile bluetooth_file = (StorageFile)await devices_folder.TryGetItemAsync("bluetooth_file.txt");
+            if(bluetooth_file == null)
+            {
+                return;
+            }
             string bluetooth_file_line = await FileIO.ReadTextAsync(bluetooth_file);
             System.Diagnostics.Debug.WriteLine(bluetooth_file_line);
             //serviceInfo.Id = bluetooth_file_line;

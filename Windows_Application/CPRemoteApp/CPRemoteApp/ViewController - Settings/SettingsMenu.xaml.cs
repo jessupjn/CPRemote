@@ -195,7 +195,7 @@ namespace CPRemoteApp.ViewController___Settings
                 { };
             popup_content.Children.Add(next_button);*/
             AddDevicePopup popup_content = new AddDevicePopup();
-            popup_content.setDevice(new VolumeDevice(), true);
+            popup_content.setDeviceType(true);
             Border border = new Border
             {
                 Child = popup_content,

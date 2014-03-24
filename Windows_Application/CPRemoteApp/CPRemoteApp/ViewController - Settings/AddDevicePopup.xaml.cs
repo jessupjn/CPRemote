@@ -21,7 +21,8 @@ namespace CPRemoteApp.ViewController___Settings
 {
     public sealed partial class AddDevicePopup : UserControl
     {
-        private Device new_device = new VolumeDevice();
+        private VolumeDevice vol_device = new VolumeDevice();
+        private ChannelDevice chan_device = new ChannelDevice();
         // volume = true, channel = false
         private bool channel_or_volume = true;
         
@@ -30,15 +31,22 @@ namespace CPRemoteApp.ViewController___Settings
             this.InitializeComponent();
         }
 
-        public void validateName(object sender, RoutedEventArgs e)
+        public async void validateName(object sender, RoutedEventArgs e)
         {
-
+            // Check to make sure the name isn't blank or already used then change to first button to train screen
+            if(channel_or_volume)
+            {
+                trainVolumeUp();
+            }
+            else
+            {
+                trainDigits();
+            }
         }
 
-        public void setDevice(Device dev, bool chan_or_vol)
+        public void setDeviceType(bool chan_or_vol)
         {
             channel_or_volume = chan_or_vol;
-            new_device = dev;
             if(channel_or_volume)
             {
                 heading_text.Text = "Create New Volume Device";
@@ -48,5 +56,45 @@ namespace CPRemoteApp.ViewController___Settings
                 heading_text.Text = "Create New Channel Device";
             }
         }
-    }
+
+        private void trainVolumeUp()
+        {
+
+        }
+
+        private void trainVolumeDown()
+        {
+
+        }
+
+        private void trainVolumeMute()
+        {
+
+        }
+
+        private void trainDigits()
+        {
+            for(int digit = 0; digit < 10; digit++)
+            {
+                //Do Bluetooth call and wait for response.
+            }
+        }
+
+        // Parameters TBD, will set the content to notify the user of which button to train
+        private void setContent()
+        {
+
+        }
+
+        private void displaySuccessMessage()
+        {
+
+        }
+
+        private void displayErrorMessage()
+        {
+
+        }
+
+    }// End of AddDevicePopup Class
 }
