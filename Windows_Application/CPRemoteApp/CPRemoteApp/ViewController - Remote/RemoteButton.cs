@@ -20,7 +20,7 @@ namespace CPRemoteApp.ViewController___Remote
     public class RemoteButton
     {
 
-        private string IR_code = "";
+        private string channel_number = "";
         public int IR_repititions = 1;
         private string name = "";
         public string abbreviation = "";
@@ -31,9 +31,9 @@ namespace CPRemoteApp.ViewController___Remote
             icon = new BitmapImage();
         }
 
-        public RemoteButton(string name_, string abbv, string code, int repititions, Uri icon_path)
+        public RemoteButton(string name_, string abbv, string chan, int repititions, Uri icon_path)
         {
-            IR_code = code;
+            channel_number = chan;
             IR_repititions = repititions;
             name = name_;
             abbreviation = abbv;
@@ -61,7 +61,7 @@ namespace CPRemoteApp.ViewController___Remote
             output.Add(name);
             output.Add(abbreviation);
             output.Add(icon.UriSource.AbsolutePath);
-            output.Add(IR_code.ToString());
+            output.Add(channel_number.ToString());
             return output;
         }
     }
