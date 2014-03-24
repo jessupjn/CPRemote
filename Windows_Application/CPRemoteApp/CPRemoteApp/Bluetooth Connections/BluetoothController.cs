@@ -30,12 +30,14 @@ namespace CPRemoteApp.Bluetooth_Connections
         /// </summary>
         /// 
 
+        public string rcvd_code { get; set; }
         private BluetoothConnectionManager connectionManager = new BluetoothConnectionManager();//mange the connection to another device
         DateTime last_alive_time = new DateTime();
 
         
         public BluetoothController()
         {
+            rcvd_code = "";
             connectionManager.ExceptionOccured += delegate(object sender, Exception ex) { System.Diagnostics.Debug.WriteLine(ex.Message + "\n"); };
             connectionManager.MessageReceived += connectionManager_MessageReceived;
             connectionManager.StateChanged += connectionManager_StateChanged;
