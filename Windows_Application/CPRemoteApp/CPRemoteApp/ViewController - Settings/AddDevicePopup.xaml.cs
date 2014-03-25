@@ -159,6 +159,14 @@ namespace CPRemoteApp.ViewController___Settings
         private string getNextData(ref string info)
         {
             int index = info.IndexOf('.');
+            if(index == -1)
+            {
+                index = info.IndexOf('/');
+                if(index == -1)
+                {
+                    return "";
+                }
+            }
             string data = info.Substring(0, index);
             info = info.Substring(index + 1);
             return data;
