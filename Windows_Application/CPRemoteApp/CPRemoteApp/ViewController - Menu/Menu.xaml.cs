@@ -27,8 +27,6 @@ namespace CPRemoteApp
     /// 
     public sealed partial class Menu : Page
     {
-        private bool enteredRemote;
-        private bool enteredSettings;
         private DispatcherTimer timer = new DispatcherTimer();
 
         public Menu()
@@ -59,7 +57,6 @@ namespace CPRemoteApp
             timer.Interval = TimeSpan.FromSeconds(10);
             timer.Tick += checkBluetoothStatus;
             timer.Start();
-            
 
         }
 
@@ -79,8 +76,6 @@ namespace CPRemoteApp
         private void checkBluetoothStatus(object sender, object e)
         {
           bool connected = App.bm.connectionManager_isConnected(sender);
-          System.Diagnostics.Debug.WriteLine(connected);
-
           SolidColorBrush fill;
 
           if(connected)
@@ -97,52 +92,29 @@ namespace CPRemoteApp
           }
 
           _bluetooth_status_indicator.Fill = fill;
-
         }
 
         private void remoteClick(object sender, RoutedEventArgs e)
         {
-            if(enteredRemote) this.Frame.Navigate( typeof(ViewController___Remote.RemoteMenu) );
+          if (_goToRemote_indicator.Visibility == Visibility.Visible) this.Frame.Navigate(typeof(ViewController___Remote.RemoteMenu));
         }
 
         private void settingsClick(object sender, RoutedEventArgs e)
         {
-            if(enteredSettings) this.Frame.Navigate( typeof(ViewController___Settings.SettingsMenu) );
+          if (_goToSettings_indicator.Visibility == Visibility.Visible) this.Frame.Navigate(typeof(ViewController___Settings.SettingsMenu));
         }
 
-        private void bluetoothClick(object sender, RoutedEventArgs e)
-        {
-            App.bm.ConnectButton_Click(sender, e); 
-        }
 
         private void enterHighlight(object sender, PointerRoutedEventArgs e)
         {
-            Windows.UI.Color fill = Windows.UI.Colors.Black;
-            if (sender.Equals(_goToRemote))
-            {
-              _goToRemote_indicator.Visibility = Visibility.Visible;
-              enteredRemote = true;
-            }
-            else if (sender.Equals(_goToSettings))
-            {
-              _goToSettings_indicator.Visibility = Visibility.Visible;
-              enteredSettings = true;
-            }
-
+            if (sender.Equals(_goToRemote)) { _goToRemote_indicator.Visibility = Visibility.Visible; }
+            else if (sender.Equals(_goToSettings)) { _goToSettings_indicator.Visibility = Visibility.Visible; }
         }
 
         private void exitHighlight(object sender, PointerRoutedEventArgs e)
         {
-            if (sender.Equals(_goToRemote))
-            {
-                _goToRemote_indicator.Visibility = Visibility.Collapsed;
-                enteredRemote = false;
-            }
-            else if (sender.Equals(_goToSettings))
-            {
-                _goToSettings_indicator.Visibility = Visibility.Collapsed;
-                enteredSettings = false;
-            }
+            if (sender.Equals(_goToRemote)) { _goToRemote_indicator.Visibility = Visibility.Collapsed; }
+            else if (sender.Equals(_goToSettings)) { _goToSettings_indicator.Visibility = Visibility.Collapsed; }
         }
 
     }

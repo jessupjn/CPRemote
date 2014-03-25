@@ -31,12 +31,6 @@ namespace CPRemoteApp.ViewController___Remote
     /// </summary>
     public sealed partial class RemoteMenu : Page
     {
-        // customizable variables
-        // -------------------------
-        private int offset = 200;
-        private double animation_time = 0.2;
-
-        // -------------------------
 
         private int status = 0;
         private bool can_move = true;
@@ -48,6 +42,7 @@ namespace CPRemoteApp.ViewController___Remote
         public RemoteMenu()
         {
             this.InitializeComponent();
+            int offset = 200;
 
             // check for bluetooth status every 0.2 seconds
             timer.Interval = TimeSpan.FromSeconds(0.2);
@@ -117,6 +112,8 @@ namespace CPRemoteApp.ViewController___Remote
 
             //TODO: Should check the return value of device_manager to ensure devices were loaded properly
             await device_manager.initialize(devices_folder);*/
+            
+            int offset = 200;
 
             // Button Scanner Panel Formatting
             channel_scanner_panel.Height = Window.Current.Bounds.Height;
@@ -176,6 +173,8 @@ namespace CPRemoteApp.ViewController___Remote
 
             if (status != 0)
             {
+                double animation_time = 0.2;
+
                 _volume_highlight.Visibility = _channel_highlight.Visibility = Visibility.Collapsed;
 
                 // show/hide channel button
@@ -201,6 +200,8 @@ namespace CPRemoteApp.ViewController___Remote
         }
 
         private void slide(bool dir){
+            double animation_time = 0.2;
+            int offset = 200;
 
             // animates the divider over.
             Storyboard storyboard = new Storyboard();
@@ -263,6 +264,7 @@ namespace CPRemoteApp.ViewController___Remote
         {
             Storyboard storyboard = new Storyboard();
             DoubleAnimation animationManager = new DoubleAnimation();
+            double animation_time = 0.2;
 
             // show/hide channel button
             animationManager = new DoubleAnimation();
