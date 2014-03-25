@@ -7,6 +7,13 @@
 int bluetoothTx = 5 ;  // TX-O pin of bluetooth mate 
 int bluetoothRx = 4;  // RX-I pin of bluetooth mate
 
+
+#define PING 0  
+#define LEARN  1
+#define SEND  2 
+
+
+
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
 
 
@@ -93,7 +100,7 @@ MyCustomSend My_Sender;
 
 int RECV_PIN =11;
 
-bool isLearn;
+int recvd_code_type;
 
 IRrecv My_Receiver(RECV_PIN);
 IRTYPES codeType; // The type of code
@@ -131,13 +138,17 @@ void loop()
     int len= bluetooth.readBytesUntil(endl, recvddata, 80);
     recvddata[len]='\0'; 
     
-    isLearn = false;
     
-    isLearn = parseString();
-    Serial.println(isLearn); 
+    recvd_code_type = parseString();
+    Serial.println(recvd_code_type); 
+    
+    if (recvd_code_type == PING) {
+      char pingBuff[]= "-A"; 
+      sendMessage(pingBuff,2);  
+    }
    
    // changeTypesofData (b_protocol, b_code, b_nbits, b_protocol_enum, b_code_long, b_nbits_long); 
-    
+    if (recvd_code_type == SEND) {
     Serial.println("Now Sending "+ b_protocol); 
     Serial.print("with b_code "); 
     Serial.println( b_code_long, DEC); 
@@ -150,8 +161,10 @@ void loop()
       My_Sender.send(b_protocol_enum,b_code_long,b_nbits_long);
       delay(250);
     }
+ 
   }
-  
+  }
+    
   if (My_Receiver.GetResults(&My_Decoder)) {
     My_Decoder.decode();
     if(My_Decoder.decode_type == UNKNOWN) {
@@ -223,7 +236,7 @@ int findIndex (char d, int index) {
   } 
 }
 
-bool parseString ()
+int parseString ()
 {
   //Serial.println(message); 
   int dashPos = findIndex('-',0);
@@ -239,7 +252,10 @@ bool parseString ()
   Serial.println(buff);
   
   if (buff[0] == 'L') {
-    return true;
+    return LEARN;
+  }
+  else if (buff[0] == 'P') {
+    return PING;
   }
   
   memset(buff, 0, 20); 
@@ -262,7 +278,7 @@ bool parseString ()
   memcpy(buff, recvddata+periodPos4+1,4);
   b_repeat = atoi(buff);
   
-  return false;
+  return SEND;
 }
 
 
