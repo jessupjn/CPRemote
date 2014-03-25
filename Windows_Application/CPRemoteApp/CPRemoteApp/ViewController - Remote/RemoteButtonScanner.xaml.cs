@@ -81,6 +81,11 @@ namespace CPRemoteApp.ViewController___Remote
             }
         }
 
+        public List<RemoteButton> getButtons()
+        {
+            return buttons;
+        }
+
         //Should take in an input stream that it can read from to initialize all the buttons associated with it
         public List<String> get_save_output()
         {
