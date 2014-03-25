@@ -27,6 +27,8 @@ namespace CPRemoteApp.ViewController___Settings
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     /// 
+    public delegate void ChangedEventHander(object sender, EventArgs e);
+
     public sealed partial class SettingsMenu : Page
     {
         private DispatcherTimer timer = new DispatcherTimer();
@@ -73,7 +75,7 @@ namespace CPRemoteApp.ViewController___Settings
           item = new ListBoxItem();
           content = new ChannelList("Add New Channel", -1);
           item.Content = content;
-          item.PointerMoved += delegate
+          content.Changed += delegate
           {
             Debug.WriteLine("ADD OBJECT");
             AddNewChannelPopup popup_content = new AddNewChannelPopup();

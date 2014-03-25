@@ -22,6 +22,7 @@ namespace CPRemoteApp.ViewController___Settings
   public sealed partial class ChannelList : UserControl
   {
     private int tag;
+    public event ChangedEventHander Changed;
 
     public ChannelList()
     {
@@ -45,6 +46,7 @@ namespace CPRemoteApp.ViewController___Settings
 
     }
 
+    private void click(object sender, object e) { Changed.Invoke(this, EventArgs.Empty); }
 
     private void editClicked(object sender, object e)
     {
