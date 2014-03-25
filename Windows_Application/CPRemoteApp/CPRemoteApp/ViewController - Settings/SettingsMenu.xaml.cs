@@ -102,7 +102,7 @@ namespace CPRemoteApp.ViewController___Settings
               Child = border,
               IsLightDismissEnabled = true
             };
-
+            add_channel_popup.IsOpen = true;
           };
           channels.Add(item);
 
