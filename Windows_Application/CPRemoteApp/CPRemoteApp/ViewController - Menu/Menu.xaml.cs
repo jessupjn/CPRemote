@@ -54,7 +54,7 @@ namespace CPRemoteApp
             loadDeviceManager();
 
             // check for bluetooth status every 0.2 seconds.
-            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += checkBluetoothStatus;
             timer.Start();
             
@@ -77,6 +77,9 @@ namespace CPRemoteApp
         private void checkBluetoothStatus(object sender, object e)
         {
           bool connected = App.bm.connectionManager_isConnected(sender);
+          System.Diagnostics.Debug.WriteLine(connected);
+
+
           SolidColorBrush fill;
 
           if(connected)

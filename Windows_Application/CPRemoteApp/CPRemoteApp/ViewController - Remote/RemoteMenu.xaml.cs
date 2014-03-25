@@ -47,7 +47,7 @@ namespace CPRemoteApp.ViewController___Remote
             // check for bluetooth status every 0.2 seconds
             timer.Interval = TimeSpan.FromSeconds(0.2);
             timer.Tick += checkBluetoothStatus;
-            timer.Start();
+            //timer.Start();
 
 
             // customization of _bluetooth_status_frame
@@ -106,6 +106,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         async void load_devices()
         {
+
             DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
             /*StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
@@ -196,7 +197,9 @@ namespace CPRemoteApp.ViewController___Remote
             {
                 slide(dir);
             };
+
             storyboard.Begin();
+
         }
 
         private void slide(bool dir){
@@ -255,8 +258,11 @@ namespace CPRemoteApp.ViewController___Remote
             storyboard.Completed += delegate {
               can_move = true;
             };
+            System.Diagnostics.Debug.WriteLine("Before");
 
             storyboard.Begin();
+            System.Diagnostics.Debug.WriteLine("After");
+
 
         }
 
@@ -299,7 +305,15 @@ namespace CPRemoteApp.ViewController___Remote
 
         // ============================================================================================================================================
         // event handlers for button clicks
-        private void backClick(object sender, RoutedEventArgs e) { this.Frame.GoBack(); }
+        private void backClick(object sender, RoutedEventArgs e) { 
+            this.Frame.GoBack();
+            DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
+
+            channel_scanner_panel.Children.Remove(device_manager.channelController.buttonScanner);
+            volume_scanner_panel.Children.Remove(device_manager.volumeController.buttonScanner);
+
+
+        }
 
         private void _volume_Click(object sender, RoutedEventArgs e)
         {
