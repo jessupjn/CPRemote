@@ -50,6 +50,17 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_border, (Window.Current.Bounds.Width - 700) / 2);
+            string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
+            if(cur_v_device_name != "")
+            {
+                _volume_device_selected.Text = cur_v_device_name;
+            }
+
+            string cur_c_device_name = ((App)CPRemoteApp.App.Current).deviceController.channelController.get_name();
+            if(cur_c_device_name != "")
+            {
+                _channel_device_selected.Text = cur_c_device_name;
+            }
 
             _channellist_listbox.ItemsSource = channels;
             populateChannelList();
