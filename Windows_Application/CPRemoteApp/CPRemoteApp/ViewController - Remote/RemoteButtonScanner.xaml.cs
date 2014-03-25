@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Diagnostics;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -93,7 +94,8 @@ namespace CPRemoteApp.ViewController___Remote
 
         public RemoteButton getCurrentButton()
         {
-            return buttons[cur_index];
+          if (buttons.Count > 0) return buttons[cur_index];
+          else return new RemoteButton();
         }
 
         // Changes the interval for the button scanner to change buttons

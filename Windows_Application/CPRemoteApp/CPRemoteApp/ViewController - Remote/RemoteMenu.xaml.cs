@@ -141,22 +141,20 @@ namespace CPRemoteApp.ViewController___Remote
         private void checkBluetoothStatus(object sender, object e)
         {
           bool connected = true;
-          SolidColorBrush fill;
 
+          Color color; 
           if (connected)
           {
-            Color color = Colors.GreenYellow;
+            color = Colors.GreenYellow;
             color.A = 160;
-            fill = new SolidColorBrush(color);
           }
           else
           {
-            Color color = Colors.DarkRed;
+            color = Colors.DarkRed;
             color.A = 160;
-            fill = new SolidColorBrush(color);
           }
 
-          _bluetooth_status_indicator.Fill = fill;
+          _bluetooth_status_indicator.Fill = new SolidColorBrush(color);
 
         }
 
@@ -166,10 +164,12 @@ namespace CPRemoteApp.ViewController___Remote
 
         // ============================================================================================================================================
         // animation functions
-        private void hideButtons(bool dir)
+        private void beginAnimationSequence(bool dir)
         {
+            can_move = false;
             Storyboard storyboard = new Storyboard();
             DoubleAnimation animationManager = new DoubleAnimation();
+            _volume_highlight.Visibility = _channel_highlight.Visibility = Visibility.Collapsed;
 
             if (status != 0)
             {
@@ -238,7 +238,7 @@ namespace CPRemoteApp.ViewController___Remote
             {
                 storyboard.Completed += delegate
                 {
-                    showButtons();
+                  finishAnimationSequence();
                 };
             }
             else if (status == -1)
@@ -252,16 +252,17 @@ namespace CPRemoteApp.ViewController___Remote
                 ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.start();
             }
 
-            storyboard.Completed += delegate { 
-                buildButtonList(dir, offset + _divider.Width);
+            storyboard.Completed += delegate {
+              can_move = true;
             };
 
             storyboard.Begin();
 
         }
 
-        private void showButtons()
+        private void finishAnimationSequence()
         {
+
             Storyboard storyboard = new Storyboard();
             DoubleAnimation animationManager = new DoubleAnimation();
             double animation_time = 0.2;
@@ -283,19 +284,6 @@ namespace CPRemoteApp.ViewController___Remote
             storyboard.Children.Add(animationManager);
 
             storyboard.Begin();
-        }
-        // ============================================================================================================================================
-        // ============================================================================================================================================
-
-
-
-
-        // ============================================================================================================================================
-        // builds and displays the clickable list.
-        private void buildButtonList(bool dir, double offset)
-        {
-            can_move = true;
-            if (status == 0) return;
 
         }
         // ============================================================================================================================================
@@ -311,15 +299,10 @@ namespace CPRemoteApp.ViewController___Remote
 
         // ============================================================================================================================================
         // event handlers for button clicks
-        private void backClick(object sender, RoutedEventArgs e)
-        {
-            this.Frame.GoBack();
-
-        }
+        private void backClick(object sender, RoutedEventArgs e) { this.Frame.GoBack(); }
 
         private void _volume_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("VOL");
             if ((status == 0 || status == 1) && can_move)
                 {
                     if(status == 1)
@@ -327,10 +310,8 @@ namespace CPRemoteApp.ViewController___Remote
                       channel_scanner_panel.Visibility = Visibility.Collapsed;
                         ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.stop();
                     }
-                    can_move = false;
                     status--;
-                    hideButtons(true);
-                    //
+                    beginAnimationSequence(true);
                 }
         }
 
@@ -343,9 +324,8 @@ namespace CPRemoteApp.ViewController___Remote
                       volume_scanner_panel.Visibility = Visibility.Collapsed;
                         ((App)(CPRemoteApp.App.Current)).deviceController.volumeController.buttonScanner.stop();
                     }
-                    can_move = false;
                     status++;
-                    hideButtons(false);
+                    beginAnimationSequence(false);
                 }
         }
 
