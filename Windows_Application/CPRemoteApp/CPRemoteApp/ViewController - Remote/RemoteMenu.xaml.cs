@@ -31,6 +31,7 @@ namespace CPRemoteApp.ViewController___Remote
     /// </summary>
     public sealed partial class RemoteMenu : Page
     {
+        
 
         private int status = 0;
         private bool can_move = true;
@@ -47,7 +48,7 @@ namespace CPRemoteApp.ViewController___Remote
             // check for bluetooth status every 0.2 seconds
             timer.Interval = TimeSpan.FromSeconds(0.2);
             timer.Tick += checkBluetoothStatus;
-            timer.Start();
+            //timer.Start();
 
 
             // customization of _bluetooth_status_frame
@@ -94,8 +95,6 @@ namespace CPRemoteApp.ViewController___Remote
             // customization of _divider
             Canvas.SetLeft(_divider, (Window.Current.Bounds.Width - _divider.Width) / 2);
             Canvas.SetTop(_divider, 0);
-
-            System.Diagnostics.Debug.WriteLine("DEBUGGER BEGINS");
 
         } // constructor
 

@@ -60,10 +60,10 @@ namespace CPRemoteApp.ViewController___Settings
 
           List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
           int num = blist.Count; // number of channels.
-          if (85 * (num + 1) > 600)
+          if (85 * (num + 1) > 450)
           {
-            _channellist_listbox.Height = 600;
-            _channellist_border.Height = 610;
+            _channellist_listbox.Height = 450;
+            _channellist_border.Height = 460;
           }
           else
           {
@@ -77,36 +77,48 @@ namespace CPRemoteApp.ViewController___Settings
           for(int i = 0; i < num; i++)
           {
             item = new ListBoxItem();
-            content = new ChannelList(blist[i].getName(), channels.Count);
+            content = new ChannelList(blist[i].getName(), i);
             item.Content = content;
             channels.Add(item);
           }
           item = new ListBoxItem();
           content = new ChannelList("Add New Channel", -1);
           item.Content = content;
-          item.PointerReleased += delegate
+          item.PointerMoved += delegate
           {
+            Debug.WriteLine("ADD OBJECT");
             AddNewChannelPopup popup_content = new AddNewChannelPopup();
             Border border = new Border
             {
               Child = popup_content,
-              Background = new SolidColorBrush(Colors.Transparent),
+              Width = 500,
+              Height = 470,
+              Background = new SolidColorBrush(Color.FromArgb(255, 18, 11, 66)),
               BorderBrush = new SolidColorBrush(Colors.Black),
               BorderThickness = new Thickness(4),
-              Padding = new Thickness(24),
+              Padding = new Thickness(50,20,50,20)
             };
 
-            //border.Background.Opacity = 0.5;
             add_channel_popup = new Popup
             {
               Child = border,
               IsLightDismissEnabled = true
+            };
+
+            add_channel_popup.Closed += add_channel_popup_Closed;
+
+            border.Loaded += (loadedSender, loadedArgs) =>
+            {
+              add_channel_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
+              add_channel_popup.VerticalOffset = 100;
+
             };
             add_channel_popup.IsOpen = true;
           };
           channels.Add(item);
 
         }
+
         // ===================================================================================================
         // ===================================================================================================
 
@@ -182,6 +194,10 @@ namespace CPRemoteApp.ViewController___Settings
           // false = channel devices
           // if there is an iteam in the list, also add "Add new device..." at bottom of the list.
 
+          //
+          // TODO: populate list with devices
+          // 
+
           var result = await menu.ShowForSelectionAsync(invokerRect);
           if (result == null && channel_or_volume)
           {
@@ -234,8 +250,6 @@ namespace CPRemoteApp.ViewController___Settings
 
             add_device_popup.Closed +=add_device_popup_Closed;
 
-            //add_device_popup.Closed += add_device_popup_Closed;
-
             border.Loaded += (loadedSender, loadedArgs) =>
                 {
                     add_device_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
@@ -252,6 +266,13 @@ namespace CPRemoteApp.ViewController___Settings
             //TODO: 
        
         }
+
+        private void add_channel_popup_Closed(object sender, object e)
+        {
+          //TODO: 
+
+        }
+
         private async void selectListItem(IUICommand command)
         {
           return;
