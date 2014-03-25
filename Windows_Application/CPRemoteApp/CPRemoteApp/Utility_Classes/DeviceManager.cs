@@ -181,6 +181,7 @@ namespace CPRemoteApp.Utility_Classes
             volume_devices.Add(vol_dev);
             vol_dev.saveDevice();
             volumeController = vol_dev;
+            await volumeController.initialize();
             saveDeviceList();
         }
 
