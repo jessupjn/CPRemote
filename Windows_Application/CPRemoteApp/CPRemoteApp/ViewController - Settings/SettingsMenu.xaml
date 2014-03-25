@@ -205,7 +205,7 @@
       <TextBlock Canvas.Left="60" Text="Settings Menu" FontSize="40" FontWeight="Bold"/>
     </Canvas>
 
-    <Canvas x:Name="_scroll_canvas" Width="700" Height="700" Canvas.Top="175">
+    <Canvas x:Name="_scroll_canvas" Width="700" Height="700" Canvas.Top="120">
 
       <!--    object to set the bluetooth device     -->
       <Canvas x:Name="_bt_device" Canvas.Top="10" Width="700" Height="50" PointerReleased="bluetoothClick" PointerMoved="clickerIn" PointerExited="clickerOut">
@@ -231,12 +231,9 @@
         <TextBlock x:Name="_channel_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
       </Canvas>
 
-      <TextBlock x:Name="_channellist_label" Canvas.Top="270" Width="700" Height="26" Text="Channel List:" Foreground="White" FontSize="24"/>
-      <ListBox x:Name="_channellist_listbox"  Canvas.Top="305" Width="700" Height="290" Background="Transparent" SelectionMode="Extended" IsTapEnabled="False" Style="{StaticResource ListBoxStyle1}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}">
-        
-       
-      </ListBox>
-      <Border x:Name="_channellist_border" Canvas.Top="300" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="300" IsTapEnabled="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+      <TextBlock x:Name="_channellist_label" Canvas.Top="240" Width="700" Height="26" Text="Channel List:" Foreground="White" FontSize="24"/>
+      <ListBox x:Name="_channellist_listbox"  Canvas.Top="275" Width="700" Height="350" Background="Transparent" SelectionMode="Extended" IsTapEnabled="False" Style="{StaticResource ListBoxStyle1}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}"/>
+      <Border x:Name="_channellist_border" Canvas.Top="270" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="360" IsTapEnabled="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
 
 
 

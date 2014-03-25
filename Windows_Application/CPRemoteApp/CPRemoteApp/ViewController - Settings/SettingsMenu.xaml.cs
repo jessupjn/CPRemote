@@ -60,17 +60,6 @@ namespace CPRemoteApp.ViewController___Settings
 
           List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
           int num = blist.Count; // number of channels.
-          if (85 * (num + 1) > 450)
-          {
-            _channellist_listbox.Height = 450;
-            _channellist_border.Height = 460;
-          }
-          else
-          {
-            _channellist_listbox.Height = 85 * (num + 1);
-            _channellist_border.Height = 85 * (num + 1) + 10;
-          }
-          _channellist_listbox.Background = _channellist_listbox.Foreground = new SolidColorBrush(Colors.Transparent);
 
           ListBoxItem item;
           ChannelList content;
@@ -91,12 +80,12 @@ namespace CPRemoteApp.ViewController___Settings
             Border border = new Border
             {
               Child = popup_content,
-              Width = 500,
-              Height = 470,
-              Background = new SolidColorBrush(Color.FromArgb(255, 18, 11, 66)),
+              Width = 840,
+              Height = 280,
+              Background = new SolidColorBrush(Colors.LightBlue),
               BorderBrush = new SolidColorBrush(Colors.Black),
               BorderThickness = new Thickness(4),
-              Padding = new Thickness(50,20,50,20)
+              Padding = new Thickness(20,10,20,0)
             };
 
             add_channel_popup = new Popup
@@ -232,7 +221,7 @@ namespace CPRemoteApp.ViewController___Settings
                 Background = new SolidColorBrush(Colors.LightBlue),
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(4),
-                Padding = new Thickness(24),
+                Padding = new Thickness(20,10,20,0),
             };
 
             add_device_popup = new Popup
@@ -246,7 +235,7 @@ namespace CPRemoteApp.ViewController___Settings
             border.Loaded += (loadedSender, loadedArgs) =>
                 {
                     add_device_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
-                    add_device_popup.VerticalOffset = (Window.Current.Bounds.Height - border.ActualHeight) / 2;
+                    add_device_popup.VerticalOffset = 100;
                 };
             popup_content.setParentPopup(ref add_device_popup);
             add_device_popup.IsOpen = true;

@@ -30,16 +30,10 @@ namespace CPRemoteApp.ViewController___Settings
 
     }
 
-    private void clickerIn(object sender, object e)
+    private void uploadClicked(object sender, RoutedEventArgs e)
     {
-      Canvas c = sender as Canvas;
-      _save_button_bg.Fill = new SolidColorBrush(Color.FromArgb(255, 118, 195, 197));
+
     }
 
-    private void clickerOut(object sender, object e)
-    {
-      Canvas c = sender as Canvas;
-      _save_button_bg.Fill = new SolidColorBrush(Color.FromArgb(255, 44, 83, 151));
-    }
   }
 }

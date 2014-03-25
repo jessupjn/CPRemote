@@ -6,27 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="430"
-    d:DesignWidth="400">
+    d:DesignHeight="220"
+    d:DesignWidth="800">
 
-  <Canvas Name="_bg" Background="#FF120B42">
-    <TextBlock Width="400" FontSize="28" FontWeight="Bold" TextAlignment="Center" Canvas.Top="10" Text="Add a New Channel"/>
+  <Canvas Name="_bg">
+    <TextBlock Width="400" FontSize="28" FontWeight="Bold" Foreground="Black" TextAlignment="Center" Canvas.Top="10" Text="Add a New Channel"/>
 
-    <TextBox Width="250" Name="_ch_name" Canvas.Left="75" Canvas.Top="60" Background="#FF2C5397" FontSize="20" PlaceholderText="Channel Name" Foreground="White" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center"/>
-    <TextBox Width="250" Name="_ch_num" Canvas.Left="75" Canvas.Top="110" Background="#FF2C5397" FontSize="20"  PlaceholderText="Channel Number" Foreground="#FFCD2121" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center" InputScope="Number"/>
+    <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="80" Canvas.Left="50" Text="Enter a name:"/>
+    <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="135" Canvas.Left="50" Text="Channel Name:"/>
+    <TextBox Width="150" Height="30" Name="_ch_name" Canvas.Left="200" Canvas.Top="75" Background="White" FontSize="16" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center"/>
+    <TextBox Width="150" Height="30" Name="_ch_num" Canvas.Left="200" Canvas.Top="130" Background="White" FontSize="16" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center" InputScope="Number"/>
 
-    <Canvas Name="_img_background" Background="#FF152C55" Width="130" Height="130" Canvas.Left="135" Canvas.Top="160">
-      <TextBlock Text="Image" Canvas.Top="55" TextAlignment="Center" Width="130" Foreground="WhiteSmoke"/>
-      <Image Name="_img" Width="130" Height="130"/>
-      <Border Width="130" Height="130" BorderThickness="2" BorderBrush="Black"/>
+    <Canvas Name="_img_background" Background="#FF152C55" Width="100" Height="100" Canvas.Left="550" Canvas.Top="20">
+      <TextBlock Text="Image" Canvas.Top="45" TextAlignment="Center" Width="100" Foreground="WhiteSmoke"/>
+      <Image Name="_img" Width="100" Height="100"/>
+      <Border Width="100" Height="100" BorderThickness="2" BorderBrush="Black"/>
     </Canvas>
-    
-    <Button Width="250" Canvas.Left="75" Name="_upload_img" FontSize="20" Canvas.Top="300" Background="#FF2C5397" BorderBrush="WhiteSmoke" BorderThickness="2" Content="Upload a logo"/>
 
-    <Canvas Name="_save_button" Height="60" Width="120" Canvas.Left="140" Canvas.Top="355" PointerReleased="saveClicked" PointerMoved="clickerIn" PointerExited="clickerOut">
-      <Rectangle Name="_save_button_bg" RadiusX="20" RadiusY="20" Fill="#FF2C5397" Height="60" Width="120"/>
-      <Border Name="_save_button_border" Height="60" Width="120" BorderThickness="3" CornerRadius="10" BorderBrush="White"/>
-      <TextBlock Text="Save" Canvas.Top="18" Height="24" Width="120" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="24" FontWeight="Bold"/>
-    </Canvas>
+    <Button Name="_upload_img" Click="uploadClicked" Width="250" Height="38" Canvas.Left="475" Canvas.Top="127" Foreground="Black">
+      <TextBlock Text="Upload a logo" />
+    </Button>
+
+    <Button Name="_save_button" Click="saveClicked" Height="40" Width="120" Canvas.Left="680" Canvas.Top="195" Foreground="Black">
+      <TextBlock Text="Save channel" />
+    </Button>
   </Canvas>
 </UserControl>

@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     d:DesignHeight="400"
     d:DesignWidth="400"
-    Height="400"
-    Width="400">
+    Height="250"
+    Width="800">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -22,8 +22,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Name="heading_text" Grid.Row="0" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <TextBlock Name="device_name_block" Text="Please Enter A Device Name: " FontSize="14" FontWeight="Bold" VerticalAlignment="Center" Padding="5" Grid.Row="1" Grid.Column="0" Foreground="Black"/>
-        <TextBox Name="device_name_text" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="150" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock Name="device_name_block" Text="Please Enter A Device Name: " FontSize="18" FontWeight="Bold" Margin="40,0,40,0" VerticalAlignment="Center" Padding="5" Grid.Row="1" Grid.Column="0" Foreground="Black"/>
+    <TextBox Name="device_name_text" VerticalAlignment="Center" Margin="40,0,40,0" HorizontalAlignment="Stretch" MinWidth="150" Grid.Row="1" Grid.Column="1"/>
         <Button Name="next_button" Click="validateName" Grid.Row="2" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Foreground="Black">
             <TextBlock Text="Next Step" />
         </Button>
