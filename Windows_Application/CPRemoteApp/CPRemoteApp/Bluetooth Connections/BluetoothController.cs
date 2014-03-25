@@ -95,7 +95,6 @@ namespace CPRemoteApp.Bluetooth_Connections
            if (connectionManager.isConnected())
            {
 
-               OperateTVButton_Click("-P./"); 
                TimeSpan sub = DateTime.Now.Subtract(last_alive_time);
                System.Diagnostics.Debug.WriteLine(sub);
                if (sub.CompareTo(five_second) == -1)
