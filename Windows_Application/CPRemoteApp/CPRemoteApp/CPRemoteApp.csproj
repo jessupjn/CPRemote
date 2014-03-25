@@ -131,6 +131,9 @@
     <Compile Include="ViewController - Settings\AddDevicePopup.xaml.cs">
       <DependentUpon>AddDevicePopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController - Settings\AddNewChannelPopup.xaml.cs">
+      <DependentUpon>AddNewChannelPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController - Settings\ChannelList.xaml.cs">
       <DependentUpon>ChannelList.xaml</DependentUpon>
     </Compile>
@@ -168,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewController - Settings\AddDevicePopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewController - Settings\AddNewChannelPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

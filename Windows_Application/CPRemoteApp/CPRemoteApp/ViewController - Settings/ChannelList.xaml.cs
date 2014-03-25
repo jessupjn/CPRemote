@@ -36,6 +36,11 @@ namespace CPRemoteApp.ViewController___Settings
       this.Background = new SolidColorBrush(Colors.Transparent);
       _channel_name.Text = name;
 
+      if(_tag == -1)
+      {
+        _edit_button.Visibility = Visibility.Collapsed;
+        _remove_button.Visibility = Visibility.Collapsed;
+      }
       tag = _tag;
 
     }

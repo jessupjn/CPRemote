@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CPRemoteApp.Utility_Classes;
+using CPRemoteApp.ViewController___Remote;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,6 +32,7 @@ namespace CPRemoteApp.ViewController___Settings
         private DispatcherTimer timer = new DispatcherTimer();
         private List<ListBoxItem> channels = new List<ListBoxItem>();
         private Popup add_device_popup = new Popup();
+        private Popup add_channel_popup = new Popup();
 
         public SettingsMenu()
         {
@@ -49,16 +51,15 @@ namespace CPRemoteApp.ViewController___Settings
 
             _channellist_listbox.ItemsSource = channels;
             populateChannelList();
-
-            //timer.Interval = TimeSpan.FromSeconds(0.2);
-            //timer.Tick += populateChannelList;
-            //timer.Start();
              
         }
 
         private void populateChannelList()
         {
-          int num = 4; // number of channels.
+          if(_channellist_listbox.Items.Count > 0) _channellist_listbox.Items.Clear();
+
+          List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
+          int num = blist.Count; // number of channels.
           if (85 * (num + 1) > 600)
           {
             _channellist_listbox.Height = 600;
@@ -73,17 +74,36 @@ namespace CPRemoteApp.ViewController___Settings
 
           ListBoxItem item;
           ChannelList content;
-          // TODO: for each in channellist... populate with items....
           for(int i = 0; i < num; i++)
           {
             item = new ListBoxItem();
-            content = new ChannelList("channel " + i.ToString(), channels.Count);
+            content = new ChannelList(blist[i].getName(), channels.Count);
             item.Content = content;
             channels.Add(item);
           }
           item = new ListBoxItem();
-          content = new ChannelList("Add New Channel", channels.Count);
+          content = new ChannelList("Add New Channel", -1);
           item.Content = content;
+          item.PointerReleased += delegate
+          {
+            AddNewChannelPopup popup_content = new AddNewChannelPopup();
+            Border border = new Border
+            {
+              Child = popup_content,
+              Background = new SolidColorBrush(Colors.Transparent),
+              BorderBrush = new SolidColorBrush(Colors.Black),
+              BorderThickness = new Thickness(4),
+              Padding = new Thickness(24),
+            };
+
+            //border.Background.Opacity = 0.5;
+            add_channel_popup = new Popup
+            {
+              Child = border,
+              IsLightDismissEnabled = true
+            };
+
+          };
           channels.Add(item);
 
         }
@@ -200,7 +220,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 Child = popup_content,
                 Background = new SolidColorBrush(Colors.LightBlue),
-                BorderBrush = new SolidColorBrush(Colors.Red),
+                BorderBrush = new SolidColorBrush(Colors.Black),
                 BorderThickness = new Thickness(4),
                 Padding = new Thickness(24),
             };
