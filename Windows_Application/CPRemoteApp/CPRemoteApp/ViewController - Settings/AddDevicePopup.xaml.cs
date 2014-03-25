@@ -90,7 +90,7 @@ namespace CPRemoteApp.ViewController___Settings
                 // Get Volume Up Info
                 string vol_up_info = "-S.NEC.12345678901234567890123456789032.32/";//await getIRInfo();
                 setContent("Volume Up");
-                await Task.Delay(TimeSpan.FromSeconds(2)); // Testing Only
+                //await Task.Delay(TimeSpan.FromSeconds(2)); // Testing Only
                 // Prompt User to press button
                 getNextData(ref vol_up_info);
                 string protocol = getNextData(ref vol_up_info);
@@ -119,8 +119,8 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 // Get Volume Down Info
                 setContent("Volume Down");
-                string vol_down_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
-                await Task.Delay(TimeSpan.FromSeconds(2));// Can be removed later. Just for show while not using bt
+                string vol_down_info = await getIRInfo();
+                //await Task.Delay(TimeSpan.FromSeconds(2));// Can be removed later. Just for show while not using bt
                 getNextData(ref vol_down_info);
                 string protocol_2 = getNextData(ref vol_down_info);
                 if(protocol_2 != IR_info[0])
@@ -145,8 +145,8 @@ namespace CPRemoteApp.ViewController___Settings
             try
             {
                 setContent("Mute");
-                string mute_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                string mute_info = await getIRInfo();
+                //await Task.Delay(TimeSpan.FromSeconds(2));
                 getNextData(ref mute_info);
                 string mute_protocol = getNextData(ref mute_info);
                 if (mute_protocol != IR_info[0])
@@ -317,8 +317,8 @@ namespace CPRemoteApp.ViewController___Settings
       
             string digit_str = digit.ToString();
             setContent(digit_str);
-            string digit_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            string digit_info = await getIRInfo();
+            //await Task.Delay(TimeSpan.FromSeconds(2));
             getNextData(ref digit_info);
             string protocol = getNextData(ref digit_info);
             if(digit == 0)
@@ -354,11 +354,11 @@ namespace CPRemoteApp.ViewController___Settings
 
         private async Task<string> getIRInfo()
         {
-            string learn_ir_command = "-L";
+            string learn_ir_command = "-L./";
             App.bm.rcvd_code = "";
             App.bm.OperateTVButton_Click(learn_ir_command);
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Interval = TimeSpan.FromSeconds(15);
             timer.Tick += setTimeLeftFalse;
             timer.Start();
             time_left = true;
