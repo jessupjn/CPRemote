@@ -218,10 +218,10 @@ namespace CPRemoteApp.ViewController___Settings
 
             border.Loaded += (loadedSender, loadedArgs) =>
                 {
-                    add_device_popup.HorizontalOffset = Window.Current.Bounds.Width / 2;
-                    add_device_popup.VerticalOffset = Window.Current.Bounds.Height / 3;
+                    add_device_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
+                    add_device_popup.VerticalOffset = (Window.Current.Bounds.Height - border.ActualHeight) / 2;
                 };
-
+            popup_content.setParentPopup(ref add_device_popup);
             add_device_popup.IsOpen = true;
             return;
         }
@@ -230,6 +230,7 @@ namespace CPRemoteApp.ViewController___Settings
         private void add_device_popup_Closed(object sender, object e)
         {
             //TODO: 
+       
         }
         private async void selectListItem(IUICommand command)
         {

@@ -130,6 +130,7 @@ namespace CPRemoteApp.Utility_Classes
             channel_devices.Add(channel_dev);
             channel_dev.saveDevice();
             saveDeviceList();
+            channelController = channel_dev;
         }
 
         public async void addVolumeDevice(string name, List<string> IR_info)
@@ -140,6 +141,7 @@ namespace CPRemoteApp.Utility_Classes
             volume_devices.Add(vol_dev);
             vol_dev.saveDevice();
             saveDeviceList();
+            volumeController = vol_dev;
         }
 
         public void removeChannelDevice()
