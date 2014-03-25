@@ -212,26 +212,20 @@ namespace CPRemoteApp.ViewController___Settings
 
         }
 
-        private async void addNewChannelDevice(IUICommand command)
+        private void addNewChannelDevice(IUICommand command)
         {
-          return;
+            addNewDevice(command, false);
         }
 
-        private async void addNewVolumeDevice(IUICommand command)
+        private void addNewVolumeDevice(IUICommand command)
         {
-            //StackPanel popup_content = new StackPanel();
-            /*TextBox name_field = new TextBox();
-            name_field.Text = "Please Enter Device Name";
-            popup_content.Children.Add(name_field);
-            Button next_button = new Button();
-            TextBlock next_txt = new TextBlock();
-            next_txt.Text = "Next";
-            next_button.Content = next_txt;
-            next_button.Click += () =>
-                { };
-            popup_content.Children.Add(next_button);*/
+            addNewDevice(command, true);
+        }
+
+        private void addNewDevice(IUICommand command, bool chan_or_vol)
+        {
             AddDevicePopup popup_content = new AddDevicePopup();
-            popup_content.setDeviceType(true);
+            popup_content.setDeviceType(chan_or_vol);
             Border border = new Border
             {
                 Child = popup_content,
@@ -241,7 +235,6 @@ namespace CPRemoteApp.ViewController___Settings
                 Padding = new Thickness(24),
             };
 
-            //border.Background.Opacity = 0.5;
             add_device_popup = new Popup
             {
                 Child = border,
