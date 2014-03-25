@@ -50,6 +50,7 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_border, (Window.Current.Bounds.Width - 700) / 2);
+
             string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
             if(cur_v_device_name != "")
             {
@@ -88,7 +89,6 @@ namespace CPRemoteApp.ViewController___Settings
           item.Content = content;
           content.Changed += delegate
           {
-            Debug.WriteLine("ADD OBJECT");
             AddNewChannelPopup popup_content = new AddNewChannelPopup();
             Border border = new Border
             {
@@ -113,12 +113,11 @@ namespace CPRemoteApp.ViewController___Settings
             {
               add_channel_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
               add_channel_popup.VerticalOffset = 100;
-
             };
             add_channel_popup.IsOpen = true;
           };
-          channels.Add(item);
 
+          channels.Add(item);
         }
 
         // ===================================================================================================
@@ -196,20 +195,28 @@ namespace CPRemoteApp.ViewController___Settings
           // false = channel devices
           // if there is an iteam in the list, also add "Add new device..." at bottom of the list.
 
-          //
-          // TODO: populate list with devices
-          // 
-
           var result = await menu.ShowForSelectionAsync(invokerRect);
           if (result == null && channel_or_volume)
           {
+            //((App)CPRemoteApp.App.Current).deviceController.
+            List<VolumeDevice> vList = new List<ChannelDevice>();
+            foreach(VolumeDevice d in vList)
+            {
+              menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
+            }
             menu.Commands.Add(new UICommand("Add new volume device...", new UICommandInvokedHandler(addNewVolumeDevice)));
             result = await menu.ShowForSelectionAsync(invokerRect);
           }
           else if(result == null)
           {
-              menu.Commands.Add(new UICommand("Add new channel device...", new UICommandInvokedHandler(addNewChannelDevice)));
-              result = await menu.ShowForSelectionAsync(invokerRect);
+            //((App)CPRemoteApp.App.Current).deviceController.
+            List<ChannelDevice> cList = new List<ChannelDevice>();
+            foreach (ChannelDevice d in cList)
+            {
+              menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
+            }
+            menu.Commands.Add(new UICommand("Add new channel device...", new UICommandInvokedHandler(addNewChannelDevice)));
+            result = await menu.ShowForSelectionAsync(invokerRect);
           }
 
         }
@@ -258,14 +265,21 @@ namespace CPRemoteApp.ViewController___Settings
         // Called when the pop-up is closed. Needs to cancel bluetooth learning process
         private void add_device_popup_Closed(object sender, object e)
         {
-            //TODO: 
-       
+          string cur_c_device_name = ((App)CPRemoteApp.App.Current).deviceController.channelController.get_name();
+          if (cur_c_device_name != "")
+          {
+            _channel_device_selected.Text = cur_c_device_name;
+          }
+          string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
+          if (cur_v_device_name != "")
+          {
+            _volume_device_selected.Text = cur_v_device_name;
+          }
         }
 
         private void add_channel_popup_Closed(object sender, object e)
         {
-          //TODO: 
-
+          populateChannelList();
         }
 
         private async void selectListItem(IUICommand command)

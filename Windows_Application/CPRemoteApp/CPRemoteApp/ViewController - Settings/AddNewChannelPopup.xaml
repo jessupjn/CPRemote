@@ -12,8 +12,8 @@
   <Canvas Name="_bg">
     <TextBlock Width="400" FontSize="28" FontWeight="Bold" Foreground="Black" TextAlignment="Center" Canvas.Top="10" Text="Add a New Channel"/>
 
-    <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="80" Canvas.Left="50" Text="Enter a name:"/>
-    <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="135" Canvas.Left="50" Text="Channel Name:"/>
+    <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="80" Canvas.Left="40" Text="Channel Name:"/>
+    <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="135" Canvas.Left="40" Text="Channel Number:"/>
     <TextBox Width="150" Height="30" Name="_ch_name" Canvas.Left="200" Canvas.Top="75" Background="White" FontSize="16" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center"/>
     <TextBox Width="150" Height="30" Name="_ch_num" Canvas.Left="200" Canvas.Top="130" Background="White" FontSize="16" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center" InputScope="Number"/>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPRemoteApp.ViewController___Remote;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace CPRemoteApp.ViewController___Settings
 
     private void saveClicked(object sender, object e)
     {
-
+      RemoteButton b = new RemoteButton(); //new RemoteButton(_ch_name, _ch_name, _ch_num.ToString(), 1, new Uri(""));
     }
 
     private void uploadClicked(object sender, RoutedEventArgs e)
