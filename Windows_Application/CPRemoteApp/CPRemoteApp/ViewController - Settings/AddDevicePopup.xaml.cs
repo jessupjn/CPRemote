@@ -2,6 +2,7 @@
 using CPRemoteApp.Utility_Classes;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Popups;
@@ -20,6 +21,7 @@ namespace CPRemoteApp.ViewController___Settings
         private List<string> IR_info = new List<string>();
         private WeakReference<Popup> popup_ref;
         private string device_name = "";
+        private int cur_digit = 0;
         // volume = true, channel = false
         private bool channel_or_volume = true;
         private bool time_left = true;
@@ -49,7 +51,8 @@ namespace CPRemoteApp.ViewController___Settings
             }
             else
             {
-               trainChannelDevice();
+                // Start at train Zero and Populate all of the IR information, via next button clicks
+                trainZero();
             }
         }
 
@@ -161,20 +164,188 @@ namespace CPRemoteApp.ViewController___Settings
             }
         }
 
-
-        private async void trainChannelDevice()
+        private async void trainZero()
         {
-            for(int digit = 0; digit < 10; digit++)
+            try
             {
-                //Do Bluetooth call and wait for response.
+                next_button.Click -= validateName;
+                next_button.Click += trainOne;
+                await trainDigit(0);
             }
-            string result = "";
-            //return result;
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+        }
+
+        private async void trainOne(object sender, RoutedEventArgs e)
+        { 
+            try
+            {
+                next_button.Click -= trainOne;
+                next_button.Click += trainTwo;
+                await trainDigit(1);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+        }
+
+        private async void trainTwo(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainTwo;
+                next_button.Click += trainThree;
+                await trainDigit(2);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainThree(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainThree;
+                next_button.Click += trainFour;
+                await trainDigit(3);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainFour(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainFour;
+                next_button.Click += trainFive;
+                await trainDigit(4);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainFive(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainFive;
+                next_button.Click += trainSix;
+                await trainDigit(5);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainSix(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainSix;
+                next_button.Click += trainSeven;
+                await trainDigit(6);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainSeven(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainSeven;
+                next_button.Click += trainEight;
+                await trainDigit(7);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainEight(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainEight;
+                next_button.Click += trainNine;
+                await trainDigit(8);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async void trainNine(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                next_button.Click -= trainNine;
+                await trainDigit(9);
+                ((App)CPRemoteApp.App.Current).deviceController.addChannelDevice(device_name, IR_info);
+            }
+            catch (Exception except)
+            {
+                displayErrorMessage(except.Message);
+            }
+            
+        }
+
+        private async Task trainDigit(int digit)
+        {
+      
+            string digit_str = digit.ToString();
+            setContent(digit_str);
+            string digit_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            getNextData(ref digit_info);
+            string protocol = getNextData(ref digit_info);
+            if(digit == 0)
+            {
+                // Set the Protocol and IR Bits in the IR_info List
+                IR_info.Add(protocol);
+                string code = getNextData(ref digit_info);
+                string bits = getNextData(ref digit_info);
+                IR_info.Add(bits);
+                IR_info.Add(code);
+            }
+            else if(protocol != IR_info[0]) // Protocols don't match
+            {
+                throw new Exception("Error: Remote Protocol not Consistent. Please Try Again");
+            }
+            else
+            {
+                string code = getNextData(ref digit_info);
+                IR_info.Add(code);
+            }
+            displaySuccessMessage( digit_str + " IR Code Successfully Learned!", digit == 9);
         }
 
         // Parameters TBD, will set the content to notify the user of which button to train
         private void setContent(string message)
         {
+            System.Diagnostics.Debug.WriteLine("Set Content: " + message);
             press_button_command_block.Text = "Please Press the " + message + " button on your remote";
             press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Visible;
             next_button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
@@ -211,7 +382,7 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void displaySuccessMessage(string success_msg, bool last_button)
         {
-            
+            System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
             if(last_button)
             {
                 success_msg += " All IR Codes have been learned." + 

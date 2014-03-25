@@ -61,26 +61,44 @@ namespace CPRemoteApp.Utility_Classes
             String device_name;
             StorageFile cur_device_input_file;
 
-          
-
-
             // Channel Device Initialization
 
             for(int i = 0; i < num_channel_devices; ++i)
             {
                 device_name = input[cur_index++];
-                cur_device_input_file = await get_input_file_from_name(device_name, 'c');
-                ChannelDevice c_device = new ChannelDevice(device_name, cur_device_input_file);
-                channel_devices.Add(c_device);
+                try
+                {
+                    cur_device_input_file = (StorageFile)await get_input_file_from_name(device_name, 'c');
+                    ChannelDevice c_device = new ChannelDevice(device_name, cur_device_input_file);
+                    channel_devices.Add(c_device);
+                }
+                catch(Exception except)
+                {
+                    System.Diagnostics.Debug.WriteLine(except.Message);
+                }
             }
             // Get Current Channel Device
-            int chan_index = channel_devices.FindIndex(x => x.get_name().Equals(input[cur_index++]));
-            if(chan_index < 0)
+            int chan_index = 0;
+            bool found = false;
+            string cur_chan_device_name = input[cur_index++];
+            foreach(ChannelDevice cur in channel_devices)
+            {
+                if(cur.get_name().Equals(cur_chan_device_name))
+                {
+                    found = true;
+                    break;
+                }
+                chan_index++;
+            }
+            if (!found)
             {
                 // Throw Exception about channel device not found
             }
-            channelController = channel_devices[chan_index];
-            await channelController.initialize();
+            else
+            {
+                channelController = channel_devices[chan_index];
+                await channelController.initialize();
+            }
 
             // Volume Device Initialization
 
@@ -92,19 +110,34 @@ namespace CPRemoteApp.Utility_Classes
                 VolumeDevice v_device = new VolumeDevice(device_name, cur_device_input_file);
                 volume_devices.Add(v_device);
             }
-            int vol_index = volume_devices.FindIndex(x => x.get_name().Equals(cur_index++));
-            if(vol_index < 0)
+            int vol_index = 0;
+            string cur_vol_device_name = input[cur_index++];
+            found = false;
+            foreach(VolumeDevice cur_v in volume_devices)
             {
-                // Throw Exception about Volume device not found
+                if(cur_v.get_name().Equals(cur_vol_device_name))
+                {
+                    found = true;
+                    break;
+                }
+                vol_index++;
             }
-            volumeController = volume_devices[vol_index];
-            await volumeController.initialize();
+            if(!found)
+            {
+                // TODO: Throw Error
+            }
+            else
+            {
+                volumeController = volume_devices[vol_index];
+                await volumeController.initialize();
+            }
+      
         }
 
         public async void saveDeviceList()
         {
             // # of channel devices, name of each channel device, cur channel device, 
-            StorageFile info_file = await devices_folder.CreateFileAsync("device_info.txt", CreationCollisionOption.ReplaceExisting);
+            StorageFile info_file = await devices_folder.CreateFileAsync("devices_info.txt", CreationCollisionOption.ReplaceExisting);
             List<string> save_output = new List<string>();
             save_output.Add(channel_devices.Count.ToString());
             foreach(ChannelDevice cur_dev in channel_devices)
@@ -129,8 +162,8 @@ namespace CPRemoteApp.Utility_Classes
             ChannelDevice channel_dev = new ChannelDevice(name, chan_file, IR_info);
             channel_devices.Add(channel_dev);
             channel_dev.saveDevice();
-            saveDeviceList();
             channelController = channel_dev;
+            saveDeviceList();
         }
 
         public async void addVolumeDevice(string name, List<string> IR_info)
@@ -140,18 +173,18 @@ namespace CPRemoteApp.Utility_Classes
             VolumeDevice vol_dev = new VolumeDevice(name, vol_file, IR_info);
             volume_devices.Add(vol_dev);
             vol_dev.saveDevice();
-            saveDeviceList();
             volumeController = vol_dev;
+            saveDeviceList();
         }
 
         public void removeChannelDevice()
         {
-
+            saveDeviceList();
         }
 
         public void removeVolumeDevice()
         {
-
+            saveDeviceList();
         }
 
         public void editChannelDevice()
@@ -166,9 +199,9 @@ namespace CPRemoteApp.Utility_Classes
 
         private string get_input_file_name(string name, char postfix)
         {
-            name.Replace(" ", "_");
-            name += "_" + postfix + ".txt";
-            return name;
+            string f_name = name.Replace(" ", "_");
+            f_name += "_" + postfix + ".txt";
+            return f_name;
         }
 
         public async Task<bool> device_input_file_exists(string dev_name, bool channel_or_volume)
@@ -202,10 +235,10 @@ namespace CPRemoteApp.Utility_Classes
             //name += "_" + postfix;
             name = get_input_file_name(name, postfix);
             StorageFile input_file = (StorageFile) await devices_folder.TryGetItemAsync(name);
-            if(input_file.IsEqual(null))
+            /*if(input_file.IsEqual(null))
             {
                 //TODO: Throw Null File Exception Error
-            }
+            }*/
             return input_file;
         }
 

@@ -22,6 +22,7 @@ namespace CPRemoteApp.ViewController___Settings
   public sealed partial class ChannelList : UserControl
   {
     private int tag;
+    public event ChangedEventHander Changed;
 
     public ChannelList()
     {
@@ -36,10 +37,16 @@ namespace CPRemoteApp.ViewController___Settings
       this.Background = new SolidColorBrush(Colors.Transparent);
       _channel_name.Text = name;
 
+      if(_tag == -1)
+      {
+        _edit_button.Visibility = Visibility.Collapsed;
+        _remove_button.Visibility = Visibility.Collapsed;
+      }
       tag = _tag;
 
     }
 
+    private void click(object sender, object e) { Changed.Invoke(this, EventArgs.Empty); }
 
     private void editClicked(object sender, object e)
     {

@@ -10,7 +10,7 @@
     d:DesignWidth="700"
     Background="Transparent">
 
-  <Canvas Name="_channel_canvas" Height="60" Width="700" Background="Transparent">
+  <Canvas Name="_channel_canvas" Height="60" Width="700" Background="Transparent" PointerReleased="click">
     <TextBlock Name="_channel_name" Text="name" Width="350" Height="30" Canvas.Top="15" Canvas.Left="50" Foreground="White" TextAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
 
     <Canvas Name="_edit_button" Height="30" Width="60" Canvas.Left="450" Canvas.Top="15" PointerReleased="editClicked" PointerMoved="clickerIn" PointerExited="clickerOut">

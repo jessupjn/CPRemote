@@ -56,7 +56,7 @@ namespace CPRemoteApp
             // check for bluetooth status every 0.2 seconds.
             timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += checkBluetoothStatus;
-            timer.Start();
+            //timer.Start();
             
 
         }
