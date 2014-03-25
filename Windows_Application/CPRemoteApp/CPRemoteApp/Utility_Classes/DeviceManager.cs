@@ -165,7 +165,7 @@ namespace CPRemoteApp.Utility_Classes
         private string get_input_file_name(string name, char postfix)
         {
             name.Replace(" ", "_");
-            name += "_" + postfix;
+            name += "_" + postfix + ".txt";
             return name;
         }
 
