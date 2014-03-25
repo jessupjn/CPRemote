@@ -90,13 +90,14 @@ namespace CPRemoteApp.Bluetooth_Connections
         //react
         public bool connectionManager_isConnected(object sender)
         {
-           TimeSpan five_second = new TimeSpan(0, 0, 0, 5, 0);
+           TimeSpan five_second = new TimeSpan(0, 0, 0, 20, 0);
 
            if (connectionManager.isConnected())
            {
+
                OperateTVButton_Click("-P./"); 
                TimeSpan sub = DateTime.Now.Subtract(last_alive_time);
-               //System.Diagnostics.Debug.WriteLine(sub);
+               System.Diagnostics.Debug.WriteLine(sub);
                if (sub.CompareTo(five_second) == -1)
                {
                    return true;

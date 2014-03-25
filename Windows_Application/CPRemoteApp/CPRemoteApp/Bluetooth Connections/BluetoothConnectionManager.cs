@@ -70,7 +70,7 @@ namespace TCD.Arduino.Bluetooth
         /// <param name="invokerRect">for example: connectButton.GetElementRect();</param>
         public async Task EnumerateDevicesAsync(Rect invokerRect)
         {
-            this.State = BluetoothConnectionState.Enumerating;
+            //this.State = BluetoothConnectionState.Enumerating;
             var serviceInfoCollection = await DeviceInformation.FindAllAsync(RfcommDeviceService.GetDeviceSelector(RfcommServiceId.SerialPort));
             PopupMenu menu = new PopupMenu();
             foreach (var serviceInfo in serviceInfoCollection)
