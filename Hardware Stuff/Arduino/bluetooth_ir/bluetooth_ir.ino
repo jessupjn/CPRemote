@@ -1,6 +1,8 @@
 #include <SoftwareSerial.h>  
 #include <IRLib.h>
 #include <IRLibMatch.h>
+#include <Timer.h>
+// https://github.com/JChristensen/Timer
 
 //Format of strings -<protocol>.<code>.<nbits>/
 
@@ -15,6 +17,8 @@ int bluetoothRx = 4;  // RX-I pin of bluetooth mate
 
 
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
+
+Timer t;
 
 
 class IRdecodeGIcable: public virtual IRdecodeBase
@@ -124,11 +128,13 @@ void setup()
   bluetooth.begin(57600);  // Start bluetooth serial at 9600
   
   My_Receiver.enableIRIn();
+  t.every(2000, confirmConnection);
 }
 
 
 void loop()
 {
+  t.update();
   // If the bluetooth sent any characters
   if(bluetooth.available())  
   {
@@ -309,4 +315,8 @@ void sendMessage(char* message, int len)
 		bluetooth.write(messageLen);
 		bluetooth.print(message);
 	}
+}
+
+void confirmConnection() {
+  sendMessage("Device Online", 13);
 }
