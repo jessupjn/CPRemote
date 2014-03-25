@@ -21,14 +21,30 @@ namespace CPRemoteApp.ViewController___Settings
 {
   public sealed partial class AddNewChannelPopup : UserControl
   {
+      private WeakReference<Popup> popup_ref;
     public AddNewChannelPopup()
     {
       this.InitializeComponent();
     }
 
+    public void setParentPopup(ref Popup p)
+    {
+        popup_ref = new WeakReference<Popup>(p);
+    }
+
+    public void closePopup(object sender, RoutedEventArgs e)
+    {
+        Popup pop;
+        popup_ref.TryGetTarget(out pop);
+        pop.IsOpen = false;
+    }
+
     private void saveClicked(object sender, object e)
     {
-      RemoteButton b = new RemoteButton(); //new RemoteButton(_ch_name, _ch_name, _ch_num.ToString(), 1, new Uri(""));
+        Uri temp_icon_path = new Uri("ms-appx:///img/media_volume_down.png");
+        RemoteButton b = new RemoteButton(_ch_name.Text, _ch_name.Text, _ch_num.Text, 1, temp_icon_path);
+        ((App)CPRemoteApp.App.Current).deviceController.channelController.add_channel(b);
+        closePopup(null, null);
     }
 
     private void uploadClicked(object sender, RoutedEventArgs e)
