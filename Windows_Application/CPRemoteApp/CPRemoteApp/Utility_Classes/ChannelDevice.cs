@@ -98,6 +98,8 @@ namespace CPRemoteApp.Utility_Classes
         public async void saveDevice()
         {
             List<string> output = new List<string>();
+            output.Add(IR_protocol);
+            output.Add(IR_bits);
             for (int i = 0; i < 10; i++ )
             {
                 output.Add(digit_IR_codes[i]);

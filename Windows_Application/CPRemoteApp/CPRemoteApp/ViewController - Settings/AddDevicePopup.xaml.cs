@@ -303,6 +303,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 next_button.Click -= trainNine;
                 await trainDigit(9);
+                ((App)CPRemoteApp.App.Current).deviceController.addChannelDevice(device_name, IR_info);
             }
             catch (Exception except)
             {
