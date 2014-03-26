@@ -189,7 +189,8 @@ namespace CPRemoteApp.Utility_Classes
         {
             if(name == channelController.get_name())
             {
-                throw new Exception("Cannot Delete the currently selected device");
+                //throw new Exception("Cannot Delete the currently selected device");
+                return;
             }
             int index = getChannelDeviceIndex(ref name);
             if(index == -1)
@@ -204,7 +205,8 @@ namespace CPRemoteApp.Utility_Classes
         {
             if(name == volumeController.get_name())
             {
-                throw new Exception("Cannot Delete the currently selected device");
+                //throw new Exception("Cannot Delete the currently selected device");
+                return;
             }
             int index = getVolumeDeviceIndex(ref name);
             if(index == -1)
