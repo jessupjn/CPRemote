@@ -384,12 +384,12 @@ namespace CPRemoteApp.ViewController___Settings
         private void displaySuccessMessage(string success_msg, bool last_button)
         {
             System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
-            if(last_button)
+            if (last_button)
             {
-                success_msg = " All IR Codes have been learned." + 
-                    " The device has been created and set as the default " + 
+                success_msg = " All IR Codes have been learned." +
+                    " The device has been created and set as the default " +
                     (channel_or_volume ? "volume" : "channel") + " device.";
-                
+
                 close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
             else
