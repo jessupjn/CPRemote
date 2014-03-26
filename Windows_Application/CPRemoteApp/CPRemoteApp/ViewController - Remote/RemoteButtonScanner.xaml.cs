@@ -37,9 +37,6 @@ namespace CPRemoteApp.ViewController___Remote
         {
             this.InitializeComponent();
 
-            imgCanvas.Width = cur_button_panel.Width;
-            imgCanvas.Height = cur_button_panel.Height;
-
             buttons = new List<RemoteButton>();
             buttonList.ItemsSource = abbreviations;
             buttonList.SelectionMode = ListViewSelectionMode.Single;
@@ -62,8 +59,9 @@ namespace CPRemoteApp.ViewController___Remote
         {
             if (cur_index < buttons.Count)
             {
-                this.cur_image.Height = dimmension;
-                this.cur_image.Width = dimmension;
+              this.cur_image.Margin = new Thickness(0, dimmension / 8, 0, 0);
+              this.cur_image.Height = 5 * dimmension / 8;
+                this.cur_image.Width = 5 * dimmension / 8;
                 this.cur_image.Source = buttons[cur_index].icon;
             }
         }

@@ -117,13 +117,16 @@ namespace CPRemoteApp.ViewController___Remote
 
             // Button Scanner Panel Formatting
             channel_scanner_panel.Height = Window.Current.Bounds.Height;
-            channel_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
-            channel_scanner_panel.Children.Add(device_manager.channelController.buttonScanner);
+            channel_scanner_panel.Width = Window.Current.Bounds.Width - offset;
             volume_scanner_panel.Height = Window.Current.Bounds.Height;
-            volume_scanner_panel.Width = Canvas.GetLeft(_divider) + (Window.Current.Bounds.Width / 2 - offset);
+            volume_scanner_panel.Width = Window.Current.Bounds.Width - offset;
+            
+            
+
+            channel_scanner_panel.Children.Add(device_manager.channelController.buttonScanner);
             device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
-            double image_dimension = 1.5 * channel_scanner_panel.Height / 4;
+            double image_dimension = 4 * channel_scanner_panel.Height / 5;
             device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
             device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
