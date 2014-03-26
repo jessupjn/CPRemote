@@ -34,9 +34,11 @@ namespace CPRemoteApp.Utility_Classes
             }
         }
 
-        public void add_channel()
+        public void add_channel(RemoteButton new_chan)
         {
-
+            num_channels++;
+            buttonScanner.add_button(new_chan);
+            saveDevice();
         }
 
         public void modify_channel()

@@ -88,8 +88,8 @@ namespace CPRemoteApp.ViewController___Settings
             try
             {
                 // Get Volume Up Info
-                string vol_up_info = "-S.NEC.12345678901234567890123456789032.32/";//await getIRInfo();
                 setContent("Volume Up");
+                string vol_up_info = await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2)); // Testing Only
                 // Prompt User to press button
                 getNextData(ref vol_up_info);
@@ -370,6 +370,7 @@ namespace CPRemoteApp.ViewController___Settings
             if(!time_left)
             {
                 Exception e = new Exception("Didn't receive remote input");
+                throw e;
             }
             string IR_info = App.bm.rcvd_code;
             return IR_info;

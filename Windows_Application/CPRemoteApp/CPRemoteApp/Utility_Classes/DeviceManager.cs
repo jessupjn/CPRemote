@@ -17,6 +17,7 @@ namespace CPRemoteApp.Utility_Classes
         List<VolumeDevice> volume_devices;
         public VolumeDevice volumeController { private set; get; }
         public ChannelDevice channelController { private set; get; }
+        private bool is_initialized = false;
         public DeviceManager()
         {
             volumeController = new VolumeDevice();
@@ -25,9 +26,15 @@ namespace CPRemoteApp.Utility_Classes
             volume_devices = new List<VolumeDevice>();
         }
 
+        public bool isInitialized()
+        {
+            return is_initialized;
+        }
+
         //Initialize "devices" list and Channel and volumeDevices
         public async Task initialize(StorageFolder devices_folder_)
         {
+            is_initialized = true;
             // Device Manager Metadata Initialization 
             devices_folder = devices_folder_;
             devices_info_file = (StorageFile) await devices_folder.TryGetItemAsync("devices_info.txt");
@@ -174,6 +181,7 @@ namespace CPRemoteApp.Utility_Classes
             volume_devices.Add(vol_dev);
             vol_dev.saveDevice();
             volumeController = vol_dev;
+            await volumeController.initialize();
             saveDeviceList();
         }
 
@@ -195,6 +203,16 @@ namespace CPRemoteApp.Utility_Classes
         public void editVolumeDevice()
         {
 
+        }
+
+        public List<VolumeDevice> getVolumeDevices()
+        {
+            return volume_devices;
+        }
+
+        public List<ChannelDevice> getChannelDevices()
+        {
+            return channel_devices;
         }
 
         private string get_input_file_name(string name, char postfix)
@@ -231,8 +249,6 @@ namespace CPRemoteApp.Utility_Classes
 
         private async Task<StorageFile> get_input_file_from_name(string name, char postfix)
         {
-            //name.Replace(" ", "_");
-            //name += "_" + postfix;
             name = get_input_file_name(name, postfix);
             StorageFile input_file = (StorageFile) await devices_folder.TryGetItemAsync(name);
             /*if(input_file.IsEqual(null))

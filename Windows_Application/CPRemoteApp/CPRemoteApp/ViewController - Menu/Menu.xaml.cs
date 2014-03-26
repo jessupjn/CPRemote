@@ -51,8 +51,10 @@ namespace CPRemoteApp
             // customization of _bluetooth_status_frame
             Canvas.SetLeft(_bluetooth_status_frame, Window.Current.Bounds.Width - 100);
             Canvas.SetTop(_bluetooth_status_frame, 25);
-            loadDeviceManager();
-
+            if (((App)(CPRemoteApp.App.Current)).deviceController.isInitialized() == false)
+            {
+                loadDeviceManager();
+            }
             // check for bluetooth status every 0.2 seconds.
             timer.Interval = TimeSpan.FromSeconds(2);
             timer.Tick += checkBluetoothStatus;

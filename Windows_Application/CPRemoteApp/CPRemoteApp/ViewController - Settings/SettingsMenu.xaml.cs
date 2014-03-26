@@ -69,7 +69,7 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void populateChannelList()
         {
-          if(_channellist_listbox.Items.Count > 0) _channellist_listbox.Items.Clear();
+          channels.Clear();
 
           List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
           int num = blist.Count; // number of channels.
@@ -113,6 +113,7 @@ namespace CPRemoteApp.ViewController___Settings
               popup_control.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
               popup_control.VerticalOffset = 100;
             };
+            popup_content.setParentPopup(ref popup_control);
             popup_control.IsOpen = true;
           };
 
@@ -197,8 +198,7 @@ namespace CPRemoteApp.ViewController___Settings
           var result = await menu.ShowForSelectionAsync(invokerRect);
           if (result == null && channel_or_volume)
           {
-            //((App)CPRemoteApp.App.Current).deviceController.
-            List<VolumeDevice> vList = new List<VolumeDevice>();
+            List<VolumeDevice> vList = ((App)CPRemoteApp.App.Current).deviceController.getVolumeDevices();
             foreach(VolumeDevice d in vList)
             {
               menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
@@ -208,8 +208,7 @@ namespace CPRemoteApp.ViewController___Settings
           }
           else if(result == null)
           {
-            //((App)CPRemoteApp.App.Current).deviceController.
-            List<ChannelDevice> cList = new List<ChannelDevice>();
+            List<ChannelDevice> cList = ((App)CPRemoteApp.App.Current).deviceController.getChannelDevices();
             foreach (ChannelDevice d in cList)
             {
               menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
@@ -278,7 +277,7 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void add_channel_popup_Closed(object sender, object e)
         {
-          populateChannelList();
+            populateChannelList();
         }
 
         private async void selectListItem(IUICommand command)
