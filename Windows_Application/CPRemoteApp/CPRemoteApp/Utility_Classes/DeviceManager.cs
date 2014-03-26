@@ -215,16 +215,17 @@ namespace CPRemoteApp.Utility_Classes
             saveDeviceList();
         }
 
-        public async void selectChannelDevice(string name)
+        public async Task<bool> selectChannelDevice(string name)
         {
             int index = getChannelDeviceIndex(ref name);
             if(index == -1)
             {
-                return;
+                return false;
             }
             channelController = channel_devices[index];
             await channelController.initialize();
             saveDeviceList();
+            return true;
         }
 
         public async void selectVolumeDevice(string name)
