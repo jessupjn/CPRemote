@@ -279,18 +279,14 @@ namespace CPRemoteApp.ViewController___Settings
           SelectedDevice popup_content = new SelectedDevice();
           popup_content.deletePressed += delegate
           {
-            //
-            // DELETE DEVICE CONTENT HERE
-            //
-
-            ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
+              ((App)(CPRemoteApp.App.Current)).deviceController.removeChannelDevice(command.Label);
+              ((App)(CPRemoteApp.App.Current)).deviceController.removeVolumeDevice(command.Label);
+              ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           popup_content.selectPressed += delegate
           {
-            //
-            // SELECT DEVICE CONTENT HERE
-            //
-
+            ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(command.Label);
+            ((App)(CPRemoteApp.App.Current)).deviceController.selectVolumeDevice(command.Label);
             ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           Border border = new Border
