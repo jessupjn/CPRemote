@@ -38,6 +38,8 @@ namespace CPRemoteApp
         public static int button_scanner_interval = 2;
         public static ApplicationData appData;
         public DeviceManager deviceController { set; get; }
+        private DispatcherTimer time = new DispatcherTimer();
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -49,9 +51,18 @@ namespace CPRemoteApp
             this.Suspending += OnSuspending;
             appData = ApplicationData.Current;
             deviceController = new DeviceManager();
-            bm.connectToDefault(null, null); 
+            bm.connectToDefault(null, null);
+
+            time.Interval = TimeSpan.FromSeconds(15);
+            time.Tick += checkConnection;
+            time.Start();
         }
 
+        private void checkConnection(object sender, object e)
+        {
+            System.Diagnostics.Debug.WriteLine("PING");
+            bm.OperateTVButton_Click("-P./"); 
+        }
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.

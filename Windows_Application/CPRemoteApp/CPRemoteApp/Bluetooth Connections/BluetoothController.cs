@@ -56,6 +56,12 @@ namespace CPRemoteApp.Bluetooth_Connections
           }
 
         }
+
+        public string connectedDeviceName()
+        {
+            return connectionManager.connectedDeviceName();
+            
+        }
         public void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             connectionManager.AbortConnection();//cancel current connection attempts
@@ -80,12 +86,11 @@ namespace CPRemoteApp.Bluetooth_Connections
             //enumerateButton.IsEnabled = (state == BluetoothConnectionState.Disconnected);
             //cancelButton.IsEnabled = (state == BluetoothConnectionState.Connecting);
             // disconnectButton.IsEnabled = (state == BluetoothConnectionState.Connected);
+            last_alive_time = DateTime.Now;
+
         }
 
-        public string connectedDeviceName()
-        {
-            return connectionManager.connectedDeviceName(); 
-        }
+    
 
         //react
         public bool connectionManager_isConnected(object sender)

@@ -44,11 +44,11 @@ namespace CPRemoteApp.ViewController___Remote
         {
             this.InitializeComponent();
             int offset = 200;
-
+            checkBluetoothStatus(null, null); 
             // check for bluetooth status every 0.2 seconds
-            timer.Interval = TimeSpan.FromSeconds(0.2);
+            timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += checkBluetoothStatus;
-            //timer.Start();
+            timer.Start();
 
 
             // customization of _bluetooth_status_frame
@@ -143,18 +143,22 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void checkBluetoothStatus(object sender, object e)
         {
-          bool connected = true;
+         bool connected = App.bm.connectionManager_isConnected(sender);
 
-          Color color; 
+          Color color;
+          SolidColorBrush fill;
+
           if (connected)
           {
             color = Colors.GreenYellow;
             color.A = 160;
+            fill = new SolidColorBrush(color);
           }
           else
           {
             color = Colors.DarkRed;
             color.A = 160;
+            fill = new SolidColorBrush(color);
           }
 
           _bluetooth_status_indicator.Fill = new SolidColorBrush(color);

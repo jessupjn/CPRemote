@@ -54,11 +54,13 @@ namespace CPRemoteApp
             if (((App)(CPRemoteApp.App.Current)).deviceController.isInitialized() == false)
             {
                 loadDeviceManager();
-            }
+            }                
+            checkBluetoothStatus(null, null); 
+
             // check for bluetooth status every 0.2 seconds.
-            timer.Interval = TimeSpan.FromSeconds(2);
+            timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += checkBluetoothStatus;
-            //timer.Start();
+            timer.Start();
             
 
         }
