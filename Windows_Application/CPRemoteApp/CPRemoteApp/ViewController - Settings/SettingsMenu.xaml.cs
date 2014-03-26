@@ -67,6 +67,21 @@ namespace CPRemoteApp.ViewController___Settings
              
         }
 
+        private void changeSelectedText()
+        {
+            string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
+            if (cur_v_device_name != "")
+            {
+                _volume_device_selected.Text = cur_v_device_name;
+            }
+
+            string cur_c_device_name = ((App)CPRemoteApp.App.Current).deviceController.channelController.get_name();
+            if (cur_c_device_name != "")
+            {
+                _channel_device_selected.Text = cur_c_device_name;
+            }
+        }
+
         private void populateChannelList()
         {
           channels.Clear();
@@ -274,23 +289,28 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void add_channel_popup_Closed(object sender, object e) { populateChannelList(); }
 
+        private async void selectDevice(string name)
+        {
+            if(await ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(name))
+            {
+                populateChannelList();
+            }
+            ((App)(CPRemoteApp.App.Current)).deviceController.selectVolumeDevice(name);
+            changeSelectedText();
+        }
+
         private async void selectListItem(IUICommand command)
         {
           SelectedDevice popup_content = new SelectedDevice();
           popup_content.deletePressed += delegate
           {
-            //
-            // DELETE DEVICE CONTENT HERE
-            //
-
-            ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
+              ((App)(CPRemoteApp.App.Current)).deviceController.removeChannelDevice(command.Label);
+              ((App)(CPRemoteApp.App.Current)).deviceController.removeVolumeDevice(command.Label);
+              ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           popup_content.selectPressed += delegate
           {
-            //
-            // SELECT DEVICE CONTENT HERE
-            //
-
+              selectDevice(command.Label);
             ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           Border border = new Border
