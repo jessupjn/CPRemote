@@ -370,6 +370,7 @@ namespace CPRemoteApp.ViewController___Settings
             if(!time_left)
             {
                 Exception e = new Exception("Didn't receive remote input");
+                throw e;
             }
             string IR_info = App.bm.rcvd_code;
             return IR_info;
