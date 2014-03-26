@@ -1,8 +1,6 @@
 #include <SoftwareSerial.h>  
 #include <IRLib.h>
 #include <IRLibMatch.h>
-#include <Timer.h>
-// https://github.com/JChristensen/Timer
 
 //Format of strings -<protocol>.<code>.<nbits>/
 
@@ -17,8 +15,6 @@ int bluetoothRx = 4;  // RX-I pin of bluetooth mate
 
 
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
-
-Timer t;
 
 
 class IRdecodeGIcable: public virtual IRdecodeBase
@@ -128,13 +124,11 @@ void setup()
   bluetooth.begin(57600);  // Start bluetooth serial at 9600
   
   My_Receiver.enableIRIn();
-  t.every(2000, confirmConnection);
 }
 
 
 void loop()
 {
-  t.update();
   // If the bluetooth sent any characters
   if(bluetooth.available())  
   {
@@ -170,8 +164,10 @@ void loop()
  
   }
   }
-    
-  if (My_Receiver.GetResults(&My_Decoder)) {
+  
+   
+  if (My_Receiver.GetResults(&My_Decoder) ) {
+    Serial.println("In learn"); 
     My_Decoder.decode();
     if(My_Decoder.decode_type == UNKNOWN) {
       Serial.println(F("Unknown type received. Ignoring."));
@@ -182,10 +178,74 @@ void loop()
       GotOne=true;
     }
     My_Decoder.DumpResults();
-    Serial.println(My_Decoder.value, HEX);
+    Serial.println(My_Decoder.value, DEC);
     Serial.println(Pnames(My_Decoder.decode_type));
     delay(1000);
+    
+    if (GotOne) {
+      //construct the string 
+      memset(recvddata, 0, 80); 
+      int senddatasize = 0; 
+      char L = 'L';
+      char period = '.';
+
+      char endl = '/';
+      
+      //S flag
+      memcpy (recvddata, &L, 1);
+      senddatasize++; 
+      memcpy (recvddata+senddatasize, &period, 1);
+      senddatasize++; 
+      
+     char conversion_int[34]; 
+     memset(conversion_int, '/0', 34); 
+     memcpy(conversion_int, Pnames(My_Decoder.decode_type), 4); 
+          conversion_int[4]=  '/0'; 
+
+     
+
+     int s_size = strlen((char*)convertToString(My_Decoder.decode_type)); 
+     
+     //protocol 
+     memcpy (recvddata+senddatasize, convertToString(My_Decoder.decode_type),s_size );
+     senddatasize+=s_size; 
+     memcpy (recvddata+senddatasize, &period, 1);
+     senddatasize++; 
+
+     
+  
+    //IRcode 
+    memset(conversion_int, '/0', 34); 
+
+    ultoa(codeValue,conversion_int,10); 
+    s_size= strlen(conversion_int); 
+    memcpy (recvddata+senddatasize, conversion_int, s_size);
+    senddatasize+=s_size; 
+    memcpy (recvddata+senddatasize, &period, 1);
+    senddatasize++; 
+    
+    //Bits    
+    memset(conversion_int, '/0', 34); 
+    ultoa(codeBits,conversion_int,10); 
+    s_size= strlen(conversion_int); 
+    
+    memcpy (recvddata+senddatasize, &conversion_int, s_size);
+    senddatasize+=s_size; 
+    memcpy (recvddata+senddatasize, &endl, 1);
+    senddatasize++;
+   
+   
+   sendMessage(recvddata, senddatasize); 
+    
+      
+
+      
+      
+    }
+    recvd_code_type =-1;
+    GotOne= false;  
     My_Receiver.resume();
+    
   }
   
   //check if you need to send anything via bluetooth 
@@ -199,6 +259,11 @@ void changeTypesofData (String buff){
   if (buff == "NEC") {
      Serial.println("NEC FOUND"); 
      b_protocol_enum = NEC; 
+  }
+  
+  if (buff == "NECx") {
+     Serial.println("NECx FOUND"); 
+     b_protocol_enum = NECX; 
   }
   
   else if (buff == "SONY") {
@@ -255,7 +320,6 @@ int parseString ()
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+dashPos+1,periodPos1-dashPos-1); 
-  Serial.println(buff);
   
   if (buff[0] == 'L') {
     return LEARN;
@@ -266,7 +330,6 @@ int parseString ()
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos1+1,periodPos2-periodPos1-1); 
-  Serial.println(buff); 
   changeTypesofData(buff);
    
   
@@ -274,7 +337,6 @@ int parseString ()
   memcpy(buff, recvddata+periodPos2+1,periodPos3-periodPos2-1); 
   char * pEnd; 
   b_code_long = strtol(buff, &pEnd, 10); 
-  Serial.println(b_code_long,DEC);
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos3+1,periodPos4-periodPos3-1);
@@ -315,8 +377,4 @@ void sendMessage(char* message, int len)
 		bluetooth.write(messageLen);
 		bluetooth.print(message);
 	}
-}
-
-void confirmConnection() {
-  sendMessage("Device Online", 13);
 }
