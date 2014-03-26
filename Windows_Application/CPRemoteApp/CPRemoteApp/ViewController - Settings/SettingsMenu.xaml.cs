@@ -115,8 +115,6 @@ namespace CPRemoteApp.ViewController___Settings
             };
             popup_content.setParentPopup(ref popup_control);
             popup_control.IsOpen = true;
-
-
           };
 
           channels.Add(item);
