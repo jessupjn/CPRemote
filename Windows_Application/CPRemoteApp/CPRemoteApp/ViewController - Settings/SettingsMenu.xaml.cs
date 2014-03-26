@@ -116,6 +116,7 @@ namespace CPRemoteApp.ViewController___Settings
             popup_content.setParentPopup(ref popup_control);
             popup_control.IsOpen = true;
 
+
           };
 
           channels.Add(item);
@@ -199,6 +200,7 @@ namespace CPRemoteApp.ViewController___Settings
           var result = await menu.ShowForSelectionAsync(invokerRect);
           if (result == null && channel_or_volume)
           {
+
             List<VolumeDevice> vList = ((App)CPRemoteApp.App.Current).deviceController.getVolumeDevices();
             foreach(VolumeDevice d in vList)
             {
