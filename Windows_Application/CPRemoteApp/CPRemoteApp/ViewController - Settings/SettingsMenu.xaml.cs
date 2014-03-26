@@ -33,8 +33,7 @@ namespace CPRemoteApp.ViewController___Settings
     {
         private DispatcherTimer timer = new DispatcherTimer();
         private List<ListBoxItem> channels = new List<ListBoxItem>();
-        private Popup add_device_popup = new Popup();
-        private Popup add_channel_popup = new Popup();
+        private Popup popup_control;
 
         public SettingsMenu()
         {
@@ -101,20 +100,20 @@ namespace CPRemoteApp.ViewController___Settings
               Padding = new Thickness(20,10,20,0)
             };
 
-            add_channel_popup = new Popup
+            popup_control = new Popup
             {
               Child = border,
               IsLightDismissEnabled = true
             };
 
-            add_channel_popup.Closed += add_channel_popup_Closed;
+            popup_control.Closed += add_channel_popup_Closed;
 
             border.Loaded += (loadedSender, loadedArgs) =>
             {
-              add_channel_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
-              add_channel_popup.VerticalOffset = 100;
+              popup_control.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
+              popup_control.VerticalOffset = 100;
             };
-            add_channel_popup.IsOpen = true;
+            popup_control.IsOpen = true;
           };
 
           channels.Add(item);
@@ -199,7 +198,7 @@ namespace CPRemoteApp.ViewController___Settings
           if (result == null && channel_or_volume)
           {
             //((App)CPRemoteApp.App.Current).deviceController.
-            List<VolumeDevice> vList = new List<ChannelDevice>();
+            List<VolumeDevice> vList = new List<VolumeDevice>();
             foreach(VolumeDevice d in vList)
             {
               menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
@@ -244,21 +243,21 @@ namespace CPRemoteApp.ViewController___Settings
                 Padding = new Thickness(20,10,20,0),
             };
 
-            add_device_popup = new Popup
+            popup_control = new Popup
             {
                 Child = border,
                 IsLightDismissEnabled = true
             };
 
-            add_device_popup.Closed +=add_device_popup_Closed;
+            popup_control.Closed +=add_device_popup_Closed;
 
             border.Loaded += (loadedSender, loadedArgs) =>
                 {
-                    add_device_popup.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
-                    add_device_popup.VerticalOffset = 100;
+                    popup_control.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
+                    popup_control.VerticalOffset = 100;
                 };
-            popup_content.setParentPopup(ref add_device_popup);
-            add_device_popup.IsOpen = true;
+            popup_content.setParentPopup(ref popup_control);
+            popup_control.IsOpen = true;
             return;
         }
 
@@ -284,7 +283,44 @@ namespace CPRemoteApp.ViewController___Settings
 
         private async void selectListItem(IUICommand command)
         {
-          return;
+          SelectedDevice popup_content = new SelectedDevice();
+          popup_content.deletePressed += delegate
+          {
+            //
+            // DELETE DEVICE CONTENT HERE
+            //
+          };
+          popup_content.selectPressed += delegate
+          {
+            //
+            // SELECT DEVICE CONTENT HERE
+            //
+          };
+          Border border = new Border
+          {
+            Child = popup_content,
+            Width = 840,
+            Height = 280,
+            Background = new SolidColorBrush(Colors.LightBlue),
+            BorderBrush = new SolidColorBrush(Colors.Black),
+            BorderThickness = new Thickness(4),
+            Padding = new Thickness(20,10,20,0)
+          };
+
+          popup_control = new Popup
+          {
+            Child = border,
+            IsLightDismissEnabled = true
+          };
+
+          popup_control.Closed += add_channel_popup_Closed;
+
+          border.Loaded += (loadedSender, loadedArgs) =>
+          {
+            popup_control.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
+            popup_control.VerticalOffset = 100;
+          };
+            popup_control.IsOpen = true;
         }
 
 
