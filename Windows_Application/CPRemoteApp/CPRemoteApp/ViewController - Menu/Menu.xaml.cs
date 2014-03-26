@@ -16,6 +16,7 @@ using CPRemoteApp.Bluetooth_Connections;
 using Windows.UI;
 using CPRemoteApp.Utility_Classes;
 using Windows.Storage;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -102,7 +103,17 @@ namespace CPRemoteApp
 
         private void remoteClick(object sender, RoutedEventArgs e)
         {
-          if (_goToRemote_indicator.Visibility == Visibility.Visible) this.Frame.Navigate(typeof(ViewController___Remote.RemoteMenu));
+          // TODO: ADD DEVICE-CHECK
+          if( /* DEVICES ARE SET */ true )
+             this.Frame.Navigate(typeof(ViewController___Remote.RemoteMenu));
+          else
+          {
+            MessageDialog msgDialog = new MessageDialog("Devices are not set!", "Please set up your devices in the settings menu!");
+            UICommand okBtn = new UICommand("OK");
+            okBtn.Invoked += delegate { };
+            msgDialog.Commands.Add(okBtn);
+            msgDialog.ShowAsync();
+          }
         }
 
         private void settingsClick(object sender, RoutedEventArgs e)
