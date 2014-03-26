@@ -21,7 +21,7 @@ namespace CPRemoteApp.ViewController___Settings
 {
   public sealed partial class ChannelList : UserControl
   {
-    private int tag;
+    public int tag;
     public event ChangedEventHander Changed;
     public event ChangedEventHander deletePressed;
     public event ChangedEventHander editPressed;
@@ -67,6 +67,6 @@ namespace CPRemoteApp.ViewController___Settings
       if( c.Name == "_edit_button") _edit_button_bg.Fill = new SolidColorBrush(Color.FromArgb(255,54,153,156));
       else _remove_button_bg.Fill = new SolidColorBrush(Color.FromArgb(255,180,72,72));
     }
-
+  
   }
 }

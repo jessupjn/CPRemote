@@ -72,11 +72,10 @@ namespace CPRemoteApp.ViewController___Settings
           channels.Clear();
 
           List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
-          int num = blist.Count; // number of channels.
 
           ListBoxItem item;
           ChannelList content;
-          for(int i = 0; i < num; i++)
+          for (int i = 0; i < blist.Count; i++)
           {
             item = new ListBoxItem();
             content = new ChannelList(blist[i].getName(), i);
@@ -86,6 +85,9 @@ namespace CPRemoteApp.ViewController___Settings
           item = new ListBoxItem();
           content = new ChannelList("Add New Channel", -1);
           item.Content = content;
+
+          content.deletePressed += channelButtonDeletePressed;
+          content.editPressed += channelButtonEditPressed;
           content.Changed += delegate
           {
             AddNewChannelPopup popup_content = new AddNewChannelPopup();
@@ -97,7 +99,7 @@ namespace CPRemoteApp.ViewController___Settings
               Background = new SolidColorBrush(Colors.LightBlue),
               BorderBrush = new SolidColorBrush(Colors.Black),
               BorderThickness = new Thickness(4),
-              Padding = new Thickness(20,10,20,0)
+              Padding = new Thickness(20, 10, 20, 0)
             };
 
             popup_control = new Popup
@@ -220,15 +222,9 @@ namespace CPRemoteApp.ViewController___Settings
 
         }
 
-        private void addNewChannelDevice(IUICommand command)
-        {
-            addNewDevice(command, false);
-        }
+        private void addNewChannelDevice(IUICommand command) { addNewDevice(command, false); }
 
-        private void addNewVolumeDevice(IUICommand command)
-        {
-            addNewDevice(command, true);
-        }
+        private void addNewVolumeDevice(IUICommand command) {  addNewDevice(command, true); }
 
         private void addNewDevice(IUICommand command, bool chan_or_vol)
         {
@@ -276,10 +272,7 @@ namespace CPRemoteApp.ViewController___Settings
           }
         }
 
-        private void add_channel_popup_Closed(object sender, object e)
-        {
-            populateChannelList();
-        }
+        private void add_channel_popup_Closed(object sender, object e) { populateChannelList(); }
 
         private async void selectListItem(IUICommand command)
         {
@@ -335,5 +328,56 @@ namespace CPRemoteApp.ViewController___Settings
           return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
         }
 
+        // opens a add new channel with the information previously stored in the button.
+        // deletes the old one when save is pressed.
+        private void channelButtonEditPressed(object sender, EventArgs e)
+        {
+          List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
+          int ch_tag = (sender as ChannelList).tag;
+          AddNewChannelPopup popup_content = new AddNewChannelPopup(blist[ch_tag].getName(), blist[ch_tag].getChannelNumber(), blist[ch_tag].getImgUri());
+          Border border = new Border
+          {
+            Child = popup_content,
+            Width = 840,
+            Height = 280,
+            Background = new SolidColorBrush(Colors.LightBlue),
+            BorderBrush = new SolidColorBrush(Colors.Black),
+            BorderThickness = new Thickness(4),
+            Padding = new Thickness(20, 10, 20, 0)
+          };
+
+          popup_control = new Popup
+          {
+            Child = border,
+            IsLightDismissEnabled = true
+          };
+
+          popup_control.Closed += add_channel_popup_Closed;
+
+          border.Loaded += (loadedSender, loadedArgs) =>
+          {
+            popup_control.HorizontalOffset = (Window.Current.Bounds.Width - border.ActualWidth) / 2;
+            popup_control.VerticalOffset = 100;
+          };
+          popup_content.setParentPopup(ref popup_control);
+          popup_control.IsOpen = true;
+
+          popup_content.savePressed += delegate
+          {
+            // if save is pressed, also delete the button currently being edited to save the new one.
+            channelButtonDeletePressed(sender, EventArgs.Empty);
+          };
+          
+        }
+
+        private void channelButtonDeletePressed(object sender, EventArgs e)
+        {
+          //
+          // TODO: LUKE
+          // THIS IS WHERE THE CHANNEL NEEDS TO BE DELETED.
+          //
+
+          populateChannelList();
+        }
     }
 }

@@ -45,6 +45,16 @@ namespace CPRemoteApp.ViewController___Remote
             return name;
         }
 
+        public string getChannelNumber()
+        {
+          return channel_number;
+        }
+
+        public Uri getImgUri()
+        {
+          return icon.UriSource;
+        }
+
         public string getAbbreviation()
         {
             return abbreviation;
