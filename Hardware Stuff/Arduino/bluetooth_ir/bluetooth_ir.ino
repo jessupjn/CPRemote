@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>  
 #include <IRLib.h>
 #include <IRLibMatch.h>
-#include <Timer.h>
+
 // https://github.com/JChristensen/Timer
 
 //Format of strings -<protocol>.<code>.<nbits>/
@@ -15,10 +15,7 @@ int bluetoothRx = 4;  // RX-I pin of bluetooth mate
 #define SEND  2 
 
 
-
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
-
-Timer t;
 
 
 class IRdecodeGIcable: public virtual IRdecodeBase
@@ -128,13 +125,13 @@ void setup()
   bluetooth.begin(57600);  // Start bluetooth serial at 9600
   
   My_Receiver.enableIRIn();
-  t.every(2000, confirmConnection);
+  //t.every(2000, confirmConnection);
 }
 
 
 void loop()
 {
-  t.update();
+ // t.update();
   // If the bluetooth sent any characters
   if(bluetooth.available())  
   {
@@ -155,7 +152,8 @@ void loop()
    
    // changeTypesofData (b_protocol, b_code, b_nbits, b_protocol_enum, b_code_long, b_nbits_long); 
     if (recvd_code_type == SEND) {
-    Serial.println("Now Sending "+ b_protocol); 
+    Serial.println("Now Sending "); 
+    Serial.println(Pnames(b_protocol_enum)); 
     Serial.print("with b_code "); 
     Serial.println( b_code_long, DEC); 
     Serial.print("and b_nbits "); 
@@ -167,11 +165,15 @@ void loop()
       My_Sender.send(b_protocol_enum,b_code_long,b_nbits_long);
       delay(250);
     }
+    My_Receiver.enableIRIn(); // Re-enable receiver
+
  
   }
   }
-    
-  if (My_Receiver.GetResults(&My_Decoder)) {
+  
+   
+  if (My_Receiver.GetResults(&My_Decoder) ) {
+    Serial.println("In learn"); 
     My_Decoder.decode();
     if(My_Decoder.decode_type == UNKNOWN) {
       Serial.println(F("Unknown type received. Ignoring."));
@@ -182,10 +184,83 @@ void loop()
       GotOne=true;
     }
     My_Decoder.DumpResults();
-    Serial.println(My_Decoder.value, HEX);
+    Serial.println(My_Decoder.value, DEC);
     Serial.println(Pnames(My_Decoder.decode_type));
     delay(1000);
+    
+    if (GotOne) {
+      //construct the string 
+      memset(recvddata, 0, 80); 
+      int senddatasize = 0; 
+      char L = 'L';
+      char period = '.';
+
+      char endl = '/';
+      
+      //S flag
+      memcpy (recvddata, &L, 1);
+      senddatasize++; 
+      memcpy (recvddata+senddatasize, &period, 1);
+      senddatasize++; 
+      
+     char conversion_int[34]; 
+     memset(conversion_int, '/0', 34); 
+
+     
+     int s_size;
+
+     
+     //protocol 
+     if (My_Decoder.decode_type == GICABLE) {
+       Serial.println("GICABLE");
+       char s[]= "GICABLE";
+       memcpy (recvddata+senddatasize, &s, 7); 
+       senddatasize+=7;
+     }
+     else {
+       s_size = strlen((char*)convertToString(My_Decoder.decode_type)); 
+       memcpy (recvddata+senddatasize, convertToString(My_Decoder.decode_type),s_size );
+       senddatasize+=s_size; 
+     }
+     
+       memcpy (recvddata+senddatasize, &period, 1);
+       senddatasize++;
+    
+
+     
+  
+    //IRcode 
+    memset(conversion_int, '/0', 34); 
+
+    ultoa(codeValue,conversion_int,10); 
+    s_size= strlen(conversion_int); 
+    memcpy (recvddata+senddatasize, conversion_int, s_size);
+    senddatasize+=s_size; 
+    memcpy (recvddata+senddatasize, &period, 1);
+    senddatasize++; 
+    
+    //Bits    
+    memset(conversion_int, '/0', 34); 
+    ultoa(codeBits,conversion_int,10); 
+    s_size= strlen(conversion_int); 
+    
+    memcpy (recvddata+senddatasize, &conversion_int, s_size);
+    senddatasize+=s_size; 
+    memcpy (recvddata+senddatasize, &endl, 1);
+    senddatasize++;
+   
+   
+   sendMessage(recvddata, senddatasize); 
+    
+      
+
+      
+      
+    }
+    recvd_code_type =-1;
+    GotOne= false;  
     My_Receiver.resume();
+    
   }
   
   //check if you need to send anything via bluetooth 
@@ -193,40 +268,42 @@ void loop()
  
 }
 
-void changeTypesofData (String buff){ 
+void changeTypesofData (char* buff){ 
    
 
-  if (buff == "NEC") {
+  if (strcmp(buff,"NEC") ==0) {
      Serial.println("NEC FOUND"); 
      b_protocol_enum = NEC; 
   }
   
-  else if (buff == "SONY") {
+  if (strcmp(buff,"NECx") == 0) {
+     Serial.println("NECx FOUND"); 
+     b_protocol_enum = NECX; 
+  }
+  
+  else if (strcmp(buff, "SONY")==0) {
     b_protocol_enum = SONY; 
   }
   
-  else if (buff == "RC5") {
+  else if (strcmp(buff,"RC5") == 0) {
       b_protocol_enum =RC5; 
   }
   
-  else if (buff == "RC6") {
+  else if (strcmp(buff,"RC6")==0) {
      b_protocol_enum = RC6; 
   }
   
-  else if (buff == "PANASONIC_OLD") {
+  else if (strcmp(buff,"PANASONIC_OLD")==0) {
        b_protocol_enum = PANASONIC_OLD; 
   }
   
   
-  else if (buff == "JVC") {
+  else if (strcmp(buff,"JVC") ==0 ) {
      b_protocol_enum = JVC; 
   }
   
-  else if (buff == "NECX") {
-       b_protocol_enum = NECX; 
-  }
-  
-  else if (buff == "GICABLE") {
+
+  else if (strcmp(buff,"GICABLE") == 0) {
        b_protocol_enum = static_cast<IRTYPES>GICABLE; 
   }
   
@@ -255,7 +332,6 @@ int parseString ()
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+dashPos+1,periodPos1-dashPos-1); 
-  Serial.println(buff);
   
   if (buff[0] == 'L') {
     return LEARN;
@@ -266,7 +342,6 @@ int parseString ()
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos1+1,periodPos2-periodPos1-1); 
-  Serial.println(buff); 
   changeTypesofData(buff);
    
   
@@ -274,7 +349,6 @@ int parseString ()
   memcpy(buff, recvddata+periodPos2+1,periodPos3-periodPos2-1); 
   char * pEnd; 
   b_code_long = strtol(buff, &pEnd, 10); 
-  Serial.println(b_code_long,DEC);
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos3+1,periodPos4-periodPos3-1);
@@ -317,6 +391,3 @@ void sendMessage(char* message, int len)
 	}
 }
 
-void confirmConnection() {
-  sendMessage("Device Online", 13);
-}
