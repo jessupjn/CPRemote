@@ -23,6 +23,8 @@ namespace CPRemoteApp.ViewController___Settings
   {
     private int tag;
     public event ChangedEventHander Changed;
+    public event ChangedEventHander deletePressed;
+    public event ChangedEventHander editPressed;
 
     public ChannelList()
     {
@@ -48,16 +50,9 @@ namespace CPRemoteApp.ViewController___Settings
 
     private void click(object sender, object e) { Changed.Invoke(this, EventArgs.Empty); }
 
-    private void editClicked(object sender, object e)
-    {
-      Debug.WriteLine("edit");
-      // SHOW EDIT MENU
-    }
+    private void editClicked(object sender, object e) { editPressed.Invoke(this, EventArgs.Empty); }
 
-    private void deleteClicked(object sender, object e)
-    {
-      Debug.WriteLine("delete");
-    }
+    private void deleteClicked(object sender, object e) { deletePressed.Invoke(this, EventArgs.Empty); }
 
     private void clickerIn(object sender, object e)
     {

@@ -289,12 +289,16 @@ namespace CPRemoteApp.ViewController___Settings
             //
             // DELETE DEVICE CONTENT HERE
             //
+
+            ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           popup_content.selectPressed += delegate
           {
             //
             // SELECT DEVICE CONTENT HERE
             //
+
+            ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           Border border = new Border
           {

@@ -27,6 +27,13 @@ namespace CPRemoteApp.ViewController___Settings
       this.InitializeComponent();
     }
 
+    public AddNewChannelPopup(string name, string channel_num, Uri img_uri)
+    {
+      this.InitializeComponent();
+      _ch_name.Text = name;
+      _ch_num.Text = channel_num;
+    }
+
     public void setParentPopup(ref Popup p)
     {
         popup_ref = new WeakReference<Popup>(p);

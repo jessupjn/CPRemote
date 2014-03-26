@@ -89,7 +89,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 // Get Volume Up Info
                 setContent("Volume Up");
-                string vol_up_info = await getIRInfo();
+                string vol_up_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2)); // Testing Only
                 // Prompt User to press button
                 getNextData(ref vol_up_info);
@@ -119,7 +119,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 // Get Volume Down Info
                 setContent("Volume Down");
-                string vol_down_info = await getIRInfo();
+                string vol_down_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2));// Can be removed later. Just for show while not using bt
                 getNextData(ref vol_down_info);
                 string protocol_2 = getNextData(ref vol_down_info);
@@ -145,7 +145,7 @@ namespace CPRemoteApp.ViewController___Settings
             try
             {
                 setContent("Mute");
-                string mute_info = await getIRInfo();
+                string mute_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2));
                 getNextData(ref mute_info);
                 string mute_protocol = getNextData(ref mute_info);
