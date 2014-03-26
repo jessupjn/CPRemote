@@ -161,13 +161,18 @@
     <Content Include="img\channel_logo.png" />
     <Content Include="img\disney_icon.png" />
     <Content Include="img\espn_icon.jpg" />
-    <Content Include="img\media_volume_down.png" />
-    <Content Include="img\media_volume_up.png" />
     <Content Include="img\nbc_icon.png" />
     <Content Include="img\nickelodeon_icon.png" />
     <Content Include="img\remote_symbol.png" />
     <Content Include="img\settings_gear.png" />
     <Content Include="img\toon_disney_icon.png" />
+    <Content Include="img\vol+1.png" />
+    <Content Include="img\vol+2.png" />
+    <Content Include="img\vol+3.png" />
+    <Content Include="img\vol-1.png" />
+    <Content Include="img\vol-2.png" />
+    <Content Include="img\vol-3.png" />
+    <Content Include="img\volMute.png" />
     <Content Include="img\volume_symbol.png" />
     <Page Include="ViewController - Remote\RemoteButtonScanner.xaml">
       <SubType>Designer</SubType>

@@ -76,15 +76,20 @@ namespace CPRemoteApp.Utility_Classes
             {
                 down_name = "Down " + x.ToString();
                 down_abbv = "-" + x.ToString();
-                Uri down_icon_path = new Uri("ms-appx:///img/media_volume_down.png");
+                Uri down_icon_path = new Uri("ms-appx:///img/vol-" + x.ToString() +".png");
                 RemoteButton down_btn = new RemoteButton(down_name, down_abbv, volume_down_ir_code, x * volume_increments, down_icon_path);
                 up_name = "Up " + x.ToString();
                 up_abbv = "+" + x.ToString();
-                Uri up_icon_path = new Uri("ms-appx:///img/media_volume_up.png");
+                Uri up_icon_path = new Uri("ms-appx:///img/vol+" + x.ToString() + ".png");
                 RemoteButton up_btn = new RemoteButton(up_name, up_abbv, volume_up_ir_code, x * volume_increments, up_icon_path);
                 buttonScanner.add_button(down_btn);
                 buttonScanner.add_button(up_btn);
             }
+            string mute_name = "Mute";
+            string mute_abbv = "Mute";
+            Uri mute_uri = new Uri("ms-appx:///img/volMute.png");
+            RemoteButton mute_button = new RemoteButton(mute_name, mute_abbv, mute_ir_code, 1, mute_uri);
+            buttonScanner.add_button(mute_button);
         }
 
         public async void saveDevice()
