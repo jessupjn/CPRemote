@@ -27,12 +27,12 @@
         <Button Name="next_button" Click="validateName" Grid.Row="2" HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Foreground="Black">
             <TextBlock Text="Next Step" />
         </Button>
-        <StackPanel Name="success_message_panel" Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" >
+        <StackPanel Name="success_message_panel" Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Top">
             <TextBlock Name="success_msg_block" FontSize="20" Width="400" TextWrapping="WrapWholeWords" Foreground="Black"/>
         </StackPanel>
         <StackPanel Name="error_message_panel" Visibility="Collapsed" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-            <TextBlock Name="error_header" FontSize="20" Text="Error:" Foreground="Black"/>
-            <TextBlock Name="error_msg_block" FontSize="16" Foreground="Black"/>
+            <TextBlock Name="error_header" FontSize="24" Text="Error:" Foreground="Red"/>
+            <TextBlock Name="error_msg_block" FontSize="20" Width="400" TextWrapping="WrapWholeWords" Foreground="Black"/>
         </StackPanel>
         <TextBlock Name="press_button_command_block" FontSize="24" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center"
                    Visibility="Collapsed"  Width="400" TextWrapping="WrapWholeWords" Foreground="Black"/>
