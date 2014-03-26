@@ -369,7 +369,7 @@ namespace CPRemoteApp.ViewController___Settings
             timer.Stop();
             if(!time_left)
             {
-                Exception e = new Exception("Didn't receive remote input");
+                Exception e = new Exception("Input was not received from the remote. Please close this message, and try again.");
                 throw e;
             }
             string IR_info = App.bm.rcvd_code;
@@ -386,7 +386,7 @@ namespace CPRemoteApp.ViewController___Settings
             System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
             if(last_button)
             {
-                success_msg += " All IR Codes have been learned." + 
+                success_msg = " All IR Codes have been learned." + 
                     " The device has been created and set as the default " + 
                     (channel_or_volume ? "volume" : "channel") + " device.";
                 
@@ -406,6 +406,9 @@ namespace CPRemoteApp.ViewController___Settings
         {
             error_msg_block.Text = error_msg;
             error_message_panel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            heading_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private string getNextData(ref string info)
