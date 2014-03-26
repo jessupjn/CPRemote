@@ -382,23 +382,33 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void displaySuccessMessage(string success_msg, bool last_button)
         {
-            System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
-            if(last_button)
+
+            try
             {
-                success_msg += " All IR Codes have been learned." + 
-                    " The device has been created and set as the default " + 
-                    (channel_or_volume ? "volume" : "channel") + " device.";
-                
-                close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
+                if (last_button)
+                {
+                    success_msg += " All IR Codes have been learned." +
+                        " The device has been created and set as the default " +
+                        (channel_or_volume ? "volume" : "channel") + " device.";
+
+                    close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                else
+                {
+                    next_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                }
+                success_msg_block.Text = success_msg;
+                press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                success_msg_block.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                success_message_panel.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
-            else
+
+            catch
             {
-                next_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                System.Diagnostics.Debug.WriteLine("In");
+
             }
-            success_msg_block.Text = success_msg;
-            press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            success_msg_block.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            success_message_panel.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void displayErrorMessage(string error_msg)

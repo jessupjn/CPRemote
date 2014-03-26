@@ -124,7 +124,7 @@ namespace CPRemoteApp.Bluetooth_Connections
                
             }
 
-            if (message.StartsWith("-L."))
+            if (message.StartsWith("L."))
             {
                 System.Diagnostics.Debug.WriteLine("Learn code received");
                 rcvd_code = message; 
