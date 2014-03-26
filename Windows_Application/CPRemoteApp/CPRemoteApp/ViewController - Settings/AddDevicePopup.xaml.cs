@@ -89,7 +89,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 // Get Volume Up Info
                 setContent("Volume Up");
-                string vol_up_info = await getIRInfo();
+                string vol_up_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2)); // Testing Only
                 // Prompt User to press button
                 getNextData(ref vol_up_info);
@@ -119,7 +119,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 // Get Volume Down Info
                 setContent("Volume Down");
-                string vol_down_info = await getIRInfo();
+                string vol_down_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2));// Can be removed later. Just for show while not using bt
                 getNextData(ref vol_down_info);
                 string protocol_2 = getNextData(ref vol_down_info);
@@ -145,7 +145,7 @@ namespace CPRemoteApp.ViewController___Settings
             try
             {
                 setContent("Mute");
-                string mute_info = await getIRInfo();
+                string mute_info = "-S.NEC.12345678901234567890123456789032.32/"; //await getIRInfo();
                 //await Task.Delay(TimeSpan.FromSeconds(2));
                 getNextData(ref mute_info);
                 string mute_protocol = getNextData(ref mute_info);
@@ -369,7 +369,8 @@ namespace CPRemoteApp.ViewController___Settings
             timer.Stop();
             if(!time_left)
             {
-                Exception e = new Exception("Didn't receive remote input");
+                Exception e = new Exception("Input was not received from the remote. Please close this message, and try again.");
+                throw e;
             }
             string IR_info = App.bm.rcvd_code;
             return IR_info;
@@ -382,39 +383,32 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void displaySuccessMessage(string success_msg, bool last_button)
         {
-
-            try
+            System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
+            if (last_button)
             {
-                System.Diagnostics.Debug.WriteLine("Display Success Message: " + success_msg);
-                if (last_button)
-                {
-                    success_msg += " All IR Codes have been learned." +
-                        " The device has been created and set as the default " +
-                        (channel_or_volume ? "volume" : "channel") + " device.";
+                success_msg = " All IR Codes have been learned." +
+                    " The device has been created and set as the default " +
+                    (channel_or_volume ? "volume" : "channel") + " device.";
 
-                    close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                }
-                else
-                {
-                    next_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                }
-                success_msg_block.Text = success_msg;
-                press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                success_msg_block.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                success_message_panel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
-
-            catch
+            else
             {
-                System.Diagnostics.Debug.WriteLine("In");
-
+                next_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
+            success_msg_block.Text = success_msg;
+            press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            success_msg_block.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            success_message_panel.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void displayErrorMessage(string error_msg)
         {
             error_msg_block.Text = error_msg;
             error_message_panel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            close_button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            press_button_command_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            heading_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private string getNextData(ref string info)

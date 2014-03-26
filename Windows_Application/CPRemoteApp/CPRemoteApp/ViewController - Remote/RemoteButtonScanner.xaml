@@ -40,11 +40,9 @@
                 <StackPanel.Background>
                     <SolidColorBrush Color="Transparent" Opacity=".25"></SolidColorBrush>
                 </StackPanel.Background>
-                <Canvas Name="imgCanvas" Background="Red">
-                   <Image Name="cur_image"/>
-                </Canvas>
-               
-            </StackPanel>
+        <Image Name="cur_image" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,20,0,0"/>
+
+      </StackPanel>
         </Grid>
     </Border>
 </UserControl>

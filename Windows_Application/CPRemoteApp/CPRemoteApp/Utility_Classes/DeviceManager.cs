@@ -185,24 +185,89 @@ namespace CPRemoteApp.Utility_Classes
             saveDeviceList();
         }
 
-        public void removeChannelDevice()
+        public void removeChannelDevice(string name)
         {
+            if(name == channelController.get_name())
+            {
+                //throw new Exception("Cannot Delete the currently selected device");
+                return;
+            }
+            int index = getChannelDeviceIndex(ref name);
+            if(index == -1)
+            {
+                return;
+            }
+            channel_devices.RemoveAt(index);
             saveDeviceList();
         }
 
-        public void removeVolumeDevice()
+        public void removeVolumeDevice(string name)
         {
+            if(name == volumeController.get_name())
+            {
+                //throw new Exception("Cannot Delete the currently selected device");
+                return;
+            }
+            int index = getVolumeDeviceIndex(ref name);
+            if(index == -1)
+            {
+                return;
+            }
+            volume_devices.RemoveAt(index);
             saveDeviceList();
         }
 
-        public void editChannelDevice()
+        public async Task<bool> selectChannelDevice(string name)
         {
-
+            int index = getChannelDeviceIndex(ref name);
+            if(index == -1)
+            {
+                return false;
+            }
+            channelController = channel_devices[index];
+            await channelController.initialize();
+            saveDeviceList();
+            return true;
         }
 
-        public void editVolumeDevice()
+        public async void selectVolumeDevice(string name)
         {
+            int index = getVolumeDeviceIndex(ref name);
+            if (index == -1)
+            {
+                return;
+            }
+            volumeController = volume_devices[index];
+            await volumeController.initialize();
+            saveDeviceList();
+        }
 
+        private int getVolumeDeviceIndex(ref string name)
+        {
+            int vol_index = 0;
+            foreach (VolumeDevice cur in volume_devices)
+            {
+                if (cur.get_name().Equals(name))
+                {
+                    return vol_index;
+                }
+                vol_index++;
+            }
+            return -1;
+        }
+
+        private int getChannelDeviceIndex(ref string name)
+        {
+            int chan_index = 0;
+            foreach (ChannelDevice cur in channel_devices)
+            {
+                if (cur.get_name().Equals(name))
+                {
+                    return chan_index;
+                }
+                chan_index++;
+            }
+            return -1;
         }
 
         public List<VolumeDevice> getVolumeDevices()

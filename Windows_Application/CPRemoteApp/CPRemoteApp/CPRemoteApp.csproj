@@ -137,6 +137,9 @@
     <Compile Include="ViewController - Settings\ChannelList.xaml.cs">
       <DependentUpon>ChannelList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewController - Settings\SelectedDevice.xaml.cs">
+      <DependentUpon>SelectedDevice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewController - Settings\SettingsMenu.xaml.cs">
       <DependentUpon>SettingsMenu.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewController - Settings\ChannelList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewController - Settings\SelectedDevice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,8 +21,10 @@ namespace CPRemoteApp.ViewController___Settings
 {
   public sealed partial class ChannelList : UserControl
   {
-    private int tag;
+    public int tag;
     public event ChangedEventHander Changed;
+    public event ChangedEventHander deletePressed;
+    public event ChangedEventHander editPressed;
 
     public ChannelList()
     {
@@ -48,16 +50,9 @@ namespace CPRemoteApp.ViewController___Settings
 
     private void click(object sender, object e) { Changed.Invoke(this, EventArgs.Empty); }
 
-    private void editClicked(object sender, object e)
-    {
-      Debug.WriteLine("edit");
-      // SHOW EDIT MENU
-    }
+    private void editClicked(object sender, object e) { editPressed.Invoke(this, EventArgs.Empty); }
 
-    private void deleteClicked(object sender, object e)
-    {
-      Debug.WriteLine("delete");
-    }
+    private void deleteClicked(object sender, object e) { deletePressed.Invoke(this, EventArgs.Empty); }
 
     private void clickerIn(object sender, object e)
     {
@@ -72,6 +67,6 @@ namespace CPRemoteApp.ViewController___Settings
       if( c.Name == "_edit_button") _edit_button_bg.Fill = new SolidColorBrush(Color.FromArgb(255,54,153,156));
       else _remove_button_bg.Fill = new SolidColorBrush(Color.FromArgb(255,180,72,72));
     }
-
+  
   }
 }
