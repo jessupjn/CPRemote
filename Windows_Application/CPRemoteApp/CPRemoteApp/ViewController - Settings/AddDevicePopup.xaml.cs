@@ -16,12 +16,9 @@ namespace CPRemoteApp.ViewController___Settings
 {
     public sealed partial class AddDevicePopup : UserControl
     {
-        private VolumeDevice vol_device = new VolumeDevice();
-        private ChannelDevice chan_device = new ChannelDevice();
         private List<string> IR_info = new List<string>();
         private WeakReference<Popup> popup_ref;
         private string device_name = "";
-        private int cur_digit = 0;
         // volume = true, channel = false
         private bool channel_or_volume = true;
         private bool time_left = true;

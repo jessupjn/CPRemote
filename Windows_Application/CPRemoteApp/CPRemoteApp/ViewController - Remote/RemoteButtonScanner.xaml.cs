@@ -65,9 +65,7 @@ namespace CPRemoteApp.ViewController___Remote
               this.cur_image.Width = 5 * dimmension / 8;
               this.cur_image.Source = buttons[cur_index].icon;
             }
-        }
-
-        
+        } 
 
         public void add_button(RemoteButton btn)
         {
