@@ -64,7 +64,15 @@ namespace CPRemoteApp.ViewController___Settings
 
             _channellist_listbox.ItemsSource = channels;
             populateChannelList();
-             
+
+            string bt_name = App.bm.connectedDeviceName();
+            if (bt_name != null) _bt_device_selected.Text = bt_name;
+            App.bm.bt_name_changed += delegate
+            {
+              string s = App.bm.connectedDeviceName();
+              if (s != null) _bt_device_selected.Text = s;
+              else _bt_device_selected.Text = "No Device Selected.";
+            };
         }
 
         private void changeSelectedText()

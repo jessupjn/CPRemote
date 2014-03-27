@@ -6,6 +6,7 @@ using TCD.Controls;
 using Windows.UI.Xaml.Controls;
 using TCD.Arduino.Bluetooth;
 using Windows.Storage;
+using CPRemoteApp.ViewController___Settings;
 
 
 namespace CPRemoteApp.Bluetooth_Connections
@@ -33,6 +34,7 @@ namespace CPRemoteApp.Bluetooth_Connections
         public string rcvd_code { get; set; }
         private BluetoothConnectionManager connectionManager = new BluetoothConnectionManager();//mange the connection to another device
         DateTime last_alive_time = new DateTime();
+        public event ChangedEventHander bt_name_changed;
         
         public BluetoothController()
         {
@@ -41,7 +43,7 @@ namespace CPRemoteApp.Bluetooth_Connections
             connectionManager.MessageReceived += connectionManager_MessageReceived;
             connectionManager.StateChanged += connectionManager_StateChanged;
             connectionManager.State = BluetoothConnectionState.Disconnected;//to trigger UI update
-
+            connectionManager.changedName += delegate { if (bt_name_changed != null) bt_name_changed.Invoke(this, EventArgs.Empty); };
         }
 
         #region Lifecycle

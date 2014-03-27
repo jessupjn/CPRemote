@@ -9,6 +9,7 @@ using Windows.UI.Popups;
 
 using Windows.Storage;
 using CPRemoteApp;
+using CPRemoteApp.ViewController___Settings;
 
 
 namespace TCD.Arduino.Bluetooth
@@ -68,6 +69,7 @@ namespace TCD.Arduino.Bluetooth
         /// Continues by establishing a connection to the selected device.
         /// </summary>
         /// <param name="invokerRect">for example: connectButton.GetElementRect();</param>
+        public event ChangedEventHander changedName;
         public async Task EnumerateDevicesAsync(Rect invokerRect)
         {
             //this.State = BluetoothConnectionState.Enumerating;
@@ -159,8 +161,8 @@ namespace TCD.Arduino.Bluetooth
 
                         await FileIO.WriteTextAsync(device_info, serviceNameString+ ','+ serviceIDString);
                     }
-                    connectedBluetoothDeviceName = serviceNameString; 
-
+                    connectedBluetoothDeviceName = serviceNameString;
+                    if(changedName != null) changedName.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
