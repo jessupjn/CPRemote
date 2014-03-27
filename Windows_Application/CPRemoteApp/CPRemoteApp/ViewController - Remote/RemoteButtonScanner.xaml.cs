@@ -78,6 +78,20 @@ namespace CPRemoteApp.ViewController___Remote
             }
         }
 
+        public void removeButton(int index)
+        {
+            RemoteButton btn = buttons.ElementAt(index);
+            buttons.RemoveAt(index);
+            for (int i = 0; i < abbreviations.Count; ++i )
+            {
+                if(abbreviations[i] == btn.getAbbreviation())
+                {
+                    abbreviations.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
         public List<RemoteButton> getButtons()
         {
             return buttons;

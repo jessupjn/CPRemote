@@ -47,9 +47,11 @@ namespace CPRemoteApp.Utility_Classes
 
         }
 
-        public void remove_channel()
+        public void remove_channel(int index)
         {
-
+            num_channels--;
+            buttonScanner.removeButton(index);
+            saveDevice();
         }
 
         public async Task initialize()
@@ -101,7 +103,7 @@ namespace CPRemoteApp.Utility_Classes
                     bt_msg += IR_bits + ".1/";
                     App.bm.OperateTVButton_Click(bt_msg);
                     System.Diagnostics.Debug.WriteLine(bt_msg);
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
             }
             catch (Exception except)
