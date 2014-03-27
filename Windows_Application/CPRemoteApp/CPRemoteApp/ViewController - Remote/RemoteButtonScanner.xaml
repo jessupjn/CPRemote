@@ -40,7 +40,11 @@
                 <StackPanel.Background>
                     <SolidColorBrush Color="Transparent" Opacity=".25"></SolidColorBrush>
                 </StackPanel.Background>
+<<<<<<< HEAD
         <Image Name="cur_image" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,20,0,0" Visibility="Visible"/>
+=======
+        <Image Name="cur_image" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,20,0,0"/>
+>>>>>>> 6a8bd54ee075fe8be9b2db328026a5b863c8ebbc
 
       </StackPanel>
         </Grid>

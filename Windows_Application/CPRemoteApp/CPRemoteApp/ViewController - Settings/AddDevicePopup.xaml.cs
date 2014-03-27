@@ -90,8 +90,6 @@ namespace CPRemoteApp.ViewController___Settings
                 // Get Volume Up Info
                 setContent("Volume Up");
                 string vol_up_info = await getIRInfo();
-                //await Task.Delay(TimeSpan.FromSeconds(2)); // Testing Only
-                // Prompt User to press button
                 getNextData(ref vol_up_info);
                 string protocol = getNextData(ref vol_up_info);
                 string vol_up_ir_code = getNextData(ref vol_up_info);
@@ -146,7 +144,7 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 setContent("Mute");
                 string mute_info = await getIRInfo();
-                //await Task.Delay(TimeSpan.FromSeconds(2));
+                //await Task.Delay(TimeSpan.FromSeconds(1));
                 getNextData(ref mute_info);
                 string mute_protocol = getNextData(ref mute_info);
                 if (mute_protocol != IR_info[0])
@@ -318,7 +316,7 @@ namespace CPRemoteApp.ViewController___Settings
             string digit_str = digit.ToString();
             setContent(digit_str);
             string digit_info = await getIRInfo();
-            //await Task.Delay(TimeSpan.FromSeconds(2));
+            //await Task.Delay(TimeSpan.FromSeconds(1));
             getNextData(ref digit_info);
             string protocol = getNextData(ref digit_info);
             if(digit == 0)
