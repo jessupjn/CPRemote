@@ -227,7 +227,10 @@ namespace CPRemoteApp.Utility_Classes
                 return false;
             }
             channelController = channel_devices[index];
-            await channelController.initialize();
+            if (!channelController.is_initialized)
+            {
+                await channelController.initialize();
+            }
             saveDeviceList();
             return true;
         }

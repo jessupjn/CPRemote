@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CPRemoteApp.Utility_Classes;
 using CPRemoteApp.ViewController___Remote;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,7 +33,7 @@ namespace CPRemoteApp.ViewController___Settings
     public sealed partial class SettingsMenu : Page
     {
         private DispatcherTimer timer = new DispatcherTimer();
-        private List<ListBoxItem> channels = new List<ListBoxItem>();
+        private ObservableCollection<ListBoxItem> channels = new ObservableCollection<ListBoxItem>();
         private Popup popup_control;
 
         public SettingsMenu()
@@ -296,7 +297,7 @@ namespace CPRemoteApp.ViewController___Settings
           }
         }
 
-        private void add_channel_popup_Closed(object sender, object e) { populateChannelList(); }
+        private void add_channel_popup_Closed(object sender, object e) { /*populateChannelList();*/ }
 
         private async void selectDevice(string name)
         {
