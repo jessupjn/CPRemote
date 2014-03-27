@@ -160,6 +160,7 @@ namespace CPRemoteApp.Utility_Classes
             }
             save_output.Add(volumeController.get_name());
             await FileIO.WriteLinesAsync(info_file, save_output);
+            devices_info_file = info_file;
         }
 
         public async void addChannelDevice(string name, List<string> IR_info)
@@ -181,7 +182,7 @@ namespace CPRemoteApp.Utility_Classes
             volume_devices.Add(vol_dev);
             vol_dev.saveDevice();
             volumeController = vol_dev;
-            await volumeController.initialize();
+            volumeController.createButtons();
             saveDeviceList();
         }
 
