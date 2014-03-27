@@ -188,6 +188,7 @@ namespace CPRemoteApp.Utility_Classes
 
         public void removeChannelDevice(string name)
         {
+            // TODO: Delete the File from the devices folder
             if(name == channelController.get_name())
             {
                 //throw new Exception("Cannot Delete the currently selected device");

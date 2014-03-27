@@ -94,7 +94,7 @@ namespace CPRemoteApp.Utility_Classes
                 for(int i = 0; i < num_digits; ++i)
                 {
                     bt_msg += "-S." + IR_protocol + ".";
-                    cur_digit = Convert.ToInt32(chan_number_str[i]);
+                    cur_digit = Convert.ToInt32(chan_number_str[i].ToString());
                     cur_IR_code = digit_IR_codes[cur_digit];
                     bt_msg += cur_IR_code + ".";
                     // .1/ for Number of Repitions
