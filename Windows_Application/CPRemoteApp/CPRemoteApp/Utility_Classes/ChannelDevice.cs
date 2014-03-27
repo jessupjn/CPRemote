@@ -97,6 +97,34 @@ namespace CPRemoteApp.Utility_Classes
             }
         }
 
+        public async void onButtonClick()
+        {
+            try
+            {
+                string chan_number_str = buttonScanner.getCurrentButton().getChannelNumber();
+                int num_digits = chan_number_str.Length;
+                string bt_msg = "";
+                string cur_IR_code;
+                int cur_digit;
+                for(int i = 0; i < num_digits; ++i)
+                {
+                    bt_msg += "-S." + IR_protocol + ".";
+                    cur_digit = Convert.ToInt32(chan_number_str[i]);
+                    cur_IR_code = digit_IR_codes[cur_digit];
+                    bt_msg += cur_IR_code + ".";
+                    // .1/ for Number of Repitions
+                    bt_msg += IR_bits + ".1/";
+                    App.bm.OperateTVButton_Click(bt_msg);
+                    System.Diagnostics.Debug.WriteLine(bt_msg);
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                }
+            }
+            catch (Exception except)
+            {
+                System.Diagnostics.Debug.WriteLine("In Channel Device on Button Click" + except.Message);
+            }
+        }
+
         public async void saveDevice()
         {
             List<string> output = new List<string>();
