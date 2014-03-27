@@ -1,6 +1,8 @@
 #include <SoftwareSerial.h>  
 #include <IRLib.h>
 #include <IRLibMatch.h>
+#include <avr/wdt.h>
+
 
 // https://github.com/JChristensen/Timer
 
@@ -16,6 +18,8 @@ int bluetoothRx = 4;  // RX-I pin of bluetooth mate
 
 
 SoftwareSerial bluetooth(bluetoothTx, bluetoothRx);
+
+
 
 
 class IRdecodeGIcable: public virtual IRdecodeBase
@@ -131,23 +135,35 @@ void setup()
 
 void loop()
 {
- // t.update();
+  //Serial.flush(); 
+ if (bluetooth.overflow()) {
+   Serial.println("SoftwareSerial overflow!"); 
+ }
+
+  // t.update();
   // If the bluetooth sent any characters
   if(bluetooth.available())  
   {
     memset(recvddata, 0, 80); 
     
     char endl='/'; 
+       Serial.println("IN HEERE"); 
+
     int len= bluetooth.readBytesUntil(endl, recvddata, 80);
+           Serial.println("OUT HERE"); 
+
     recvddata[len]='\0'; 
     
     
     recvd_code_type = parseString();
-    Serial.println(recvd_code_type); 
+    //////Serial.println(recvd_code_type); 
     
     if (recvd_code_type == PING) {
       char pingBuff[]= "-A"; 
+        Serial.println(" happens");
+
       sendMessage(pingBuff,2);  
+       software_Reboot();  //call reset
     }
    
    // changeTypesofData (b_protocol, b_code, b_nbits, b_protocol_enum, b_code_long, b_nbits_long); 
@@ -155,7 +171,7 @@ void loop()
     Serial.println("Now Sending "); 
     Serial.println(Pnames(b_protocol_enum)); 
     Serial.print("with b_code "); 
-    Serial.println( b_code_long, DEC); 
+    Serial.println( b_code_long, HEX); 
     Serial.print("and b_nbits "); 
     Serial.println( b_nbits_long, DEC);
     Serial.print("and repeat "); 
@@ -173,10 +189,10 @@ void loop()
   
    
   if (My_Receiver.GetResults(&My_Decoder) ) {
-    Serial.println("In learn"); 
+    //////Serial.println("In learn"); 
     My_Decoder.decode();
     if(My_Decoder.decode_type == UNKNOWN) {
-      Serial.println(F("Unknown type received. Ignoring."));
+      //////Serial.println(F("Unknown type received. Ignoring."));
     } else {
       codeType = My_Decoder.decode_type;
       codeValue = My_Decoder.value;
@@ -184,8 +200,8 @@ void loop()
       GotOne=true;
     }
     My_Decoder.DumpResults();
-    Serial.println(My_Decoder.value, DEC);
-    Serial.println(Pnames(My_Decoder.decode_type));
+    ////My_Decoder.value, DEC);
+    ////Serial.println(Pnames(My_Decoder.decode_type));
     delay(1000);
     
     if (GotOne) {
@@ -212,7 +228,7 @@ void loop()
      
      //protocol 
      if (My_Decoder.decode_type == GICABLE) {
-       Serial.println("GICABLE");
+       ////Serial.println("GICABLE");
        char s[]= "GICABLE";
        memcpy (recvddata+senddatasize, &s, 7); 
        senddatasize+=7;
@@ -252,7 +268,8 @@ void loop()
    
    sendMessage(recvddata, senddatasize); 
     
-      
+   software_Reboot();  //call reset
+
 
       
       
@@ -260,11 +277,14 @@ void loop()
     recvd_code_type =-1;
     GotOne= false;  
     My_Receiver.resume();
+   
+
+
     
   }
   
   //check if you need to send anything via bluetooth 
-  sendBluetoothMessage(); 
+  //sendBluetoothMessage(); 
  
 }
 
@@ -277,7 +297,7 @@ void changeTypesofData (char* buff){
   }
   
   if (strcmp(buff,"NECx") == 0) {
-     Serial.println("NECx FOUND"); 
+     ////Serial.println("NECx FOUND"); 
      b_protocol_enum = NECX; 
   }
   
@@ -321,7 +341,7 @@ int findIndex (char d, int index) {
 
 int parseString ()
 {
-  //Serial.println(message); 
+  //////Serial.println(message); 
   int dashPos = findIndex('-',0);
   int periodPos1 =  findIndex('.',0);
   int periodPos2 =  findIndex('.', periodPos1+1);
@@ -348,7 +368,7 @@ int parseString ()
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos2+1,periodPos3-periodPos2-1); 
   char * pEnd; 
-  b_code_long = strtol(buff, &pEnd, 10); 
+  b_code_long = strtoul(buff, &pEnd, 10); 
   
   memset(buff, 0, 20); 
   memcpy(buff, recvddata+periodPos3+1,periodPos4-periodPos3-1);
@@ -381,8 +401,8 @@ void sendBluetoothMessage () {
 //outbound
 void sendMessage(char* message, int len)
 {
-	Serial.print("> ");
-	Serial.println(message);
+	//Serial.print("> ");//////Serial.println(
+	//////Serial.println(message);
 	int messageLen =len;
 	if (messageLen < 256)
 	{
@@ -391,3 +411,10 @@ void sendMessage(char* message, int len)
 	}
 }
 
+void software_Reboot()
+{
+  wdt_enable(WDTO_15MS);
+  while(1)
+  {
+  }
+}
