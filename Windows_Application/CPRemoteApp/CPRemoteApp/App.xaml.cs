@@ -35,7 +35,7 @@ namespace CPRemoteApp
         public static BluetoothController bm = new BluetoothController(); 
         // ----------- Customizable Application Settings -----------------------
 
-        public static int button_scanner_interval = 2;
+        public static int button_scanner_interval = 5;
         public static ApplicationData appData;
         public DeviceManager deviceController { set; get; }
         private DispatcherTimer time = new DispatcherTimer();
