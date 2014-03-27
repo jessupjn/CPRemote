@@ -51,6 +51,7 @@ namespace CPRemoteApp.ViewController___Settings
 
     private void saveClicked(object sender, object e)
     {
+        this._save_button.Focus(Windows.UI.Xaml.FocusState.Programmatic);
         if(savePressed != null) savePressed.Invoke(this, EventArgs.Empty);
         Uri temp_icon_path = new Uri("ms-appx:///img/unset.png");
         Debug.WriteLine(temp_icon_path.ToString());
