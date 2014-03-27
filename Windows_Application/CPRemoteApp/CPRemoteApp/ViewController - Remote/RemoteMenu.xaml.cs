@@ -122,28 +122,16 @@ namespace CPRemoteApp.ViewController___Remote
             volume_scanner_panel.Width = Window.Current.Bounds.Width - offset;
             
             
-            // Channel Button Scanner Formatting
+
+            channel_scanner_panel.Children.Add(device_manager.channelController.buttonScanner);
             device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
             double image_dimension = 4 * channel_scanner_panel.Height / 5;
             device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
-            if(!device_manager.channelController.buttonScanner.clickEventSet)
-            {
-                device_manager.channelController.buttonScanner.PointerReleased += onChannelButtonClicked;
-                device_manager.channelController.buttonScanner.clickEventSet = true;
-            }
-            // Volume Button Scanner Formatting
             device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
             device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
             device_manager.volumeController.buttonScanner.setCurrentImage(image_dimension);
-            if(!device_manager.volumeController.buttonScanner.clickEventSet)
-            {
-                device_manager.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
-                device_manager.volumeController.buttonScanner.clickEventSet = true;
-            }
-
-            // Add Button Scanners to Corresponding Panels
-            channel_scanner_panel.Children.Add(device_manager.channelController.buttonScanner);
+            device_manager.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
             volume_scanner_panel.Children.Add(device_manager.volumeController.buttonScanner);
         }
 
@@ -155,8 +143,9 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void checkBluetoothStatus(object sender, object e)
         {
-         bool connected = App.bm.connectionManager_isConnected(sender);
-
+         //bool connected = App.bm.connectionManager_isConnected(sender);
+          bool connected = true; 
+            
           Color color;
           SolidColorBrush fill;
 
@@ -359,11 +348,6 @@ namespace CPRemoteApp.ViewController___Remote
                     status++;
                     beginAnimationSequence(false);
                 }
-        }
-
-        private void onChannelButtonClicked(object sender, RoutedEventArgs e)
-        {
-            ((App)CPRemoteApp.App.Current).deviceController.channelController.onButtonClick();
         }
 
         private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
