@@ -376,9 +376,13 @@ namespace CPRemoteApp.ViewController___Remote
             {
                 to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_down_ir_code;
             }
-            else
+            else if (cur_button.abbreviation[0] == '+')
             {
                 to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_up_ir_code;
+            }
+            else
+            {
+                to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.mute_ir_code;
             }
             to_send += ".";
             to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_bits;
