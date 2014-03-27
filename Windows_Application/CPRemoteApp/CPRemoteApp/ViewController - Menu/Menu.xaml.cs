@@ -105,12 +105,12 @@ namespace CPRemoteApp
 
         private void remoteClick(object sender, RoutedEventArgs e)
         {
-          // TODO: ADD DEVICE-CHECK
-          if( /* DEVICES ARE SET */ true )
+          DeviceManager dm = ((App)(CPRemoteApp.App.Current)).deviceController;
+          if ( dm.volumeController.is_initialized && dm.channelController.is_initialized )
              this.Frame.Navigate(typeof(ViewController___Remote.RemoteMenu));
           else
           {
-            MessageDialog msgDialog = new MessageDialog("Devices are not set!", "Please set up your devices in the settings menu!");
+            MessageDialog msgDialog = new MessageDialog("Please set up your devices in the settings menu!", "Devices are not set!");
             UICommand okBtn = new UICommand("OK");
             okBtn.Invoked += delegate { };
             msgDialog.Commands.Add(okBtn);

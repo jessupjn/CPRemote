@@ -40,7 +40,8 @@
                 <StackPanel.Background>
                     <SolidColorBrush Color="Transparent" Opacity=".25"></SolidColorBrush>
                 </StackPanel.Background>
-        <Image Name="cur_image" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,20,0,0"/>
+        <Image Name="cur_image" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,20,0,0" Visibility="Visible"/>
+        <TextBlock Name="cur_channel_text" Text="No Icon Set" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Margin="0,80,0,0" FontSize="30" Visibility="Collapsed"/>
 
       </StackPanel>
         </Grid>

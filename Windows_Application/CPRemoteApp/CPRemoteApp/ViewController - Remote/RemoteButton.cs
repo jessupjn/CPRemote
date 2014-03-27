@@ -37,7 +37,8 @@ namespace CPRemoteApp.ViewController___Remote
             IR_repititions = repititions;
             name = name_;
             abbreviation = abbv;
-            icon = new BitmapImage(icon_path);
+            if (icon_path.ToString() == "notset") icon = null;
+            else icon = new BitmapImage(icon_path);
         }
 
         public string getName()

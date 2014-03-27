@@ -62,8 +62,20 @@ namespace CPRemoteApp.ViewController___Remote
             {
               this.cur_image.Margin = new Thickness(0, dimmension / 8, 0, 0);
               this.cur_image.Height = 5 * dimmension / 8;
-                this.cur_image.Width = 5 * dimmension / 8;
+              this.cur_image.Width = 5 * dimmension / 8;
+
+              if (buttons[cur_index].getImgUri().ToString() == "notset")
+              {
+                this.cur_image.Visibility = Visibility.Visible;
+                this.cur_channel_text.Visibility = Visibility.Collapsed;
                 this.cur_image.Source = buttons[cur_index].icon;
+              }
+              else
+              {
+                this.cur_channel_text.Text = buttons[cur_index].getName();
+                this.cur_channel_text.Visibility = Visibility.Visible;
+                this.cur_image.Visibility = Visibility.Collapsed;
+              }
             }
         }
 
