@@ -48,11 +48,11 @@ namespace CPRemoteApp.ViewController___Settings
 
     }
 
-    private void click(object sender, object e) { Changed.Invoke(this, EventArgs.Empty); }
+    private void click(object sender, object e) { if(Changed != null) Changed.Invoke(this, EventArgs.Empty); }
 
-    private void editClicked(object sender, object e) { editPressed.Invoke(this, EventArgs.Empty); }
+    private void editClicked(object sender, object e) { Debug.WriteLine("Edit Pressed"); if (editPressed != null) editPressed.Invoke(this, EventArgs.Empty); }
 
-    private void deleteClicked(object sender, object e) { deletePressed.Invoke(this, EventArgs.Empty); }
+    private void deleteClicked(object sender, object e) { if(deletePressed != null) deletePressed.Invoke(this, EventArgs.Empty); }
 
     private void clickerIn(object sender, object e)
     {

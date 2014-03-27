@@ -102,6 +102,8 @@ namespace CPRemoteApp.ViewController___Settings
           {
             item = new ListBoxItem();
             content = new ChannelList(blist[i].getName(), i);
+            content.deletePressed += channelButtonDeletePressed;
+            content.editPressed += channelButtonEditPressed;
             item.Content = content;
             channels.Add(item);
           }
@@ -109,10 +111,9 @@ namespace CPRemoteApp.ViewController___Settings
           content = new ChannelList("Add New Channel", -1);
           item.Content = content;
 
-          content.deletePressed += channelButtonDeletePressed;
-          content.editPressed += channelButtonEditPressed;
           content.Changed += delegate
           {
+
             AddNewChannelPopup popup_content = new AddNewChannelPopup();
             Border border = new Border
             {
