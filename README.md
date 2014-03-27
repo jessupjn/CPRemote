@@ -10,11 +10,11 @@ Build Instructions
 The project consists of the Windows App code and the Arduino Code 
 
 Windows App
-============
+-----------
 Use Visual Studio 2013 to compile and deploy the windows app code in Windows_Application/CPRemote
 
 Arduino 
-============
+-------
 The Arduino code can be found in HardwareStuff/Arduino/CPRemote/bluetooth_ir/
 
 The code also uses an CY's IRLib (github.com/cyborg5/IRLib/)
