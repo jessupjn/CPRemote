@@ -297,7 +297,7 @@ namespace CPRemoteApp.ViewController___Settings
           }
         }
 
-        private void add_channel_popup_Closed(object sender, object e) { /*populateChannelList();*/ }
+        private void add_channel_popup_Closed(object sender, object e) { populateChannelList(); }
 
         private async void selectDevice(string name)
         {

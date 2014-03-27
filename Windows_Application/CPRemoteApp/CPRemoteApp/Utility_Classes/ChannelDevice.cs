@@ -88,12 +88,12 @@ namespace CPRemoteApp.Utility_Classes
             {
                 string chan_number_str = buttonScanner.getCurrentButton().getChannelNumber();
                 int num_digits = chan_number_str.Length;
-                string bt_msg = "";
+                string bt_msg;
                 string cur_IR_code;
                 int cur_digit;
                 for(int i = 0; i < num_digits; ++i)
                 {
-                    bt_msg += "-S." + IR_protocol + ".";
+                    bt_msg = "-S." + IR_protocol + ".";
                     cur_digit = Convert.ToInt32(chan_number_str[i].ToString());
                     cur_IR_code = digit_IR_codes[cur_digit];
                     bt_msg += cur_IR_code + ".";
