@@ -27,6 +27,7 @@ namespace CPRemoteApp.ViewController___Remote
         // -------------------------------------
         private List<RemoteButton> buttons;
         public Button cur_button { get; set;}
+        public bool clickEventSet { get; set; }
         public ObservableCollection<string> abbreviations = new ObservableCollection<string>();
         private int cur_index = 0;
         private DispatcherTimer timer = new DispatcherTimer();
@@ -36,7 +37,7 @@ namespace CPRemoteApp.ViewController___Remote
         public RemoteButtonScanner()
         {
             this.InitializeComponent();
-
+            clickEventSet = false;
             buttons = new List<RemoteButton>();
             buttonList.ItemsSource = abbreviations;
             buttonList.SelectionMode = ListViewSelectionMode.Single;
