@@ -47,9 +47,11 @@ namespace CPRemoteApp.Utility_Classes
 
         }
 
-        public void remove_channel()
+        public void remove_channel(int index)
         {
-
+            num_channels--;
+            buttonScanner.removeButton(index);
+            saveDevice();
         }
 
         public async Task initialize()
@@ -88,20 +90,20 @@ namespace CPRemoteApp.Utility_Classes
             {
                 string chan_number_str = buttonScanner.getCurrentButton().getChannelNumber();
                 int num_digits = chan_number_str.Length;
-                string bt_msg = "";
+                string bt_msg;
                 string cur_IR_code;
                 int cur_digit;
                 for(int i = 0; i < num_digits; ++i)
                 {
-                    bt_msg += "-S." + IR_protocol + ".";
-                    cur_digit = Convert.ToInt32(chan_number_str[i]);
+                    bt_msg = "-S." + IR_protocol + ".";
+                    cur_digit = Convert.ToInt32(chan_number_str[i].ToString());
                     cur_IR_code = digit_IR_codes[cur_digit];
                     bt_msg += cur_IR_code + ".";
                     // .1/ for Number of Repitions
                     bt_msg += IR_bits + ".1/";
                     App.bm.OperateTVButton_Click(bt_msg);
                     System.Diagnostics.Debug.WriteLine(bt_msg);
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
             }
             catch (Exception except)

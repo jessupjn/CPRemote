@@ -68,15 +68,21 @@ namespace CPRemoteApp.Utility_Classes
                 data_lines_read++;
             }
             // Create Volume buttons
+            createButtons();
+        }
+
+        public void createButtons()
+        {
+            // Create Volume buttons
             string down_name;
             string down_abbv;
             string up_name;
             string up_abbv;
-            for(int x = 1; x < 4; x++)
+            for (int x = 1; x < 4; x++)
             {
                 down_name = "Down " + x.ToString();
                 down_abbv = "-" + x.ToString();
-                Uri down_icon_path = new Uri("ms-appx:///img/vol-" + x.ToString() +".png");
+                Uri down_icon_path = new Uri("ms-appx:///img/vol-" + x.ToString() + ".png");
                 RemoteButton down_btn = new RemoteButton(down_name, down_abbv, volume_down_ir_code, x * volume_increments, down_icon_path);
                 up_name = "Up " + x.ToString();
                 up_abbv = "+" + x.ToString();

@@ -406,7 +406,8 @@ namespace CPRemoteApp.ViewController___Settings
           // TODO: LUKE
           // THIS IS WHERE THE CHANNEL NEEDS TO BE DELETED.
           //
-
+          ChannelList c = sender as ChannelList;
+          ((App)(CPRemoteApp.App.Current)).deviceController.channelController.remove_channel(c.tag);
           populateChannelList();
         }
     }

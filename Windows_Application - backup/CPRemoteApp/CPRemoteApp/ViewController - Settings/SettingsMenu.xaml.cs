@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CPRemoteApp.Utility_Classes;
 using CPRemoteApp.ViewController___Remote;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,7 +33,7 @@ namespace CPRemoteApp.ViewController___Settings
     public sealed partial class SettingsMenu : Page
     {
         private DispatcherTimer timer = new DispatcherTimer();
-        private List<ListBoxItem> channels = new List<ListBoxItem>();
+        private ObservableCollection<ListBoxItem> channels = new ObservableCollection<ListBoxItem>();
         private Popup popup_control;
 
         public SettingsMenu()
@@ -102,6 +103,8 @@ namespace CPRemoteApp.ViewController___Settings
           {
             item = new ListBoxItem();
             content = new ChannelList(blist[i].getName(), i);
+            content.deletePressed += channelButtonDeletePressed;
+            content.editPressed += channelButtonEditPressed;
             item.Content = content;
             channels.Add(item);
           }
@@ -109,10 +112,9 @@ namespace CPRemoteApp.ViewController___Settings
           content = new ChannelList("Add New Channel", -1);
           item.Content = content;
 
-          content.deletePressed += channelButtonDeletePressed;
-          content.editPressed += channelButtonEditPressed;
           content.Changed += delegate
           {
+
             AddNewChannelPopup popup_content = new AddNewChannelPopup();
             Border border = new Border
             {
@@ -404,7 +406,8 @@ namespace CPRemoteApp.ViewController___Settings
           // TODO: LUKE
           // THIS IS WHERE THE CHANNEL NEEDS TO BE DELETED.
           //
-
+          ChannelList c = sender as ChannelList;
+          ((App)(CPRemoteApp.App.Current)).deviceController.channelController.remove_channel(c.tag);
           populateChannelList();
         }
     }
