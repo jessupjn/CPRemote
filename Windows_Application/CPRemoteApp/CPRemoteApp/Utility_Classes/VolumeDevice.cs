@@ -90,6 +90,7 @@ namespace CPRemoteApp.Utility_Classes
             Uri mute_uri = new Uri("ms-appx:///img/volMute.png");
             RemoteButton mute_button = new RemoteButton(mute_name, mute_abbv, mute_ir_code, 1, mute_uri);
             buttonScanner.add_button(mute_button);
+            is_initialized = true;
         }
 
         public async void saveDevice()

@@ -32,6 +32,7 @@ namespace CPRemoteApp.Utility_Classes
             {
                 digit_IR_codes[i] = dev_info[i + 2];
             }
+            is_initialized = true;
         }
 
         public void add_channel(RemoteButton new_chan)
@@ -55,20 +56,6 @@ namespace CPRemoteApp.Utility_Classes
         {
             // Needs to initialize IR_Bits and IR_protocol
             IList<string> input = await FileIO.ReadLinesAsync(device_info_file);
-            //Remove Comments
-            /*Stack<int> comment_line_numbers = new Stack<int>();
-            for(int i =0; i < input.Count; i++)
-            {
-                if(input[i].ElementAt(0) == '#')
-               {
-                    comment_line_numbers.Push(i);
-                }
-            }
-            while(comment_line_numbers.Count != 0)
-            {
-                input.RemoveAt(comment_line_numbers.Pop());
-            }*/
-            // Protocol[0], IR_Bits[1], Digit IR Codes[2-11], Num Buttons[12]
             IR_protocol = input[0];
             IR_bits = input[1];
             // Initialize the Digit IR Codes
@@ -90,11 +77,9 @@ namespace CPRemoteApp.Utility_Classes
                 chan_num = input[index++];
 
                 Uri img_uri = new Uri(img_path);
-                //BitmapIcon icon = new BitmapIcon();
-                //icon.UriSource = img_uri;
-                
                 buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, chan_num, 1, img_uri));
             }
+            is_initialized = true;
         }
 
         public async void onButtonClick()

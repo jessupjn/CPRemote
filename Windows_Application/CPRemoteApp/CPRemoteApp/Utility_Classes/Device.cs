@@ -18,6 +18,7 @@ namespace CPRemoteApp.Utility_Classes
         public RemoteButtonScanner buttonScanner { set; get; }
         public string IR_protocol = "";
         public string IR_bits = "";
+        public bool is_initialized { get; set; }
         protected StorageFile device_info_file;
         private string name = "";
         
