@@ -24,8 +24,9 @@ Use the Arduino IDE to first install IRLib and then upload the arduino code to t
 For everything to work, you must have the following setup
 
 1. BlueSmirf Bluetooth Modem (TX =5, RX =4) 
-2. IR emittor connected to a 100 ohm resistor (Pin 3) 
+2. IR emittor connected to a 220 ohm resistor (Pin 3) 
 3. IR receiver (pin 11) 
 
+![Wiring diagram](https://s3.amazonaws.com/martinzhu/image/Arduino+Schematics.png)
 
 
