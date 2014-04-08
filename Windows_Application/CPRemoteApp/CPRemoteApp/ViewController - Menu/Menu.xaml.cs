@@ -136,5 +136,10 @@ namespace CPRemoteApp
             else if (sender.Equals(_goToSettings)) { _goToSettings_indicator.Visibility = Visibility.Collapsed; }
         }
 
+        private void selectDevice(object sender, PointerRoutedEventArgs e)
+        {
+            App.bm.ConnectButton_Click(sender, e);
+        }
+
     }
 }
