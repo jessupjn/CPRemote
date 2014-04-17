@@ -70,7 +70,7 @@ namespace CPRemoteApp.ViewController___Remote
             List<string> output = new List<string>();
             output.Add(name);
             output.Add(abbreviation);
-            output.Add("ms-appx://" + icon.UriSource.AbsolutePath);
+            output.Add(icon.UriSource.ToString());
             output.Add(channel_number.ToString());
             return output;
         }

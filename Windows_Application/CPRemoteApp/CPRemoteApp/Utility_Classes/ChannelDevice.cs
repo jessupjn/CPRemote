@@ -77,7 +77,7 @@ namespace CPRemoteApp.Utility_Classes
                 chan_abbv = input[index++];
                 img_path = input[index++];
                 chan_num = input[index++];
-
+                
                 Uri img_uri = new Uri(img_path);
                 buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, chan_num, 1, img_uri));
             }

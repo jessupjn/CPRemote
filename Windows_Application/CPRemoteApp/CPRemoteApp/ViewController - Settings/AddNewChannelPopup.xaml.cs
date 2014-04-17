@@ -17,6 +17,11 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Imaging;
+
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -37,6 +42,9 @@ namespace CPRemoteApp.ViewController___Settings
       this.InitializeComponent();
       _ch_name.Text = name;
       _ch_num.Text = channel_num;
+      ImageSource imgSource = new BitmapImage(img_uri);
+      _img.Source = imgSource; 
+       
     }
 
     public void setParentPopup(ref Popup p)
@@ -92,21 +100,85 @@ namespace CPRemoteApp.ViewController___Settings
       {
         this._save_button.Focus(Windows.UI.Xaml.FocusState.Programmatic);
         if (savePressed != null) savePressed.Invoke(this, EventArgs.Empty);
-        Uri temp_icon_path = new Uri("ms-appx:///img/unset.png");
-        Debug.WriteLine(temp_icon_path.ToString());
-        RemoteButton b = new RemoteButton(_ch_name.Text, _ch_name.Text, _ch_num.Text, 1, temp_icon_path);
+
+        BitmapImage bi = _img.Source as BitmapImage;
+        Uri uri; 
+        if (bi == null)
+        {
+            uri = new Uri("ms-appx:///img/unset.png"); 
+        }
+        else
+        {
+            uri = bi.UriSource;
+
+        }
+
+
+        RemoteButton b = new RemoteButton(_ch_name.Text, _ch_name.Text, _ch_num.Text, 1, uri);
         ((App)CPRemoteApp.App.Current).deviceController.channelController.add_channel(b);
         closePopup(null, null);
       }
     }
 
-    private void uploadClicked(object sender, RoutedEventArgs e)
+    async private void uploadClicked(object sender, RoutedEventArgs e)
     {
-      //
-      // TODO: CODE TO UPLOAD AN IMAGE
-      //
+        FileOpenPicker openPicker = new FileOpenPicker();
+        openPicker.ViewMode = PickerViewMode.Thumbnail;
+        openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+        openPicker.FileTypeFilter.Add(".jpg");
+        openPicker.FileTypeFilter.Add(".jpeg");
+        openPicker.FileTypeFilter.Add(".png");
+
+        StorageFile file = await openPicker.PickSingleFileAsync();
+        Popup pop;
+
+
+        if (file != null)
+        {
+            StorageFolder img_folder = await  App.appData.LocalFolder.CreateFolderAsync("images_folder", CreationCollisionOption.OpenIfExists);
+            if (await IfStorageItemExist(img_folder, file.Name))
+            {
+                MessageDialog msgDialog = new MessageDialog("Image with same name already exists. Please rename the image and try again!", "Whoops!");
+                UICommand okBtn = new UICommand("OK");
+                msgDialog.Commands.Add(okBtn);
+                await msgDialog.ShowAsync();
+                popup_ref.TryGetTarget(out pop);
+                pop.IsOpen = true; 
+      
+            }
+            else
+            {
+                // file/folder does not exist. 
+               await file.CopyAsync(img_folder);
+               popup_ref.TryGetTarget(out pop);
+               Uri uri = new Uri(App.appData.LocalFolder.Path + "\\" + "images_folder" + "\\" + file.Name);
+            
+
+               ImageSource imgSource = new BitmapImage(uri);
+                _img.Source = imgSource; 
+               pop.IsOpen = true; 
+
+            } 
+ 
+        }
+ 
 
     }
+
+    public async Task<bool> IfStorageItemExist(StorageFolder folder, string itemName)
+    {
+        try
+        {
+            IStorageItem item = await folder.TryGetItemAsync(itemName);
+            return (item != null);
+        }
+        catch (Exception ex)
+        {
+            // Should never get here 
+            return false;
+        }
+    } 
+
 
   }
 }
