@@ -11,7 +11,9 @@
     >
     
     <Border BorderBrush="Transparent" BorderThickness="10" Margin="10 0">
-        <Grid>
+        <Canvas>
+        <Rectangle Name="cover_panel" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="1" Opacity="10" Fill="Transparent" Width="400" Height="100"></Rectangle>
+        <Grid Name="content_grid" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="0">
             <Grid.Background>
                 <SolidColorBrush Color="Transparent" Opacity=".25" />
             </Grid.Background>
@@ -44,5 +46,6 @@
 
       </StackPanel>
         </Grid>
+      </Canvas>
     </Border>
 </UserControl>

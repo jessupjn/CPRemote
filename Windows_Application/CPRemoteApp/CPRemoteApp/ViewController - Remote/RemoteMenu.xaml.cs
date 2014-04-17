@@ -123,19 +123,15 @@ namespace CPRemoteApp.ViewController___Remote
             
             
             // Channel Button Scanner Formatting
-            device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
-            device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
-            double image_dimension = 4 * channel_scanner_panel.Height / 5;
-            device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
+            device_manager.channelController.buttonScanner.setDimensions(channel_scanner_panel.Height, channel_scanner_panel.Width);
             if(!device_manager.channelController.buttonScanner.clickEventSet)
             {
                 device_manager.channelController.buttonScanner.PointerReleased += onChannelButtonClicked;
                 device_manager.channelController.buttonScanner.clickEventSet = true;
             }
+
             // Volume Button Scanner Formatting
-            device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
-            device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
-            device_manager.volumeController.buttonScanner.setCurrentImage(image_dimension);
+            device_manager.volumeController.buttonScanner.setDimensions(volume_scanner_panel.Height, channel_scanner_panel.Width);
             if(!device_manager.volumeController.buttonScanner.clickEventSet)
             {
                 device_manager.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
