@@ -4,7 +4,7 @@
   <Properties>
     <DisplayName>CPRemoteApp</DisplayName>
     <PublisherDisplayName>Jackson Jessup</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Assets\Store Logo.png</Logo>
   </Properties>
   <Prerequisites>
     <OSMinVersion>6.3.0</OSMinVersion>
@@ -15,10 +15,13 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CPRemoteApp.App">
-      <m2:VisualElements DisplayName="CPRemoteApp" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="CPRemoteApp" ForegroundText="light" BackgroundColor="#3E106C">
-        <m2:DefaultTile ShortName="CPRemote">
+      <m2:VisualElements DisplayName="CPRemoteApp" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets/Small Logo.png" Description="CPRemoteApp" ForegroundText="light" BackgroundColor="#3E106C">
+        <m2:DefaultTile ShortName="CPRemote" Wide310x150Logo="Assets/Wide Logo.png">
         </m2:DefaultTile>
-        <m2:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#3E106C" />
+        <m2:SplashScreen Image="Assets/Splash Screen.png" BackgroundColor="#000000" />
+        <m2:InitialRotationPreference>
+          <m2:Rotation Preference="landscape" />
+        </m2:InitialRotationPreference>
       </m2:VisualElements>
     </Application>
   </Applications>

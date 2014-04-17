@@ -151,10 +151,11 @@
     <None Include="CPRemoteApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo.scale-100.png" />
-    <Content Include="Assets\SmallLogo.scale-100.png" />
-    <Content Include="Assets\SplashScreen.scale-100.png" />
-    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\Small Logo.png" />
+    <Content Include="Assets\Splash Screen.png" />
+    <Content Include="Assets\Store Logo.png" />
+    <Content Include="Assets\Wide Logo.png" />
     <Content Include="img\abc_icon.png" />
     <Content Include="img\bluetooth_symbol.png" />
     <Content Include="img\cartoon_network_icon.png" />
