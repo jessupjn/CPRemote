@@ -31,7 +31,7 @@ namespace CPRemoteApp.ViewController___Remote
         public ObservableCollection<string> abbreviations = new ObservableCollection<string>();
         private int cur_index = 0;
         private DispatcherTimer timer = new DispatcherTimer();
-        private static int MAX_BUTTONS_SHOWN = 5;
+        private const int MAX_BUTTONS_SHOWN = 5;
         // -------------------------------------
 
         public RemoteButtonScanner()
