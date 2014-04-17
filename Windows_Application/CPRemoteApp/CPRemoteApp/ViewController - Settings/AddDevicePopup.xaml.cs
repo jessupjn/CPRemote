@@ -32,17 +32,52 @@ namespace CPRemoteApp.ViewController___Settings
         {
             // Check to make sure the name isn't blank or already used then change to first button to train screen
             device_name = device_name_text.Text;
-            //bool name_exists = await ((App)CPRemoteApp.App.Current).deviceController.device_input_file_exists(name, channel_or_volume);
-            //if(name_exists)
-            //{
-                // TODO: Display warning/Confirmation Dialog
-            //    return;
-            //}
+            DeviceManager m = ((App)(CPRemoteApp.App.Current)).deviceController;
+            if(device_name.TrimStart(' ').Length == 0)
+            {
+              MessageDialog msgDialog = new MessageDialog("Please enter a valid name for the device! The device's name cannot be empty!", "Whoops!");
+              UICommand okBtn = new UICommand("OK");
+              okBtn.Invoked += delegate { };
+              msgDialog.Commands.Add(okBtn);
+              msgDialog.ShowAsync();
+              return;
+            }
+            else if (channel_or_volume)
+            {
+              foreach (VolumeDevice d in m.getVolumeDevices())
+              {
+                if (d.get_name() == device_name)
+                {
+                  MessageDialog msgDialog = new MessageDialog("There is already a volume device saved with that name! Please enter a unique name for the device!", "Whoops!");
+                  UICommand okBtn = new UICommand("OK");
+                  okBtn.Invoked += delegate { };
+                  msgDialog.Commands.Add(okBtn);
+                  msgDialog.ShowAsync();
+                  return;
+                }
+              }
+            }
+            else
+            {
+              foreach (ChannelDevice d in m.getChannelDevices())
+              {
+                if (d.get_name() == device_name)
+                {
+                  MessageDialog msgDialog = new MessageDialog("There is already a channel device saved with that name! Please enter a unique name for the device!", "Whoops!");
+                  UICommand okBtn = new UICommand("OK");
+                  okBtn.Invoked += delegate { };
+                  msgDialog.Commands.Add(okBtn);
+                  msgDialog.ShowAsync();
+                  return;
+                }
+              }
+            }
             
             device_name_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             device_name_block.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             next_button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-            if(channel_or_volume)
+
+            if (channel_or_volume)
             {
                 trainVolumeDevice();
             }
