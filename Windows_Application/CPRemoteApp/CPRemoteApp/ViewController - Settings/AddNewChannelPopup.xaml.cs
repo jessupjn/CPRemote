@@ -112,7 +112,7 @@ namespace CPRemoteApp.ViewController___Settings
             uri = bi.UriSource;
 
         }
-
+       
 
         RemoteButton b = new RemoteButton(_ch_name.Text, _ch_name.Text, _ch_num.Text, 1, uri);
         ((App)CPRemoteApp.App.Current).deviceController.channelController.add_channel(b);
@@ -124,42 +124,25 @@ namespace CPRemoteApp.ViewController___Settings
     {
         FileOpenPicker openPicker = new FileOpenPicker();
         openPicker.ViewMode = PickerViewMode.Thumbnail;
-        openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+        openPicker.SuggestedStartLocation = PickerLocationId.Downloads;    
         openPicker.FileTypeFilter.Add(".jpg");
         openPicker.FileTypeFilter.Add(".jpeg");
         openPicker.FileTypeFilter.Add(".png");
 
         StorageFile file = await openPicker.PickSingleFileAsync();
         Popup pop;
-
-
         if (file != null)
         {
             StorageFolder img_folder = await  App.appData.LocalFolder.CreateFolderAsync("images_folder", CreationCollisionOption.OpenIfExists);
-            if (await IfStorageItemExist(img_folder, file.Name))
-            {
-                MessageDialog msgDialog = new MessageDialog("Image with same name already exists. Please rename the image and try again!", "Whoops!");
-                UICommand okBtn = new UICommand("OK");
-                msgDialog.Commands.Add(okBtn);
-                await msgDialog.ShowAsync();
-                popup_ref.TryGetTarget(out pop);
-                pop.IsOpen = true; 
-      
-            }
-            else
-            {
-                // file/folder does not exist. 
-               await file.CopyAsync(img_folder);
-               popup_ref.TryGetTarget(out pop);
-               Uri uri = new Uri(App.appData.LocalFolder.Path + "\\" + "images_folder" + "\\" + file.Name);
-            
-
-               ImageSource imgSource = new BitmapImage(uri);
-                _img.Source = imgSource; 
-               pop.IsOpen = true; 
-
-            } 
- 
+          
+            StorageFile file_name = await file.CopyAsync(img_folder, file.Name,  NameCollisionOption.GenerateUniqueName);
+                      
+            popup_ref.TryGetTarget(out pop);
+            Uri uri = new Uri(file_name.Path);
+            Debug.WriteLine(uri.ToString()); 
+            ImageSource imgSource = new BitmapImage(uri);
+            _img.Source = imgSource; 
+            pop.IsOpen = true;
         }
  
 
