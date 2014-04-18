@@ -97,6 +97,36 @@ namespace CPRemoteApp.Utility_Classes
             RemoteButton mute_button = new RemoteButton(mute_name, mute_abbv, mute_ir_code, 1, mute_uri);
             buttonScanner.add_button(mute_button);
             is_initialized = true;
+            remote_timer.Interval = TimeSpan.FromSeconds(1);
+            remote_timer.Tick += setAllowIRTransmission;
+        }
+
+        override public async void sendIRInfo()
+        {
+            string to_send = "-S.";
+            to_send += IR_protocol;
+            to_send += ".";
+            RemoteButton cur_button = buttonScanner.getCurrentButton();
+            if (cur_button.abbreviation[0] == '-')
+            {
+                to_send += volume_down_ir_code;
+            }
+            else if (cur_button.abbreviation[0] == '+')
+            {
+                to_send += volume_up_ir_code;
+            }
+            else
+            {
+                to_send += mute_ir_code;
+            }
+            to_send += ".";
+            to_send += IR_bits;
+            to_send += ".";
+            int change_increment = volume_increments * cur_button.getRepitions();
+            to_send += change_increment.ToString();
+            to_send += "/";
+            App.bm.OperateTVButton_Click(to_send);
+            await Task.Delay(TimeSpan.FromSeconds(.1));
         }
 
         public async void saveDevice()

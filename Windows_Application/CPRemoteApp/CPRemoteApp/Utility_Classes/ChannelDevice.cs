@@ -23,7 +23,7 @@ namespace CPRemoteApp.Utility_Classes
         // Used when creating a channel device from a text file
         public ChannelDevice(string name_, StorageFile input_file) : base(name_, input_file)
         {
- 
+            // remote timer info set in initialize.
         }
 
         public ChannelDevice(string name_, StorageFile input_file, List<string> dev_info) : base(name_, input_file, dev_info)
@@ -33,6 +33,8 @@ namespace CPRemoteApp.Utility_Classes
                 digit_IR_codes[i] = dev_info[i + 2];
             }
             is_initialized = true;
+            remote_timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
+            remote_timer.Tick += setAllowIRTransmission;
         }
 
         public void add_channel(RemoteButton new_chan)
@@ -82,9 +84,11 @@ namespace CPRemoteApp.Utility_Classes
                 buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, chan_num, 1, img_uri));
             }
             is_initialized = true;
+            remote_timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
+            remote_timer.Tick += setAllowIRTransmission;
         }
 
-        public async void onButtonClick()
+        override public async void sendIRInfo()
         {
             try
             {

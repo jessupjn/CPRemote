@@ -20,6 +20,8 @@ namespace CPRemoteApp.Utility_Classes
         public string IR_bits = "";
         public bool is_initialized { get; set; }
         protected StorageFile device_info_file;
+        protected DispatcherTimer remote_timer = new DispatcherTimer();
+        protected bool allow_IR_transmission = true;
         private string name = "";
         
         public Device()
@@ -49,10 +51,31 @@ namespace CPRemoteApp.Utility_Classes
             return name;
         }
 
+        public void onButtonClick()
+        {
+            if (!allow_IR_transmission)
+            {
+                return;
+            }
+            buttonScanner.stop();
+            allow_IR_transmission = false;
+            //Function call to send IR
+            sendIRInfo();
+            buttonScanner.start();
+            remote_timer.Start();
+        }
+
+        protected void setAllowIRTransmission(Object sender, object e)
+        {
+            allow_IR_transmission = true;
+            remote_timer.Stop();
+        }
+
 
 
         // ------------------------ Abstract Functions to be written by Derived Classes -------------------
 
+        abstract public void sendIRInfo();
 
     }
 }
