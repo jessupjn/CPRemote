@@ -5,6 +5,7 @@
     xmlns:local="using:CPRemoteApp">
 
     <Application.Resources>
+        <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="Orange" />
         
         <Style TargetType="Button">
               

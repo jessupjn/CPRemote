@@ -23,20 +23,20 @@
             </Grid.RowDefinitions>
             
             <Border BorderBrush="White" BorderThickness="0 2">
-            <ListView Name="buttonList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="{Binding}" FontSize="24" FontWeight="Bold" Foreground="White" Margin="15"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+                <ListView Name="buttonList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="{Binding}" FontSize="24" FontWeight="Bold" Foreground="White" Margin="15"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
             </Border>
             <StackPanel Name="cur_button_panel" Grid.Row="1">
                 <StackPanel.Background>
