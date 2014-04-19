@@ -57,8 +57,8 @@ namespace CPRemoteApp.Utility_Classes
             {
                 return;
             }
-            buttonScanner.stop();
             allow_IR_transmission = false;
+            buttonScanner.stop();
             //Function call to send IR
             sendIRInfo();
             buttonScanner.start();

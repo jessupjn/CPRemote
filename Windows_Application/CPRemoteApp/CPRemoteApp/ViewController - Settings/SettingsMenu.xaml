@@ -187,7 +187,7 @@
 			</Setter>
 		</Style>
 	</Page.Resources>
-
+    <ScrollViewer VerticalScrollBarVisibility="Visible">
   <Canvas x:Name="_bg">
     <Canvas.Background>
       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -235,7 +235,36 @@
       <ListBox x:Name="_channellist_listbox"  Canvas.Top="275" Width="700" Height="350" Background="Transparent" SelectionMode="Extended" IsTapEnabled="False" Style="{StaticResource ListBoxStyle1}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}"/>
       <Border x:Name="_channellist_border" Canvas.Top="270" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="360" IsTapEnabled="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
 
-
+            <StackPanel Canvas.Top="650" Name="increment_slider_panel">
+                <TextBlock Name="increment_slider_label" Text="Scanning Increment:" FontSize="24"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="95" />
+                        <ColumnDefinition Width="95" />
+                        <ColumnDefinition Width="95" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        
+                    </Grid.ColumnDefinitions>
+                    <Slider Name="increment_slider" Maximum="10" Minimum="2" StepFrequency="1" TickFrequency="1" 
+                            TickPlacement="Outside"  Width="700" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"/>
+                    <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Text="2" />
+                    <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Text="4" />
+                    <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" Text="6" />
+                    <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" Text="8" />
+                    <TextBlock FontSize="16" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="4" Text="10" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5">
+                        <TextBlock Name="increment_slider_value_text" FontSize="24" HorizontalAlignment="Center" Text="{Binding ElementName=increment_slider, Path=Value}"/>
+                        <TextBlock FontSize="24" Text=" Seconds" />
+                    </StackPanel>
+                </Grid>
+                
+            </StackPanel>
 
 
     </Canvas>
@@ -243,4 +272,5 @@
     <!-- back button always on the very top-->
     <Button x:Name="_backButton" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="backClick" Canvas.Left="75" Canvas.Top="50"/>
   </Canvas>
+  </ScrollViewer>
 </Page>

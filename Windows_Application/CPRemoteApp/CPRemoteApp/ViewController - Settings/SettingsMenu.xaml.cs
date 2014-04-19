@@ -50,6 +50,7 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_channellist_label, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_border, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(increment_slider_panel, (Window.Current.Bounds.Width - 700) / 2);
 
             string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
             if(cur_v_device_name != "")
@@ -65,6 +66,10 @@ namespace CPRemoteApp.ViewController___Settings
 
             _channellist_listbox.ItemsSource = channels;
             populateChannelList();
+
+            // Set the initial value on increment slider and on changed handler
+            increment_slider.Value = (double) CPRemoteApp.App.button_scanner_interval;
+            increment_slider.ValueChanged += incrementChanged;
 
             string bt_name = App.bm.connectedDeviceName();
             if (bt_name != null) _bt_device_selected.Text = bt_name;
@@ -204,6 +209,17 @@ namespace CPRemoteApp.ViewController___Settings
         }
       }
 
+        // Increment Slider Value Changed
+        void incrementChanged(object sender, RangeBaseValueChangedEventArgs args)
+        {
+            Slider slide = sender as Slider;
+            CPRemoteApp.App.button_scanner_interval = (int) slide.Value;
+            ((App)CPRemoteApp.App.Current).deviceController.channelController.buttonScanner.updateTimerInterval();
+            ((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
+            ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.updateTimerInterval();
+            // TODO: Save the Change in Increment
+        }
+
 
         // ===================================================================================================
         // ===================================================================================================
@@ -303,6 +319,7 @@ namespace CPRemoteApp.ViewController___Settings
         {
             if(await ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(name))
             {
+                ((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
                 populateChannelList();
             }
             ((App)(CPRemoteApp.App.Current)).deviceController.selectVolumeDevice(name);
