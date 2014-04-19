@@ -122,7 +122,7 @@ namespace CPRemoteApp.ViewController___Settings
                 // Get Volume Up Info
                 setContent("Volume Up");
                 
-                string vol_up_info = await getIRInfo();
+               string vol_up_info = await getIRInfo();
 
                 //string vol_up_info = "-S.NEC.123.123.2/";
 

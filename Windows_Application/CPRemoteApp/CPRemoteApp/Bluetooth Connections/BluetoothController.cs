@@ -118,7 +118,6 @@ namespace CPRemoteApp.Bluetooth_Connections
         #region Send & Receive
         public async void OperateTVButton_Click(string message)
         {
-         
             var res = await connectionManager.SendMessageAsync(message);
             if (res == 1)//log if successful
                 System.Diagnostics.Debug.WriteLine("Sent: " + message);

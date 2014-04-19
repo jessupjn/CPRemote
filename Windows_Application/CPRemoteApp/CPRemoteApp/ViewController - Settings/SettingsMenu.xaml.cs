@@ -227,47 +227,61 @@ namespace CPRemoteApp.ViewController___Settings
 
 
 
-        private async void enumerateListAsync(object sender, bool channel_or_volume) { await buildList( GetElementRect(sender as Canvas), channel_or_volume); }
-        private async Task buildList(Rect invokerRect, bool channel_or_volume)
+        private async void enumerateListAsync(object sender, bool channel_or_volume) { await buildList( sender , channel_or_volume); }
+        private async Task buildList(object sender, bool channel_or_volume)
         {
-          PopupMenu menu = new PopupMenu();
-
+          //PopupMenu menu = new PopupMenu();
+     
+          MenuFlyout mf = new MenuFlyout();
+          //var r = await m.ShowAt(inv); 
           //
           // GET DEVICES FROM SOURCE BASE ON channel_or_volume
           // true = volume devices
           // false = channel devices
           // if there is an iteam in the list, also add "Add new device..." at bottom of the list.
 
-          var result = await menu.ShowForSelectionAsync(invokerRect);
-          if (result == null && channel_or_volume)
+
+          if (channel_or_volume)
           {
 
             List<VolumeDevice> vList = ((App)CPRemoteApp.App.Current).deviceController.getVolumeDevices();
             foreach(VolumeDevice d in vList)
             {
-              menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
+                MenuFlyoutItem mi = new MenuFlyoutItem();
+                mi.Text =  d.get_name(); 
+                mi.Click+= selectListItem; 
+                mf.Items.Add(mi);
             }
-            menu.Commands.Add(new UICommand("Add new volume device...", new UICommandInvokedHandler(addNewVolumeDevice)));
-            result = await menu.ShowForSelectionAsync(invokerRect);
+            MenuFlyoutItem new_vol = new MenuFlyoutItem();
+            new_vol.Text =  "Add new volume device..."; 
+            new_vol.Click+= addNewVolumeDevice; 
+            mf.Items.Add(new_vol);
           }
-          else if(result == null)
+          else
           {
             List<ChannelDevice> cList = ((App)CPRemoteApp.App.Current).deviceController.getChannelDevices();
             foreach (ChannelDevice d in cList)
             {
-              menu.Commands.Add(new UICommand(d.get_name(), new UICommandInvokedHandler(selectListItem)));
+                MenuFlyoutItem mi = new MenuFlyoutItem();
+                mi.Text = d.get_name();
+                mi.Click += selectListItem;
+                mf.Items.Add(mi);
             }
-            menu.Commands.Add(new UICommand("Add new channel device...", new UICommandInvokedHandler(addNewChannelDevice)));
-            result = await menu.ShowForSelectionAsync(invokerRect);
+            
+            MenuFlyoutItem new_chan = new MenuFlyoutItem();
+            new_chan.Text = "Add new volume device...";
+            new_chan.Click += addNewChannelDevice;
+            mf.Items.Add(new_chan);
           }
+          mf.ShowAt(sender as FrameworkElement); 
 
         }
 
-        private void addNewChannelDevice(IUICommand command) { addNewDevice(command, false); }
+        private void addNewChannelDevice(object command, object e) { addNewDevice(command, false); }
 
-        private void addNewVolumeDevice(IUICommand command) {  addNewDevice(command, true); }
+        private void addNewVolumeDevice(object command, object e) {  addNewDevice(command, true); }
 
-        private void addNewDevice(IUICommand command, bool chan_or_vol)
+        private void addNewDevice(object command, bool chan_or_vol)
         {
             AddDevicePopup popup_content = new AddDevicePopup();
             popup_content.setDeviceType(chan_or_vol);
@@ -326,18 +340,19 @@ namespace CPRemoteApp.ViewController___Settings
             changeSelectedText();
         }
 
-        private async void selectListItem(IUICommand command)
+        public void selectListItem(object sender, RoutedEventArgs e)
         {
           SelectedDevice popup_content = new SelectedDevice();
+          MenuFlyoutItem button = sender as MenuFlyoutItem;
           popup_content.deletePressed += delegate
           {
-              ((App)(CPRemoteApp.App.Current)).deviceController.removeChannelDevice(command.Label);
-              ((App)(CPRemoteApp.App.Current)).deviceController.removeVolumeDevice(command.Label);
+              ((App)(CPRemoteApp.App.Current)).deviceController.removeChannelDevice(button.Text);
+              ((App)(CPRemoteApp.App.Current)).deviceController.removeVolumeDevice(button.Text);
               ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           popup_content.selectPressed += delegate
           {
-              selectDevice(command.Label);
+              selectDevice(button.Text);
             ((popup_content.Parent as Border).Parent as Popup).IsOpen = false;
           };
           Border border = new Border

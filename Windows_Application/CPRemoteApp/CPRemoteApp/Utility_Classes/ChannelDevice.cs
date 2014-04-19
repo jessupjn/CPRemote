@@ -111,6 +111,7 @@ namespace CPRemoteApp.Utility_Classes
                     // .1/ for Number of Repitions
                     bt_msg += IR_bits + ".1/";
                     App.bm.OperateTVButton_Click(bt_msg);
+                    System.Diagnostics.Debug.WriteLine("Inside print");
                     System.Diagnostics.Debug.WriteLine(bt_msg);
                     await Task.Delay(TimeSpan.FromSeconds(1));
                 }
