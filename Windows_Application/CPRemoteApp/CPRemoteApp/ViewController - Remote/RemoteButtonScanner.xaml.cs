@@ -48,12 +48,26 @@ namespace CPRemoteApp.ViewController___Remote
         public void start()
         {
             buttonList.SelectedIndex = abbreviations.Count - 1;
+            //buttonList.SelectionMode = ListViewSelectionMode.None;
+            //buttonList.
             timer.Start();
         }
 
         public void stop()
         {
             timer.Stop();
+        }
+
+        public void setDimensions(double height_, double width_)
+        {
+            this.Height = height_;
+            this.Width = width_;
+            double image_dimension = 4 * height_ / 5;
+            setCurrentImage(image_dimension);
+            cover_panel.Height = height_;
+            cover_panel.Width = width_;
+            content_grid.Height = height_;
+            content_grid.Width = width_;
         }
 
         public void setCurrentImage(double dimmension)
@@ -65,7 +79,7 @@ namespace CPRemoteApp.ViewController___Remote
               this.cur_image.Width = 5 * dimmension / 8;
               this.cur_image.Source = buttons[cur_index].icon;
             }
-        } 
+        }
 
         public void add_button(RemoteButton btn)
         {

@@ -123,19 +123,15 @@ namespace CPRemoteApp.ViewController___Remote
             
             
             // Channel Button Scanner Formatting
-            device_manager.channelController.buttonScanner.Width = volume_scanner_panel.Width;
-            device_manager.channelController.buttonScanner.Height = volume_scanner_panel.Height;
-            double image_dimension = 4 * channel_scanner_panel.Height / 5;
-            device_manager.channelController.buttonScanner.setCurrentImage(image_dimension);
+            device_manager.channelController.buttonScanner.setDimensions(channel_scanner_panel.Height, channel_scanner_panel.Width);
             if(!device_manager.channelController.buttonScanner.clickEventSet)
             {
                 device_manager.channelController.buttonScanner.PointerReleased += onChannelButtonClicked;
                 device_manager.channelController.buttonScanner.clickEventSet = true;
             }
+
             // Volume Button Scanner Formatting
-            device_manager.volumeController.buttonScanner.Width = volume_scanner_panel.Width;
-            device_manager.volumeController.buttonScanner.Height = volume_scanner_panel.Height;
-            device_manager.volumeController.buttonScanner.setCurrentImage(image_dimension);
+            device_manager.volumeController.buttonScanner.setDimensions(volume_scanner_panel.Height, channel_scanner_panel.Width);
             if(!device_manager.volumeController.buttonScanner.clickEventSet)
             {
                 device_manager.volumeController.buttonScanner.PointerReleased += onVolumeButtonClicked;
@@ -368,7 +364,7 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
         {
-            string to_send = "-S.";
+            /*string to_send = "-S.";
             to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_protocol;
             to_send += ".";
             RemoteButton cur_button = ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.getCurrentButton();
@@ -391,7 +387,8 @@ namespace CPRemoteApp.ViewController___Remote
             to_send += change_increment.ToString();
             to_send += "/";
             App.bm.OperateTVButton_Click(to_send);
-            System.Diagnostics.Debug.WriteLine(to_send);
+            System.Diagnostics.Debug.WriteLine(to_send);*/
+            ((App)CPRemoteApp.App.Current).deviceController.volumeController.onButtonClick();
         }
 
         private void pointerEntered(object sender, PointerRoutedEventArgs e)

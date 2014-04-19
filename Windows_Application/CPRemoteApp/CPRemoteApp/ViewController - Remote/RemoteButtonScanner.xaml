@@ -11,7 +11,9 @@
     >
     
     <Border BorderBrush="Transparent" BorderThickness="10" Margin="10 0">
-        <Grid>
+        <Canvas>
+        <Rectangle Name="cover_panel" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="1" Opacity="10" Fill="Transparent" Width="400" Height="100"></Rectangle>
+        <Grid Name="content_grid" Canvas.Left="0" Canvas.Top="0" Canvas.ZIndex="0">
             <Grid.Background>
                 <SolidColorBrush Color="Transparent" Opacity=".25" />
             </Grid.Background>
@@ -21,20 +23,20 @@
             </Grid.RowDefinitions>
             
             <Border BorderBrush="White" BorderThickness="0 2">
-            <ListView Name="buttonList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="{Binding}" FontSize="24" FontWeight="Bold" Foreground="White" Margin="15"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+                <ListView Name="buttonList" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="{Binding}" FontSize="24" FontWeight="Bold" Foreground="White" Margin="15"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
             </Border>
             <StackPanel Name="cur_button_panel" Grid.Row="1">
                 <StackPanel.Background>
@@ -44,5 +46,6 @@
 
       </StackPanel>
         </Grid>
+      </Canvas>
     </Border>
 </UserControl>
