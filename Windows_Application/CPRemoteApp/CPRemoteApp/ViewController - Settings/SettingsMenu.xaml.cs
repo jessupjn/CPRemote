@@ -217,7 +217,7 @@ namespace CPRemoteApp.ViewController___Settings
             ((App)CPRemoteApp.App.Current).deviceController.channelController.buttonScanner.updateTimerInterval();
             ((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
             ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.updateTimerInterval();
-            // TODO: Save the Change in Increment
+            CPRemoteApp.App.appData.LocalSettings.Values["scannerInterval"] = CPRemoteApp.App.button_scanner_interval;
         }
 
 

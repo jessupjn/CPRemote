@@ -47,10 +47,21 @@ namespace CPRemoteApp
         /// </summary>
         public App()
         {
-            button_scanner_interval = 5;
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             appData = ApplicationData.Current;
+            Object value = appData.LocalSettings.Values["scannerInterval"];
+            if (value == null)
+            {
+                // No data
+                System.Diagnostics.Debug.WriteLine("Null");
+                button_scanner_interval = 5;
+                appData.LocalSettings.Values["scannerInterval"] = button_scanner_interval;
+            }
+            else
+            {
+                button_scanner_interval = (int)value;
+            }
             deviceController = new DeviceManager();
             bm.connectToDefault(null, null);
 

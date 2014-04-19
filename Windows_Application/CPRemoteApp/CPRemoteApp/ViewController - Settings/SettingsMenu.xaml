@@ -188,7 +188,7 @@
 		</Style>
 	</Page.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Visible">
-  <Canvas x:Name="_bg">
+  <Canvas x:Name="_bg" Height="1200">
     <Canvas.Background>
       <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="Black" Offset="0"/>
