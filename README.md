@@ -12,7 +12,7 @@ The project consists of the Windows App code and the Arduino Code
 Windows App
 -----------
 Use Visual Studio 2013 to compile and deploy the windows app code in Windows_Application/CPRemote
-<br>
+<br><br>
 <b>Build Source</b><br>
 1. Clone the <i>master branch</i> to PC<br>
 2. Navigate to Windows_Application/CPRemoteApp<br>
@@ -41,13 +41,12 @@ For everything to work, you must have the following setup as shown in the image 
 
 Operating Instructions
 ----------------------
-Once the code has been deployed to the Windows Surface tablet and the Arduino. First navigate to the <i>Settings Menu </i> and select the bluetooth connection to connect to the arduino. Then learn the infrared codes for Channel and Volume devices by adding a new device. Once volume and channel devices have been trained, add channels to the channel list. A
+Once the code has been deployed to the Windows Surface tablet and the Arduino. First navigate to the <i>Settings Menu </i> and select the bluetooth connection to connect to the arduino. Then learn the infrared codes for Channel and Volume devices by adding a new device. Once volume and channel devices have been trained, add channels to the channel list.
 
-The application is now all set to be used. Navigate to the Remote Menu and start using the application.  
+The application is now all set to be used. Navigate to the <i>Remote Menu</i> and start using the application.  
 
 <br>
-
-<b>Team:</b>Adnan Tahir, Luke Graham, Jackson Jessup, Catie Edwards, Wei Zhu
+<b>Team:</b> Adnan Tahir, Luke Graham, Jackson Jessup, Catie Edwards, Wei Zhu
 
 To report any issues please contact the team at cpremote481@umich.edu
 
