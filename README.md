@@ -40,7 +40,7 @@ For everything to work, you must have the following setup as shown in the image 
 <br> 
 
 Operating Instructions
-----------------------
+======================
 Once the code has been deployed to the Windows Surface tablet and the Arduino. First navigate to the <i>Settings Menu </i> and select the bluetooth connection to connect to the arduino. Then learn the infrared codes for Channel and Volume devices by adding a new device. Once volume and channel devices have been trained, add channels to the channel list.
 
 The application is now all set to be used. Navigate to the <i>Remote Menu</i> and start using the application.  
