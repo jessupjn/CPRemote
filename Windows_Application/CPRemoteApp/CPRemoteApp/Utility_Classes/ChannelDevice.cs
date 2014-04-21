@@ -57,11 +57,6 @@ namespace CPRemoteApp.Utility_Classes
             saveDevice();
         }
 
-        /*public void updateIRDelay()
-        {
-            remote_timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
-        }*/
-
         public async Task initialize()
         {
             // Needs to initialize IR_Bits and IR_protocol

@@ -40,27 +40,8 @@ namespace CPRemoteApp.Utility_Classes
             devices_info_file = (StorageFile) await devices_folder.TryGetItemAsync("devices_info.txt");
             if(devices_info_file == null)
             {
-                // TODO: Display Warning about no devices
+                System.Diagnostics.Debug.WriteLine("No Devices info file!");
                 return;
-                /*StorageFile chan_test = await devices_folder.CreateFileAsync("channel_test.txt", CreationCollisionOption.ReplaceExisting);
-                List<string> channel_file_test_lines = new List<string>() {"7", "Disney Channel", "Disn", "ms-appx:///img/disney_icon.png", "754",
-                                                                                                         "Cartoon Network", "Cart", "ms-appx:///img/cartoon_network_icon.png", "456",
-                                                                                                         "Nickelodeon", "Nick", "ms-appx:///img/nickelodeon_icon.png", "987",
-                                                                                                         "Toon Disney", "Toon", "ms-appx:///img/toon_disney_icon.png", "111",
-                                                                                                         "ABC", "ABC", "ms-appx:///img/abc_icon.png", "222",
-                                                                                                         "ESPN", "ESPN", "ms-appx:///img/espn_icon.jpg", "333",
-                                                                                                         "NBC", "NBC", "ms-appx:///img/nbc_icon.png", "212"
-                };
-                await FileIO.WriteLinesAsync(chan_test, channel_file_test_lines);
-                channelController = new ChannelDevice("Testing_channel", chan_test);
-                await channelController.initialize();
-
-                StorageFile vol_test = await devices_folder.CreateFileAsync("volume_test.txt", CreationCollisionOption.ReplaceExisting);
-                List<string> vol_file_test_lines = new List<string>() { "1", "NEC", "32", "2011254795", "2011246606" };
-                await FileIO.WriteLinesAsync(vol_test, vol_file_test_lines);
-                volumeController = new VolumeDevice("Testing_volume", vol_test);
-                await volumeController.initialize();
-                return;*/
             }
             IList<string> input = await FileIO.ReadLinesAsync(devices_info_file);
             int num_channel_devices = Convert.ToInt32(input[0]);
@@ -321,10 +302,6 @@ namespace CPRemoteApp.Utility_Classes
         {
             name = get_input_file_name(name, postfix);
             StorageFile input_file = (StorageFile) await devices_folder.TryGetItemAsync(name);
-            /*if(input_file.IsEqual(null))
-            {
-                //TODO: Throw Null File Exception Error
-            }*/
             return input_file;
         }
 

@@ -72,7 +72,6 @@ namespace CPRemoteApp
             StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
 
-            //TODO: Should check the return value of device_manager to ensure devices were loaded properly
             await device_manager.initialize(devices_folder);
         }
 

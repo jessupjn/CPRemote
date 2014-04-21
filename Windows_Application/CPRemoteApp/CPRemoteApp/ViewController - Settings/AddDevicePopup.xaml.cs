@@ -116,16 +116,12 @@ namespace CPRemoteApp.ViewController___Settings
         private async void trainVolumeDevice()
         {
             // [0] protocol, [1] # IR Bits, [2] Vol Up IR Code, [3] Vol Down IR Code, [4] Mute IR Code
-            // TODO: Set the UI
             try
             {
                 // Get Volume Up Info
                 setContent("Volume Up");
-                
-               string vol_up_info = await getIRInfo();
 
-                //string vol_up_info = "-S.NEC.123.123.2/";
-
+                string vol_up_info = await getIRInfo();
                 getNextData(ref vol_up_info);
                 string protocol = getNextData(ref vol_up_info);
                 string vol_up_ir_code = getNextData(ref vol_up_info);
