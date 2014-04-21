@@ -295,7 +295,7 @@ namespace CPRemoteApp.ViewController___Settings
             }
             
             MenuFlyoutItem new_chan = new MenuFlyoutItem();
-            new_chan.Text = "Add new volume device...";
+            new_chan.Text = "Add new channel device...";
             new_chan.Click += addNewChannelDevice;
             mf.Items.Add(new_chan);
           }
