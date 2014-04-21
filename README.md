@@ -1,5 +1,6 @@
 CPRemote
 ========
+(Master branch on: https://github.com/jessupjn/CPRemote)
 
 Group project for EECS481 - Software Engineering. 
 
@@ -14,7 +15,7 @@ Windows App
 Use Visual Studio 2013 to compile and deploy the windows app code in Windows_Application/CPRemote
 <br><br>
 <b>Build Source</b><br>
-1. Clone the <i>master branch</i> to PC<br>
+1. Clone the <i>master branch</i> to PC<br> (For instructions: https://help.github.com/articles/fork-a-repo)
 2. Navigate to Windows_Application/CPRemoteApp<br>
 3. Open CPRemoteApp.sln<br>
 4. Press the run button to build and deploy the code.<br>
