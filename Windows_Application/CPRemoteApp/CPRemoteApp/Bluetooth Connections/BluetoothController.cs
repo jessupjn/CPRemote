@@ -51,7 +51,7 @@ namespace CPRemoteApp.Bluetooth_Connections
         public async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             //ask the user to connect
-          await connectionManager.EnumerateDevicesAsync((sender as Canvas).GetElementRect());
+          await connectionManager.EnumerateDevicesAsync(sender);
           if (connectionManager.isConnected())
           {
               last_alive_time = DateTime.Now;
@@ -75,7 +75,7 @@ namespace CPRemoteApp.Bluetooth_Connections
 
         public async void connectToDefault(object sender, RoutedEventArgs e)
         {
-            connectionManager.ConnectToServiceAsync(null);
+            connectionManager.ConnectToServiceAsync(null, null);
             if (connectionManager.isConnected())
             {
                 last_alive_time = DateTime.Now;

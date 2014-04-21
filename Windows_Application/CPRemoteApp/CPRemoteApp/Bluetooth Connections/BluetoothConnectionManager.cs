@@ -10,6 +10,8 @@ using Windows.UI.Popups;
 using Windows.Storage;
 using CPRemoteApp;
 using CPRemoteApp.ViewController___Settings;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 
 namespace TCD.Arduino.Bluetooth
@@ -50,7 +52,8 @@ namespace TCD.Arduino.Bluetooth
         private StreamSocket socket;
         private DataReader reader;
         private DataWriter writer;
-        private string connectedBluetoothDeviceName=null; 
+        private string connectedBluetoothDeviceName=null;
+        private DeviceInformation selected_device_global; 
 
         private BluetoothConnectionState _State;
         /// <summary>
@@ -70,24 +73,35 @@ namespace TCD.Arduino.Bluetooth
         /// </summary>
         /// <param name="invokerRect">for example: connectButton.GetElementRect();</param>
         public event ChangedEventHander changedName;
-        public async Task EnumerateDevicesAsync(Rect invokerRect)
+        public async Task EnumerateDevicesAsync(object sender)
         {
             //this.State = BluetoothConnectionState.Enumerating;
             var serviceInfoCollection = await DeviceInformation.FindAllAsync(RfcommDeviceService.GetDeviceSelector(RfcommServiceId.SerialPort));
-            PopupMenu menu = new PopupMenu();
+           
+            MenuFlyout mf = new MenuFlyout();
+
             foreach (var serviceInfo in serviceInfoCollection)
-                menu.Commands.Add(new UICommand(serviceInfo.Name, new UICommandInvokedHandler(ConnectToServiceAsync), serviceInfo));
+            {
+                MenuFlyoutItem mi = new MenuFlyoutItem();
+                mi.Text = serviceInfo.Name;
+                selected_device_global = (DeviceInformation)serviceInfo; 
+              
+                mi.Click += ConnectToServiceAsync;
+
+                mf.Items.Add(mi);
+
+                //menu.Commands.Add(new UICommand(serviceInfo.Name, new UICommandInvokedHandler(ConnectToServiceAsync), serviceInfo));
+            }
             if (serviceInfoCollection.Count == 0)
             {
-                menu.Commands.Add(new UICommand("No device found..."));
-                await menu.ShowForSelectionAsync(invokerRect);
+                MenuFlyoutItem mi = new MenuFlyoutItem();
+                mi.Text = "No device found...";
                 this.State = BluetoothConnectionState.Disconnected;
-                return; 
+                mf.Items.Add(mi);
             }
 
-            var result = await menu.ShowForSelectionAsync(invokerRect);
 
-
+            mf.ShowAt(sender as FrameworkElement); 
         }
 
         public string connectedDeviceName()
@@ -98,13 +112,16 @@ namespace TCD.Arduino.Bluetooth
             }
             return null; 
         }
-        
-        public async void ConnectToServiceAsync(IUICommand command)
+
+        public async void ConnectToServiceAsync(object sender, RoutedEventArgs e)
         {
            
             StorageFolder local_folder = App.appData.LocalFolder;
             StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
             StorageFile bluetooth_file = (StorageFile)await devices_folder.TryGetItemAsync("bluetooth_file.txt");
+
+            MenuFlyoutItem command = sender as MenuFlyoutItem;
+
            
             string bluetooth_file_line=null; 
             //if file doesn't exist, return and wanting to connect at initialization, return 
@@ -130,7 +147,7 @@ namespace TCD.Arduino.Bluetooth
             }
             else
             {
-                DeviceInformation serviceInfo = (DeviceInformation)command.Id;
+                DeviceInformation serviceInfo = (DeviceInformation)selected_device_global;
                 serviceIDString = serviceInfo.Id;
                 serviceNameString = serviceInfo.Name;
             }

@@ -266,7 +266,6 @@ namespace CPRemoteApp.ViewController___Settings
           // false = channel devices
           // if there is an iteam in the list, also add "Add new device..." at bottom of the list.
 
-
           if (channel_or_volume)
           {
 
