@@ -14,8 +14,8 @@
 
     <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="80" Canvas.Left="40" Text="Channel Name:"/>
     <TextBlock Width="150" FontSize="18" FontWeight="Bold" Foreground="Black" TextAlignment="Left" Canvas.Top="135" Canvas.Left="40" Text="Channel Number:"/>
-    <TextBox Width="150" Height="30" Name="_ch_name" Canvas.Left="200" Canvas.Top="75" Background="White" FontSize="16" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center"/>
-    <TextBox Width="150" Height="30" Name="_ch_num" Canvas.Left="200" Canvas.Top="130" Background="White" FontSize="16" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center" InputScope="Number"/>
+    <TextBox Width="150" Height="30" Name="_ch_name" Canvas.Left="200" Canvas.Top="75" Background="White" FontSize="15" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center"/>
+    <TextBox Width="150" Height="30" Name="_ch_num" Canvas.Left="200" Canvas.Top="130" Background="White" FontSize="15" Foreground="#FF1E2E74" BorderBrush="White" SelectionHighlightColor="#FF596FD1" TextAlignment="Center" InputScope="Number"/>
 
     <Canvas Name="_img_background" Background="#FF152C55" Width="100" Height="100" Canvas.Left="550" Canvas.Top="20">
       <TextBlock Text="Image" Canvas.Top="45" TextAlignment="Center" Width="100" Foreground="WhiteSmoke"/>
