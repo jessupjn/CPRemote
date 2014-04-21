@@ -123,8 +123,7 @@ namespace CPRemoteApp.Utility_Classes
             to_send += ".";
             to_send += IR_bits;
             to_send += ".";
-            int change_increment = volume_increments * cur_button.getRepitions();
-            to_send += change_increment.ToString();
+            to_send += cur_button.getRepitions();
             to_send += "/";
             App.bm.OperateTVButton_Click(to_send);
             await Task.Delay(TimeSpan.FromSeconds(.1));

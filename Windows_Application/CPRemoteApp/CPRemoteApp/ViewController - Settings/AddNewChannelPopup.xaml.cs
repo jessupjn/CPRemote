@@ -233,7 +233,7 @@ namespace CPRemoteApp.ViewController___Settings
             IStorageItem item = await folder.TryGetItemAsync(itemName);
             return (item != null);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Should never get here 
             return false;

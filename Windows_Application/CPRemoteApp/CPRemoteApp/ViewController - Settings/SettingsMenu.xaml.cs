@@ -345,10 +345,12 @@ namespace CPRemoteApp.ViewController___Settings
           if (cur_c_device_name != "")
           {
             _channel_device_selected.Text = cur_c_device_name;
+            populateChannelList();
           }
           string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
           if (cur_v_device_name != "")
           {
+              initializeVolumeIncrementSlider();
             _volume_device_selected.Text = cur_v_device_name;
           }
         }
