@@ -78,16 +78,17 @@ namespace CPRemoteApp.Utility_Classes
             string down_abbv;
             string up_name;
             string up_abbv;
-            for (int x = 1; x < 4; x++)
+            for (int x = 1; x < 3; x++)
             {
-                down_name = "Down " + x.ToString();
-                down_abbv = "-" + x.ToString();
-                Uri down_icon_path = new Uri("ms-appx:///img/vol-" + x.ToString() + ".png");
-                RemoteButton down_btn = new RemoteButton(down_name, down_abbv, volume_down_ir_code, x * volume_increments, down_icon_path);
-                up_name = "Up " + x.ToString();
-                up_abbv = "+" + x.ToString();
-                Uri up_icon_path = new Uri("ms-appx:///img/vol+" + x.ToString() + ".png");
-                RemoteButton up_btn = new RemoteButton(up_name, up_abbv, volume_up_ir_code, x * volume_increments, up_icon_path);
+                int reps = x * volume_increments;
+                down_name = "Down " + reps.ToString();
+                down_abbv = "-" + reps.ToString();
+                Uri down_icon_path = new Uri("ms-appx:///img/vol-" + reps.ToString() + ".png");
+                RemoteButton down_btn = new RemoteButton(down_name, down_abbv, volume_down_ir_code, reps, down_icon_path);
+                up_name = "Up " + reps.ToString();
+                up_abbv = "+" + reps.ToString();
+                Uri up_icon_path = new Uri("ms-appx:///img/vol+" + reps.ToString() + ".png");
+                RemoteButton up_btn = new RemoteButton(up_name, up_abbv, volume_up_ir_code, reps, up_icon_path);
                 buttonScanner.add_button(down_btn);
                 buttonScanner.add_button(up_btn);
             }
@@ -132,6 +133,8 @@ namespace CPRemoteApp.Utility_Classes
         public void setVolumeIncrement(int value)
         {
             volume_increments = value;
+            buttonScanner = new RemoteButtonScanner();
+            createButtons();
             saveDevice();
         }
 

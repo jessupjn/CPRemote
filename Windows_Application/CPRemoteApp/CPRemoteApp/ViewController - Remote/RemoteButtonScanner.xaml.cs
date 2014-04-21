@@ -90,6 +90,23 @@ namespace CPRemoteApp.ViewController___Remote
             }
         }
 
+        public void update_button(int index, RemoteButton btn)
+        {
+            RemoteButton old_button = buttons.ElementAt(index);
+            buttons[index] = btn;
+            if(old_button.getName() != btn.getName())
+            {
+                for(int i = 0; i < abbreviations.Count; ++i)
+                {
+                    if(abbreviations[i] == old_button.getName())
+                    {
+                        abbreviations[i] = btn.getName();
+                        return;
+                    }
+                }
+            }
+        }
+
         public void removeButton(int index)
         {
             RemoteButton btn = buttons.ElementAt(index);

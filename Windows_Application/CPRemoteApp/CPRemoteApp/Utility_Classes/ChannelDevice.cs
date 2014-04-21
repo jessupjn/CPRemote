@@ -44,9 +44,10 @@ namespace CPRemoteApp.Utility_Classes
             saveDevice();
         }
 
-        public void modify_channel()
+        public void update_channel(int index, RemoteButton btn)
         {
-
+            buttonScanner.update_button(index, btn);
+            saveDevice();
         }
 
         public void remove_channel(int index)
@@ -56,10 +57,10 @@ namespace CPRemoteApp.Utility_Classes
             saveDevice();
         }
 
-        public void updateIRDelay()
+        /*public void updateIRDelay()
         {
             remote_timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
-        }
+        }*/
 
         public async Task initialize()
         {
@@ -89,7 +90,7 @@ namespace CPRemoteApp.Utility_Classes
                 buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, chan_num, 1, img_uri));
             }
             is_initialized = true;
-            remote_timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
+            remote_timer.Interval = TimeSpan.FromSeconds(1);
             remote_timer.Tick += setAllowIRTransmission;
         }
 

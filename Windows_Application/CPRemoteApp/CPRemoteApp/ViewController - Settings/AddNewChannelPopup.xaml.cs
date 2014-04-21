@@ -31,20 +31,26 @@ namespace CPRemoteApp.ViewController___Settings
   {
     private WeakReference<Popup> popup_ref;
     public event ChangedEventHander savePressed;
+    public int chan_ind { get; set; }
+    private bool is_edit;
+    private Uri uri;
 
     public AddNewChannelPopup()
     {
       this.InitializeComponent();
+      is_edit = false;
     }
 
-    public AddNewChannelPopup(string name, string channel_num, Uri img_uri)
+    public AddNewChannelPopup(int channel_index, string name, string channel_num, Uri img_uri)
     {
       this.InitializeComponent();
       _ch_name.Text = name;
       _ch_num.Text = channel_num;
       ImageSource imgSource = new BitmapImage(img_uri);
-      _img.Source = imgSource; 
-       
+      _img.Source = imgSource;
+      is_edit = true;
+      chan_ind = channel_index;
+      header_text.Text = "Edit Channel";
     }
 
     public void setParentPopup(ref Popup p)
@@ -61,6 +67,16 @@ namespace CPRemoteApp.ViewController___Settings
 
     private void saveClicked(object sender, object e)
     {
+        if(is_edit)
+        {
+            if (validateChannel())
+            {
+                RemoteButton btn = createButton();
+                ((App)(CPRemoteApp.App.Current)).deviceController.channelController.update_channel(chan_ind, btn);
+            }
+            closePopup(null, null);
+            return;
+        }
       //
       // CHECK FOR CHANNEL NAME DUPLICATES.
       //
@@ -102,7 +118,6 @@ namespace CPRemoteApp.ViewController___Settings
         if (savePressed != null) savePressed.Invoke(this, EventArgs.Empty);
 
         BitmapImage bi = _img.Source as BitmapImage;
-        Uri uri; 
         if (bi == null)
         {
             uri = new Uri("ms-appx:///img/unset.png"); 
@@ -118,6 +133,69 @@ namespace CPRemoteApp.ViewController___Settings
         ((App)CPRemoteApp.App.Current).deviceController.channelController.add_channel(b);
         closePopup(null, null);
       }
+    }
+
+    public bool validateChannel()
+    {
+        if (!is_edit)
+        {
+            //
+            // CHECK FOR CHANNEL NAME DUPLICATES.
+            //
+            ChannelDevice c = ((App)(CPRemoteApp.App.Current)).deviceController.channelController;
+            foreach (RemoteButton b in c.buttonScanner.getButtons())
+            {
+                if (b.getName().ToLower() == _ch_name.Text.ToLower())
+                {
+                    MessageDialog msgDialog = new MessageDialog("There is already a channel saved with that name! Please enter a unique name for the channel!", "Whoops!");
+                    UICommand okBtn = new UICommand("OK");
+                    okBtn.Invoked += delegate { };
+                    msgDialog.Commands.Add(okBtn);
+                    msgDialog.ShowAsync();
+                    return false;
+                }
+            }
+        }
+
+        //
+        // CHECK THAT NUMBER IS A NUMBER
+        //
+        int n;
+        bool isNumeric = int.TryParse(_ch_num.Text.ToString(), out n);
+        if(!isNumeric)
+        {
+            MessageDialog msgDialog = new MessageDialog("The number for the channel can only contain numbers! Please enter a positive integer for the channel number!", "Whoops!");
+            UICommand okBtn = new UICommand("OK");
+            okBtn.Invoked += delegate { };
+            msgDialog.Commands.Add(okBtn);
+            msgDialog.ShowAsync();
+            return false;
+        }
+
+
+        if (_ch_name.Text.ToString() != "" && _ch_num.Text.ToString() != "")
+        {
+            this._save_button.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+
+            BitmapImage bi = _img.Source as BitmapImage;
+            if (bi == null)
+            {
+                uri = new Uri("ms-appx:///img/unset.png");
+            }
+            else
+            {
+                uri = bi.UriSource;
+
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public RemoteButton createButton()
+    {
+        RemoteButton btn = new RemoteButton(_ch_name.Text, _ch_name.Text, _ch_num.Text, 1, uri);
+        return btn;
     }
 
     async private void uploadClicked(object sender, RoutedEventArgs e)

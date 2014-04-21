@@ -59,6 +59,7 @@ namespace CPRemoteApp.ViewController___Settings
                 _volume_device_selected.Text = cur_v_device_name;
                 initializeVolumeIncrementSlider();
             }
+            else
             {
                 volume_increment_grid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 volume_increment_error_text.Visibility = Windows.UI.Xaml.Visibility.Visible;
@@ -240,7 +241,7 @@ namespace CPRemoteApp.ViewController___Settings
             Slider slide = sender as Slider;
             CPRemoteApp.App.button_scanner_interval = (int) slide.Value;
             ((App)CPRemoteApp.App.Current).deviceController.channelController.buttonScanner.updateTimerInterval();
-            ((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
+            //((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
             ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.updateTimerInterval();
             CPRemoteApp.App.appData.LocalSettings.Values["scannerInterval"] = CPRemoteApp.App.button_scanner_interval;
         }
@@ -358,7 +359,7 @@ namespace CPRemoteApp.ViewController___Settings
         {
             if (await ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(name))
             {
-                ((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
+                //((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
                 populateChannelList();
             }
             else
@@ -426,7 +427,7 @@ namespace CPRemoteApp.ViewController___Settings
         {
           List<RemoteButton> blist = ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.getButtons();
           int ch_tag = (sender as ChannelList).tag;
-          AddNewChannelPopup popup_content = new AddNewChannelPopup(blist[ch_tag].getName(), blist[ch_tag].getChannelNumber(), blist[ch_tag].getImgUri());
+          AddNewChannelPopup popup_content = new AddNewChannelPopup(ch_tag, blist[ch_tag].getName(), blist[ch_tag].getChannelNumber(), blist[ch_tag].getImgUri());
           Border border = new Border
           {
             Child = popup_content,
@@ -457,17 +458,24 @@ namespace CPRemoteApp.ViewController___Settings
           popup_content.savePressed += delegate
           {
             // if save is pressed, also delete the button currently being edited to save the new one.
-            channelButtonDeletePressed(sender, EventArgs.Empty);
+            channelButtonSaveEdit(popup_content, EventArgs.Empty);
           };
           
         }
 
+        private void channelButtonSaveEdit(object sender, EventArgs e)
+        {
+            AddNewChannelPopup popup = sender as AddNewChannelPopup;
+            if(popup.validateChannel())
+            {
+                RemoteButton btn = popup.createButton();
+                ((App)(CPRemoteApp.App.Current)).deviceController.channelController.buttonScanner.update_button(popup.chan_ind, btn);
+                populateChannelList();
+            }
+        }
+
         private void channelButtonDeletePressed(object sender, EventArgs e)
         {
-          //
-          // TODO: LUKE
-          // THIS IS WHERE THE CHANNEL NEEDS TO BE DELETED.
-          //
           ChannelList c = sender as ChannelList;
           ((App)(CPRemoteApp.App.Current)).deviceController.channelController.remove_channel(c.tag);
           populateChannelList();
