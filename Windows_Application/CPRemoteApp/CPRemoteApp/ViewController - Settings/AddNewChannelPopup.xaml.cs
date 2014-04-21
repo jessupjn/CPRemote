@@ -37,8 +37,21 @@ namespace CPRemoteApp.ViewController___Settings
 
     public AddNewChannelPopup()
     {
-      this.InitializeComponent();
-      is_edit = false;
+      if( !((App)(CPRemoteApp.App.Current)).deviceController.channelController.is_initialized )
+      {
+        MessageDialog msgDialog = new MessageDialog("You must have a channel device set in order to save channels to it!", "Whoops!");
+        UICommand okBtn = new UICommand("OK");
+        okBtn.Invoked += delegate { };
+        msgDialog.Commands.Add(okBtn);
+        msgDialog.ShowAsync();
+        return;
+      }
+      else
+      {
+        this.InitializeComponent();
+        is_edit = false; 
+      }
+
     }
 
     public AddNewChannelPopup(int channel_index, string name, string channel_num, Uri img_uri)
@@ -132,6 +145,15 @@ namespace CPRemoteApp.ViewController___Settings
         RemoteButton b = new RemoteButton(_ch_name.Text, _ch_name.Text, _ch_num.Text, 1, uri);
         ((App)CPRemoteApp.App.Current).deviceController.channelController.add_channel(b);
         closePopup(null, null);
+      }
+      else
+      {
+        MessageDialog msgDialog = new MessageDialog("The channel name and channel number fields are required!", "Whoops!");
+        UICommand okBtn = new UICommand("OK");
+        okBtn.Invoked += delegate { };
+        msgDialog.Commands.Add(okBtn);
+        msgDialog.ShowAsync();
+        return;
       }
     }
 

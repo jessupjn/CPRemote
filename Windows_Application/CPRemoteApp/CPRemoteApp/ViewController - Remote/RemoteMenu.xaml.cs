@@ -136,6 +136,9 @@ namespace CPRemoteApp.ViewController___Remote
             // Add Button Scanners to Corresponding Panels
             channel_scanner_panel.Children.Add(device_manager.channelController.buttonScanner);
             volume_scanner_panel.Children.Add(device_manager.volumeController.buttonScanner);
+
+            Canvas.SetLeft(channel_scanner_panel, Canvas.GetLeft(_divider) - 10);
+            Canvas.SetLeft(volume_scanner_panel, -Canvas.GetLeft(_divider) - 10);
         }
 
 
