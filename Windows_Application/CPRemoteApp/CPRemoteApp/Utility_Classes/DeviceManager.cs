@@ -235,7 +235,7 @@ namespace CPRemoteApp.Utility_Classes
             return true;
         }
 
-        public async void selectVolumeDevice(string name)
+        public async Task selectVolumeDevice(string name)
         {
             int index = getVolumeDeviceIndex(ref name);
             if (index == -1)

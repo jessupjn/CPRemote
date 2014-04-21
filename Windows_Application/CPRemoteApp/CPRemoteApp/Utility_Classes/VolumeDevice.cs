@@ -129,6 +129,12 @@ namespace CPRemoteApp.Utility_Classes
             await Task.Delay(TimeSpan.FromSeconds(.1));
         }
 
+        public void setVolumeIncrement(int value)
+        {
+            volume_increments = value;
+            saveDevice();
+        }
+
         public async void saveDevice()
         {
             List<String> output = new List<string>() { IR_protocol,

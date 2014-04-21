@@ -225,7 +225,10 @@
 
       <StackPanel Canvas.Top="155" Name="volume_increments_panel">
         <TextBlock Name="volume_increment_label" Text="Volume Change Increment:" FontSize="24"/>
-        <Grid>
+                    <TextBlock Name="volume_increment_error_text" FontSize="20" Width="700" Height="60" TextAlignment="Center" Visibility="Collapsed" >
+                        <LineBreak />A volume device must be selected to change the increment.
+                    </TextBlock>
+                    <Grid Name="volume_increment_grid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                     <RowDefinition Height="*" />

@@ -57,12 +57,21 @@ namespace CPRemoteApp.ViewController___Settings
             if(cur_v_device_name != "")
             {
                 _volume_device_selected.Text = cur_v_device_name;
+                initializeVolumeIncrementSlider();
+            }
+            {
+                volume_increment_grid.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                volume_increment_error_text.Visibility = Windows.UI.Xaml.Visibility.Visible;
             }
 
             string cur_c_device_name = ((App)CPRemoteApp.App.Current).deviceController.channelController.get_name();
             if(cur_c_device_name != "")
             {
                 _channel_device_selected.Text = cur_c_device_name;
+            }
+            else
+            {
+                // TODO: Hide Channel List
             }
 
             _channellist_listbox.ItemsSource = channels;
@@ -95,6 +104,14 @@ namespace CPRemoteApp.ViewController___Settings
             {
                 _channel_device_selected.Text = cur_c_device_name;
             }
+        }
+
+        private void initializeVolumeIncrementSlider()
+        {
+            volume_increment_slider.Value = (double)((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments;
+            volume_increment_slider.ValueChanged += volIncrementChanged;
+            volume_increment_grid.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            volume_increment_error_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private void populateChannelList()
@@ -210,7 +227,14 @@ namespace CPRemoteApp.ViewController___Settings
         }
       }
 
-        // Increment Slider Value Changed
+        void volIncrementChanged(object sender, RangeBaseValueChangedEventArgs args)
+        {
+            Slider slide = sender as Slider;
+            int increment_value = (int) slide.Value;
+            ((App)CPRemoteApp.App.Current).deviceController.volumeController.setVolumeIncrement(increment_value);
+        }
+
+        // Scanner Interval Increment Slider Value Changed
         void incrementChanged(object sender, RangeBaseValueChangedEventArgs args)
         {
             Slider slide = sender as Slider;
@@ -332,12 +356,17 @@ namespace CPRemoteApp.ViewController___Settings
 
         private async void selectDevice(string name)
         {
-            if(await ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(name))
+            if (await ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(name))
             {
                 ((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
                 populateChannelList();
             }
-            ((App)(CPRemoteApp.App.Current)).deviceController.selectVolumeDevice(name);
+            else
+            {
+                volume_increment_slider.ValueChanged -= volIncrementChanged;
+                await ((App)(CPRemoteApp.App.Current)).deviceController.selectVolumeDevice(name);
+                initializeVolumeIncrementSlider();
+            }
             changeSelectedText();
         }
 
