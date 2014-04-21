@@ -107,11 +107,6 @@ namespace CPRemoteApp.ViewController___Remote
         {
 
             DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
-            /*StorageFolder local_folder = App.appData.LocalFolder;
-            StorageFolder devices_folder = await local_folder.CreateFolderAsync("devices_folder", CreationCollisionOption.OpenIfExists);
-
-            //TODO: Should check the return value of device_manager to ensure devices were loaded properly
-            await device_manager.initialize(devices_folder);*/
             
             int offset = 200;
 
@@ -272,11 +267,8 @@ namespace CPRemoteApp.ViewController___Remote
             storyboard.Completed += delegate {
               can_move = true;
             };
-            System.Diagnostics.Debug.WriteLine("Before");
-
+           
             storyboard.Begin();
-            System.Diagnostics.Debug.WriteLine("After");
-
 
         }
 
@@ -364,30 +356,6 @@ namespace CPRemoteApp.ViewController___Remote
 
         private void onVolumeButtonClicked(object sender, RoutedEventArgs e)
         {
-            /*string to_send = "-S.";
-            to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_protocol;
-            to_send += ".";
-            RemoteButton cur_button = ((App)CPRemoteApp.App.Current).deviceController.volumeController.buttonScanner.getCurrentButton();
-            if (cur_button.abbreviation[0] == '-')
-            {
-                to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_down_ir_code;
-            }
-            else if (cur_button.abbreviation[0] == '+')
-            {
-                to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_up_ir_code;
-            }
-            else
-            {
-                to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.mute_ir_code;
-            }
-            to_send += ".";
-            to_send += ((App)CPRemoteApp.App.Current).deviceController.volumeController.IR_bits;
-            to_send += ".";
-            int change_increment = ((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments * cur_button.getRepitions();
-            to_send += change_increment.ToString();
-            to_send += "/";
-            App.bm.OperateTVButton_Click(to_send);
-            System.Diagnostics.Debug.WriteLine(to_send);*/
             ((App)CPRemoteApp.App.Current).deviceController.volumeController.onButtonClick();
         }
 

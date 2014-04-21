@@ -6,9 +6,14 @@
 
     <Application.Resources>
         <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="Orange" />
-        
-        <Style TargetType="Button">
-              
+        <SolidColorBrush x:Key="FlyoutBackgroundThemeBrush" Color="Purple"/>
+        <SolidColorBrush x:Key="FlyoutBorderThemeBrush" Color="White"/>
+        <Style TargetType="MenuFlyoutPresenter">
+            <Setter Property="BorderThickness" Value="5" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style TargetType="MenuFlyoutItem">
+            <Setter Property="FontSize" Value="20" />
         </Style>
     </Application.Resources>
 </Application>
