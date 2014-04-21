@@ -223,19 +223,49 @@
         <TextBlock x:Name="_volume_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
       </Canvas>
 
-      <!--    object to set the channel device       -->
-      <Canvas x:Name="_channel_device" Canvas.Top="170" Width="700" Height="50" PointerReleased="channelClick" PointerMoved="clickerIn" PointerExited="clickerOut">
+      <StackPanel Canvas.Top="155" Name="volume_increments_panel">
+        <TextBlock Name="volume_increment_label" Text="Volume Change Increment:" FontSize="24"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="92" />
+                    <ColumnDefinition Width="92" />
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Slider Name="volume_increment_slider" Maximum="5" Minimum="1" StepFrequency="1" TickFrequency="1" 
+                            TickPlacement="Outside"  Width="700" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"/>
+                <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Text="1" />
+                <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Text="2" />
+                <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="2" Text="3" />
+                <TextBlock FontSize="16" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="3" Text="4" />
+                <TextBlock FontSize="16" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="4" Text="5" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5">
+                    <TextBlock Name="volume_increment_slider_value_text" FontSize="24" HorizontalAlignment="Center" Text="{Binding ElementName=volume_increment_slider, Path=Value}"/>
+                    <TextBlock FontSize="24" Text=" Unit(s)" />
+                </StackPanel>
+            </Grid>
+
+      </StackPanel>
+
+                <!--    object to set the channel device       -->
+      <Canvas x:Name="_channel_device" Canvas.Top="282" Width="700" Height="50" PointerReleased="channelClick" PointerMoved="clickerIn" PointerExited="clickerOut">
         <Rectangle x:Name="_channel_device_frame" Fill="Transparent" Width="700" Height="50" RadiusX="15" RadiusY="15"/>
         <Border x:Name="_channel_device_border" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="50"/>
         <TextBlock x:Name="_channel_device_text" Canvas.Left="20" Canvas.Top="12" Text="Please select a device for channel buttons:" Foreground="White" FontSize="24"/>
         <TextBlock x:Name="_channel_device_selected" Width="680" Canvas.Top="16" Text="No device selected." TextAlignment="Right" Foreground="White" FontSize="18"/>
       </Canvas>
 
-      <TextBlock x:Name="_channellist_label" Canvas.Top="240" Width="700" Height="26" Text="Channel List:" Foreground="White" FontSize="24"/>
-      <ListBox x:Name="_channellist_listbox"  Canvas.Top="275" Width="700" Height="350" Background="Transparent" SelectionMode="Extended" IsTapEnabled="False" Style="{StaticResource ListBoxStyle1}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}"/>
-      <Border x:Name="_channellist_border" Canvas.Top="270" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="360" IsTapEnabled="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+      <TextBlock x:Name="_channellist_label" Canvas.Top="345" Width="700" Height="26" Text="Channel List:" Foreground="White" FontSize="24"/>
+      <ListBox x:Name="_channellist_listbox"  Canvas.Top="380" Width="700" Height="350" Background="Transparent" SelectionMode="Extended" IsTapEnabled="False" Style="{StaticResource ListBoxStyle1}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}"/>
+      <Border x:Name="_channellist_border" Canvas.Top="375" BorderBrush="White" BorderThickness="4" CornerRadius="12" Width="700" Height="360" IsTapEnabled="False" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
 
-            <StackPanel Canvas.Top="650" Name="increment_slider_panel">
+            <StackPanel Canvas.Top="755" Name="increment_slider_panel">
                 <TextBlock Name="increment_slider_label" Text="Scanning Increment:" FontSize="24"/>
                 <Grid>
                     <Grid.RowDefinitions>

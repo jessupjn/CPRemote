@@ -51,6 +51,7 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(_channellist_listbox, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(_channellist_border, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(increment_slider_panel, (Window.Current.Bounds.Width - 700) / 2);
+            Canvas.SetLeft(volume_increments_panel, (Window.Current.Bounds.Width - 700) / 2);
 
             string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
             if(cur_v_device_name != "")
