@@ -35,6 +35,7 @@ namespace CPRemoteApp.ViewController___Settings
         private DispatcherTimer timer = new DispatcherTimer();
         private ObservableCollection<ListBoxItem> channels = new ObservableCollection<ListBoxItem>();
         private Popup popup_control;
+        private bool vol_slider_change_enabled;
 
         public SettingsMenu()
         {
@@ -53,6 +54,7 @@ namespace CPRemoteApp.ViewController___Settings
             Canvas.SetLeft(increment_slider_panel, (Window.Current.Bounds.Width - 700) / 2);
             Canvas.SetLeft(volume_increments_panel, (Window.Current.Bounds.Width - 700) / 2);
 
+            vol_slider_change_enabled = false;
             string cur_v_device_name = ((App)CPRemoteApp.App.Current).deviceController.volumeController.get_name();
             if(cur_v_device_name != "")
             {
@@ -69,10 +71,6 @@ namespace CPRemoteApp.ViewController___Settings
             if(cur_c_device_name != "")
             {
                 _channel_device_selected.Text = cur_c_device_name;
-            }
-            else
-            {
-                // TODO: Hide Channel List
             }
 
             _channellist_listbox.ItemsSource = channels;
@@ -109,8 +107,13 @@ namespace CPRemoteApp.ViewController___Settings
 
         private void initializeVolumeIncrementSlider()
         {
+            if(vol_slider_change_enabled)
+            {
+                volume_increment_slider.ValueChanged -= volIncrementChanged;
+            }
             volume_increment_slider.Value = (double)((App)CPRemoteApp.App.Current).deviceController.volumeController.volume_increments;
             volume_increment_slider.ValueChanged += volIncrementChanged;
+            vol_slider_change_enabled = true;
             volume_increment_grid.Visibility = Windows.UI.Xaml.Visibility.Visible;
             volume_increment_error_text.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
@@ -360,12 +363,10 @@ namespace CPRemoteApp.ViewController___Settings
         {
             if (await ((App)(CPRemoteApp.App.Current)).deviceController.selectChannelDevice(name))
             {
-                //((App)CPRemoteApp.App.Current).deviceController.channelController.updateIRDelay();
                 populateChannelList();
             }
             else
             {
-                volume_increment_slider.ValueChanged -= volIncrementChanged;
                 await ((App)(CPRemoteApp.App.Current)).deviceController.selectVolumeDevice(name);
                 initializeVolumeIncrementSlider();
             }
