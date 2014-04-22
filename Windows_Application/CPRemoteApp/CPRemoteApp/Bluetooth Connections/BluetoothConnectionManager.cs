@@ -84,8 +84,8 @@ namespace TCD.Arduino.Bluetooth
             {
                 MenuFlyoutItem mi = new MenuFlyoutItem();
                 mi.Text = serviceInfo.Name;
-                selected_device_global = (DeviceInformation)serviceInfo; 
-              
+                //selected_device_global = (DeviceInformation)serviceInfo; 
+                mi.Name = serviceInfo.Id; 
                 mi.Click += ConnectToServiceAsync;
 
                 mf.Items.Add(mi);
@@ -148,8 +148,8 @@ namespace TCD.Arduino.Bluetooth
             else
             {
                 DeviceInformation serviceInfo = (DeviceInformation)selected_device_global;
-                serviceIDString = serviceInfo.Id;
-                serviceNameString = serviceInfo.Name;
+                serviceIDString = command.Name;
+                serviceNameString = command.Text;
             }
             //this.State = BluetoothConnectionState.Connecting;
             this.Disconnect(); 
