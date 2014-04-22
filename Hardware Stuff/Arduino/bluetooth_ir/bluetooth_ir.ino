@@ -130,7 +130,7 @@ void charToType (char* buff) {
     b_protocol_enum = NEC; 
   }
 
-  if (strcmp(buff,"NECx") == 0) {
+  if (strcmp(buff,"NECX") == 0) {
 ////Serial.println("NECx FOUND"); 
     b_protocol_enum = NECX; 
   }
@@ -379,13 +379,12 @@ if (recvd_code_type == SEND) {
   recvd_code_type = -1;
 } // if SEND
 
-if (recvd_code_type == LEARN) {
-  Serial.print("Got one? ");
-  Serial.println(GotOne, DEC);
+  //Serial.print("Got one? ");
+  //Serial.println(GotOne, DEC);
   if (GotOne) {
     sendLearned();
   }
-}
+
 
 
 if (My_Receiver.GetResults(&My_Decoder)) {
@@ -412,4 +411,3 @@ if (My_Receiver.GetResults(&My_Decoder)) {
 //check if you need to send anything via bluetooth 
 //sendBluetoothMessage(); 
 }
-
