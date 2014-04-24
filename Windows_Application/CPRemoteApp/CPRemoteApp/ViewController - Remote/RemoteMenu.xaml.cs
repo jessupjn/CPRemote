@@ -317,7 +317,8 @@ namespace CPRemoteApp.ViewController___Remote
         private void backClick(object sender, RoutedEventArgs e) { 
             this.Frame.GoBack();
             DeviceManager device_manager = ((App)(CPRemoteApp.App.Current)).deviceController;
-
+            device_manager.channelController.buttonScanner.stop();
+            device_manager.volumeController.buttonScanner.stop();
             channel_scanner_panel.Children.Remove(device_manager.channelController.buttonScanner);
             volume_scanner_panel.Children.Remove(device_manager.volumeController.buttonScanner);
 

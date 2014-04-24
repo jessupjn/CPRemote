@@ -26,7 +26,7 @@ namespace CPRemoteApp.ViewController___Remote
     {
         // -------------------------------------
         private List<RemoteButton> buttons;
-        public Button cur_button { get; set;}
+        //public Button cur_button { get; set;}
         public bool clickEventSet { get; set; }
         public ObservableCollection<string> abbreviations = new ObservableCollection<string>();
         private int cur_index = 0;
@@ -81,10 +81,14 @@ namespace CPRemoteApp.ViewController___Remote
             }
         }
 
-        public void add_button(RemoteButton btn)
+        public void add_button(RemoteButton btn, bool reset_scanner)
         {
             buttons.Add(btn);
-            if(abbreviations.Count < MAX_BUTTONS_SHOWN)
+            if (reset_scanner)
+            {
+                resetScanner();
+            }
+            else if(abbreviations.Count < MAX_BUTTONS_SHOWN)
             {
                 abbreviations.Insert(0, btn.getName());
             }
@@ -94,31 +98,14 @@ namespace CPRemoteApp.ViewController___Remote
         {
             RemoteButton old_button = buttons.ElementAt(index);
             buttons[index] = btn;
-            if(old_button.getName() != btn.getName())
-            {
-                for(int i = 0; i < abbreviations.Count; ++i)
-                {
-                    if(abbreviations[i] == old_button.getName())
-                    {
-                        abbreviations[i] = btn.getName();
-                        return;
-                    }
-                }
-            }
+            resetScanner();
         }
 
         public void removeButton(int index)
         {
             RemoteButton btn = buttons.ElementAt(index);
             buttons.RemoveAt(index);
-            for (int i = 0; i < abbreviations.Count; ++i )
-            {
-                if(abbreviations[i] == btn.getAbbreviation())
-                {
-                    abbreviations.RemoveAt(i);
-                    break;
-                }
-            }
+            resetScanner();
         }
 
         public List<RemoteButton> getButtons()
@@ -147,6 +134,21 @@ namespace CPRemoteApp.ViewController___Remote
         public void updateTimerInterval()
         {
             timer.Interval = TimeSpan.FromSeconds(CPRemoteApp.App.button_scanner_interval);
+        }
+
+        private void resetScanner()
+        {
+            abbreviations.Clear();
+            for (int i = 0; i < MAX_BUTTONS_SHOWN; ++i)
+            {
+                if (i == buttons.Count)
+                {
+                    break;
+                }
+                abbreviations.Insert(0, buttons[i].getName());
+            }
+            cur_index = 0;
+            cur_image.Source = buttons[cur_index].icon;
         }
 
         private void incrementScanner(Object sender, object e)

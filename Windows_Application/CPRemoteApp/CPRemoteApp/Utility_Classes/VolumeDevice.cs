@@ -89,14 +89,14 @@ namespace CPRemoteApp.Utility_Classes
                 up_abbv = "+" + reps.ToString();
                 Uri up_icon_path = new Uri("ms-appx:///img/vol+" + reps.ToString() + ".png");
                 RemoteButton up_btn = new RemoteButton(up_name, up_abbv, volume_up_ir_code, reps, up_icon_path);
-                buttonScanner.add_button(down_btn);
-                buttonScanner.add_button(up_btn);
+                buttonScanner.add_button(down_btn, false);
+                buttonScanner.add_button(up_btn, false);
             }
             string mute_name = "Mute";
             string mute_abbv = "Mute";
             Uri mute_uri = new Uri("ms-appx:///img/volMute.png");
             RemoteButton mute_button = new RemoteButton(mute_name, mute_abbv, mute_ir_code, 1, mute_uri);
-            buttonScanner.add_button(mute_button);
+            buttonScanner.add_button(mute_button, false);
             is_initialized = true;
             remote_timer.Interval = TimeSpan.FromSeconds(1);
             remote_timer.Tick += setAllowIRTransmission;

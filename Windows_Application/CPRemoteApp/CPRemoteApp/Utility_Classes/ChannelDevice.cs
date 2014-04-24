@@ -40,7 +40,7 @@ namespace CPRemoteApp.Utility_Classes
         public void add_channel(RemoteButton new_chan)
         {
             num_channels++;
-            buttonScanner.add_button(new_chan);
+            buttonScanner.add_button(new_chan, true);
             saveDevice();
         }
 
@@ -82,7 +82,7 @@ namespace CPRemoteApp.Utility_Classes
                 chan_num = input[index++];
                 
                 Uri img_uri = new Uri(img_path);
-                buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, chan_num, 1, img_uri));
+                buttonScanner.add_button(new RemoteButton(chan_name, chan_abbv, chan_num, 1, img_uri), false);
             }
             is_initialized = true;
             remote_timer.Interval = TimeSpan.FromSeconds(1);
